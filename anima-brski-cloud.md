@@ -419,8 +419,30 @@ INSERT_TEXT_FROM_FILE ietf-redirected-voucher@DATE.yang END
 
 # IANA Considerations
 
-TODO:MCR - Will need to add IETF YANG registration from templates.
-[[ TODO ]]
+This document requires the following IANA actions:
+
+## The IETF XML Registry
+
+This document registers a URI in the "IETF XML Registry" {{?RFC3688}}
+IANA is asked to register the following:
+
+~~~~
+URI: urn:ietf:params:xml:ns:yang:ietf-redirected-voucher
+Registrant Contact: The ANIMA WG of the IETF.
+XML: N/A, the requested URI is an XML namespace.
+~~~~
+
+## YANG Module Names Registry
+
+This document registers a YANG module in the "YANG Module Names"
+registry {{?RFC6020}}.  IANA is asked to registered the following:
+
+~~~~
+   Name:  ietf-redirected-voucher
+   Namespace:  urn:ietf:params:xml:ns:yang:ietf-redirected-voucher
+   Prefix:  vch
+   Reference:  THIS DOCUMENT
+~~~~
 
 # Security Considerations
 
