@@ -29,7 +29,6 @@ author:
 normative:
   RFC8366: VOUCHER
   BRSKI: RFC8995
-  EST:   RFC7030
   RFC8366bis: I-D.ietf-anima-rfc8366bis
 
 informative:
@@ -205,7 +204,7 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
-The pledge MUST use an Implicit Trust Anchor database (see {{EST}}) to authenticate the cloud registrar service.
+The pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the cloud registrar service.
 The Pledge can be done with pre-loaded trust-anchors that are used to validate the TLS connection.
 This can be using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
@@ -491,5 +490,5 @@ Whether or not this is the case, it behaves as if it was separate.
 
 It may be the case that one or more 307-Redirects have taken the Pledge from the built-in Cloud Registrar to one operated by a VAR.
 
-When the Pledge is directed to the Owner's {{EST}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
+When the Pledge is directed to the Owner's EST {{!RFC7030}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
 There is no provisional TLS connection, and therefore there are no risks associated with being behind a captive portal.
