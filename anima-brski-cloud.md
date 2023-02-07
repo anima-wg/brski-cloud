@@ -30,12 +30,13 @@ normative:
   RFC8366: VOUCHER
   BRSKI: RFC8995
   EST:   RFC7030
+  RFC8366bis: I-D.ietf-anima-rfc8366bis
 
 informative:
   RFC6125:
   RFC3688:
   RFC6020:
-  I-D.richardson-t2trg-idevid-considerations:
+  I-D.irtf-t2trg-taxonomy-manufacturer-anchors:
   IEEE802.1AR:
     target: "http://standards.ieee.org/findstds/standard/802.1AR-2018.html"
     title: "IEEE 802.1AR Secure Device Identifier"
@@ -414,53 +415,11 @@ The Pledge must validate that the issued certificate has the expected identifier
 
 # YANG extension for Voucher based redirect {#redirected}
 
-An extension to the {{RFC8366}} voucher is needed for the case where the client will be redirected to a local EST Registrar.
-
-## YANG Tree
-
-INSERT_TEXT_FROM_FILE ietf-voucher-redirected-tree.txt END
-
-## YANG Voucher
-
-INSERT_TEXT_FROM_FILE ietf-voucher-redirected@DATE.yang END
+{{RFC8366bis}} contains the two needed voucher extensions: est-domain and additional-configuration which are needed when a client is redirected to a local EST Registrar.
 
 # IANA Considerations
 
-## The IETF XML Registry
-
-This document registers one URI in the IETF XML registry {{RFC3688}}.
-Following the format in {{RFC3688}}, the following registration is requested:
-
-~~~
-{: newline="true"}
-URI:
-: urn:ietf:params:xml:ns:yang:ietf-voucher-redirected
-
-Registrant Contact:
-: The ANIMA WG of the IETF.
-
-XML:
-: N/A, the requested URI is an XML namespace.
-~~~
-
-## The YANG Module Names Registry
-
-This document registers two YANG modules in the YANG Module Names registry {{RFC6020}}.  Following the format defined in {{RFC6020}}, the the following registration is requested:
-
-~~~
-{: newline="true"}
-name:
-: ietf-voucher-redirected
-
-namespace:
-: urn:ietf:params:xml:ns:yang:ietf-voucher-redirected
-
-prefix:
-: vch
-
-reference:
-: THIS DOCUMENT
-~~~
+This document makes no IANA requests.
 
 # Security Considerations
 
@@ -517,7 +476,7 @@ This list is built-in by the manufacturer along with a DNS name to which to conn
 
 The Cloud Registrar does not have a certificate that can be validated using a public (WebPKI) anchor.
 The pledge may have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
-There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addresses in part in {{I-D.richardson-t2trg-idevid-considerations}} in sections 3 and 5.
+There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addresses in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
 
 ## Issues with Redirect via Voucher
 
