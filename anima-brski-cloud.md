@@ -44,8 +44,7 @@ informative:
 
 --- abstract
 
-This document specifies the behavior of a BRSKI Cloud Registrar, and how a
-pledge can interact with a BRSKI Cloud Registrar when bootstrapping.
+BRSKI defines how a boostrapping device discovers an element of the network domain that it will belong to called a registrar, and how the device interacts with the registrar in order to bootstrap a secure key infrastructure. BRSKI outlines how a device may contact a well-known cloud registrar if no local nework registrar is discovered. This document specifies the behavior of BRSKI cloud registrars and how bootstrapping devices interact with cloud registrars.
 
 RFCED REMOVE: It is being actively worked on at https://github.com/anima-wg/brski-cloud
 
