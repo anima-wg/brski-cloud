@@ -79,18 +79,22 @@ There may not be an Owner Registrar in all deployment scenarios.
 - Local Domain Registrar: The Registrar discovered on the Local Domain.
 There may not be a Local Domain Registrar in all deployment scenarios.
 
+- EST: Enrollment over Secure Transport {{!RFC7030}}
+- 
+- VAR: Value Added Reseller
+
 ## Target Use Cases
 
 Two high level use cases are documented here.
 There are more details provided in sections {{redirect2Registrar}} and {{voucher2EST}}.
-While both use cases aid with incremental deployment of BRSKI infrastructure, for many smaller sites (such as teleworkers) no further infrastructure are expected.
+While both use cases aid with incremental deployment of BRSKI infrastructure, for many smaller sites (such as teleworkers) no further infrastructure is expected.
 
 The pledge is not expected to know which of these two situations it is in.
 The pledge determines this based upon signals that it receives from the Cloud Registrar.
 The Cloud Registrar is expected to make the determination based upon the identity presented by the pledge.
 
-While a Cloud Registrar will typically handle all the devices of a particular product line from a particular manufacturer there are no restrictions on how the Cloud Registrar is horizontally (many sites) or vertically (more equipment at one site) scaled.
-It is also entirely possible that all devices sold by through a particular VAR might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
+A Cloud Registrar will typically handle all the devices of a particular product line from a particular manufacturer. This document places no restrictions on how many different deployments or owner sites the Cloud Registrar can handle, or how many devices per site that the Cloud Registrar can handle.
+It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
 Such an effort would require unboxing each device in a controlled environment, but the provisioning could occur using a regular BRSKI or SZTP {{?RFC8572}} process.
 
 ### Owner Registrar Discovery
@@ -108,10 +112,10 @@ For example, an enduser is deploying an IP phone in a home office and the phone 
 
 A pledge is bootstrapping where the owner organization does not yet have an owner registrar deployed.
 The cloud registrar issues a voucher, and the pledge completes trust bootstrap using the cloud registrar.
-The voucher issued by the cloud includes domain information for the owner's {{EST}} service the pledge should use for certificate enrollment.
+The voucher issued by the cloud includes domain information for the owner's Enrollment over Secure Transport (EST) {{!RFC7030}} service the pledge should use for certificate enrollment.
 
 In one use case, an organization has an EST service deployed, but does not have yet a BRSKI capable Registrar service deployed.
-The pledge is deployed in the organization's domain, but does not discover a local domain, or owner, registrar.
+The pledge is deployed in the organization's domain, but does not discover a local domain registrar or owner registrar.
 The pledge uses the cloud registrar to bootstrap, and the cloud registrar provides a voucher that includes instructions on finding the organization's EST service.
 
 # Architecture
@@ -175,11 +179,11 @@ The pledge operator has already connected the pledge to the network, and the mec
 
 ## Pledge Certificate Identity Considerations
 
-BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{?RFC7030}} CSR Attributes request to the registrar. The registrar MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
+BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the registrar. The registrar MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The registrar may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject must have a specific value in order to complete enrollment with the CA.
 
-EST {{?RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
+EST {{!RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
 {{?I-D.richardson-lamps-rfc7030-csrattrs}} clarifies how a server can use CSR Attributes response to specify specific values for attributes that the client should include in its CSR.
 
 For example, the pledge may only be aware of its IDevID Subject which includes a manufacturer serial number, but must include a specific fully qualified domain name in the CSR in order to complete domain ownership proofs required by the CA.
