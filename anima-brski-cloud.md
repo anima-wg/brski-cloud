@@ -193,7 +193,7 @@ As another example, the registrar may deem the manufacturer serial number in an 
 ### Cloud Registrar Discovery
 
 BRSKI defines how a pledge MAY contact a well-known URI of a cloud registrar if a local domain registrar cannot be discovered.
-Additionally, certain pledge types may never attempt to discover a local domain registrar and may automatically bootstrap against a cloud registrar.
+Additionally, certain pledge types might never attempt to discover a local domain registrar and might automatically bootstrap against a cloud registrar.
 
 The details of the URI are manufacturer specific, with BRSKI giving the example "brski-registrar.manufacturer.example.com".
 
@@ -202,8 +202,8 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 ### Pledge - Cloud Registrar TLS Establishment Details
 
 The pledge MUST use an Implicit Trust Anchor database (see {{EST}}) to authenticate the cloud registrar service.
-The Pledge can be done with pre-loaded trust-anchors that are used to validate the TLS connection.
-This can be using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
+The Pledge may be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
+The TLS connection can be validated using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
 
 The pledge MUST NOT establish a provisional TLS connection (see BRSKI section 5.1) with the cloud registrar.
@@ -222,9 +222,11 @@ After the pledge has established a full TLS connection with the cloud registrar 
 ## Cloud Registrar Handles Voucher Request
 
 The cloud registrar must determine pledge ownership.
-Once ownership is determined, or if no owner can be determined, then the registrar may:
+if the registrar is unwilling or unable to handle the voucher request, for example it is unable to determinw ownership, then the cloud registrar MUST return a suitable 4xx or 5xx error response to the pledge.
 
-- return a suitable 4xx or 5xx error response to the pledge if the registrar is unwilling or unable to handle the voucher request
+If the cloud registrar successfully determines ownership, then the registrar SHOULD take one of the following actions:
+
+- return a suitable 4xx or 5xx error response to the pledge if the registrar is unwilling or unable to handle the voucher request for any reason
 
 - redirect the pledge to an owner register via 307 response code
 
@@ -241,7 +243,7 @@ The mechanism by which the cloud registrar determines pledge ownership is out-of
 
 ### Cloud Registrar Redirects to Owner Registrar
 
-Once the cloud registrar has determined pledge ownership, the cloud registrar may redirect the pledge to the owner registrar in order to complete bootstrap.
+Once the cloud registrar has determined pledge ownership, the cloud registrar MAY redirect the pledge to the owner registrar in order to complete bootstrap.
 Ownership registration will require the owner to register their local domain.
 The mechanism by which pledge owners register their domain with the cloud registrar is out-of-scope of this document.
 
@@ -266,24 +268,24 @@ Pledge and Registrar behavior for handling and specifying the "additional-config
 
 The cloud registrar returned a 307 response to the voucher request.
 
-The pledge should restart the process using a new voucher request using the location provided in the HTTP redirect.
+The pledge SHOULD restart the process using a new voucher request using the location provided in the HTTP redirect.
 Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept another 307 redirect.
 The pledge MUST never visit a location that it has already been to.
 If that happens then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
 
 
-The pledge should establish a provisional TLS connection with specified local domain registrar.
-The pledge should not use its Implicit Trust Anchor database for validating the local domain registrar identity.
-The pledge should send a voucher request message via the local domain registrar.
+The pledge SHOULD establish a provisional TLS connection with specified local domain registrar.
+The pledge SHOULD NOT use its Implicit Trust Anchor database for validating the local domain registrar identity.
+The pledge SHOULD send a voucher request message via the local domain registrar.
 When the pledge downloads a voucher, it can validate the TLS connection to the local domain registrar and continue with enrollment and bootstrap as per standard BRSKI operation.
 
 ### Voucher Response
 
 The cloud registrar returned a voucher to the pledge.
-The pledge should perform voucher verification as per standard BRSKI operation.
-The pledge should verify the voucher signature using the manufacturer-installed trust anchor(s), should verify the serial number in teh voucher, and must verify any nonce information in the voucher.
+The pledge SHOULD perform voucher verification as per standard BRSKI operation.
+The pledge SHOULD verify the voucher signature using the manufacturer-installed trust anchor(s), SHOULD verify the serial number in the voucher, and SHOULD verify any nonce information in the voucher.
 
-The pledge should extract the "est-domain" field from the voucher, and should continue with EST enrollment as per standard BRSKI operation.
+The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD continue with EST enrollment as per standard BRSKI operation.
 
 # Protocol Details
 
