@@ -222,7 +222,7 @@ After the pledge has established a full TLS connection with the cloud registrar 
 ## Cloud Registrar Handles Voucher Request
 
 The cloud registrar must determine pledge ownership.
-if the registrar is unwilling or unable to handle the voucher request, for example it is unable to determinw ownership, then the cloud registrar MUST return a suitable 4xx or 5xx error response to the pledge.
+if the registrar is unwilling or unable to handle the voucher request, for example it is unable to determine ownership, then the cloud registrar MUST return a suitable 4xx or 5xx error response to the pledge.
 
 If the cloud registrar successfully determines ownership, then the registrar SHOULD take one of the following actions:
 
