@@ -29,7 +29,6 @@ author:
 normative:
   RFC8366: VOUCHER
   BRSKI: RFC8995
-  EST:   RFC7030
   RFC8366bis: I-D.ietf-anima-rfc8366bis
 
 informative:
@@ -79,18 +78,22 @@ There may not be an Owner Registrar in all deployment scenarios.
 - Local Domain Registrar: The Registrar discovered on the Local Domain.
 There may not be a Local Domain Registrar in all deployment scenarios.
 
+- EST: Enrollment over Secure Transport {{!RFC7030}}
+- 
+- VAR: Value Added Reseller
+
 ## Target Use Cases
 
 Two high level use cases are documented here.
 There are more details provided in sections {{redirect2Registrar}} and {{voucher2EST}}.
-While both use cases aid with incremental deployment of BRSKI infrastructure, for many smaller sites (such as teleworkers) no further infrastructure are expected.
+While both use cases aid with incremental deployment of BRSKI infrastructure, for many smaller sites (such as teleworkers) no further infrastructure is expected.
 
 The pledge is not expected to know which of these two situations it is in.
 The pledge determines this based upon signals that it receives from the Cloud Registrar.
 The Cloud Registrar is expected to make the determination based upon the identity presented by the pledge.
 
-While a Cloud Registrar will typically handle all the devices of a particular product line from a particular manufacturer there are no restrictions on how the Cloud Registrar is horizontally (many sites) or vertically (more equipment at one site) scaled.
-It is also entirely possible that all devices sold by through a particular VAR might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
+A Cloud Registrar will typically handle all the devices of a particular product line from a particular manufacturer. This document places no restrictions on how many different deployments or owner sites the Cloud Registrar can handle, or how many devices per site that the Cloud Registrar can handle.
+It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
 Such an effort would require unboxing each device in a controlled environment, but the provisioning could occur using a regular BRSKI or SZTP {{?RFC8572}} process.
 
 ### Owner Registrar Discovery
@@ -108,10 +111,10 @@ For example, an enduser is deploying an IP phone in a home office and the phone 
 
 A pledge is bootstrapping where the owner organization does not yet have an owner registrar deployed.
 The cloud registrar issues a voucher, and the pledge completes trust bootstrap using the cloud registrar.
-The voucher issued by the cloud includes domain information for the owner's {{EST}} service the pledge should use for certificate enrollment.
+The voucher issued by the cloud includes domain information for the owner's Enrollment over Secure Transport (EST) {{!RFC7030}} service the pledge should use for certificate enrollment.
 
 In one use case, an organization has an EST service deployed, but does not have yet a BRSKI capable Registrar service deployed.
-The pledge is deployed in the organization's domain, but does not discover a local domain, or owner, registrar.
+The pledge is deployed in the organization's domain, but does not discover a local domain registrar or owner registrar.
 The pledge uses the cloud registrar to bootstrap, and the cloud registrar provides a voucher that includes instructions on finding the organization's EST service.
 
 # Architecture
@@ -175,7 +178,7 @@ The pledge operator has already connected the pledge to the network, and the mec
 
 ## Pledge Certificate Identity Considerations
 
-BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{?RFC7030}} CSR Attributes request to the registrar. The registrar MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
+BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the registrar. The registrar MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The registrar may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject must have a specific value in order to complete enrollment with the CA.
 
@@ -201,7 +204,7 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
-The pledge MUST use an Implicit Trust Anchor database (see {{EST}}) to authenticate the cloud registrar service.
+The pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the cloud registrar service.
 The Pledge can be done with pre-loaded trust-anchors that are used to validate the TLS connection.
 This can be using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
@@ -487,5 +490,5 @@ Whether or not this is the case, it behaves as if it was separate.
 
 It may be the case that one or more 307-Redirects have taken the Pledge from the built-in Cloud Registrar to one operated by a VAR.
 
-When the Pledge is directed to the Owner's {{EST}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
+When the Pledge is directed to the Owner's EST {{!RFC7030}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
 There is no provisional TLS connection, and therefore there are no risks associated with being behind a captive portal.
