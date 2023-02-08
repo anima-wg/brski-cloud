@@ -1,5 +1,4 @@
 ---
-
 title: "BRSKI Cloud Registrar"
 abbrev: BRSKI-CLOUD
 docname: draft-ietf-anima-brski-cloud-05
@@ -65,22 +64,28 @@ This document further specifies use of a BRSKI cloud registrar and clarifies ope
 
 This document uses the terms Pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366}}.
 
-- Local Domain: The domain where the pledge is physically located and bootstrapping from.
-This may be different to the pledge owner's domain.
+Local Domain:
+: The domain where the pledge is physically located and bootstrapping from. This may be different to the pledge owner's domain.
 
-- Owner Domain: The domain that the pledge needs to discover and bootstrap with.
+Owner Domain:
+: The domain that the pledge needs to discover and bootstrap with.
 
-- Cloud Registrar: The default Registrar that is deployed at a URI that is well known to the pledge.
+Cloud Registrar:
+: The default Registrar that is deployed at a URI that is well known to the pledge.
 
-- Owner Registrar: The Registrar that is operated by the Owner, or the Owner's delegate.
+Owner Registrar:
+: The Registrar that is operated by the Owner, or the Owner's delegate.
 There may not be an Owner Registrar in all deployment scenarios.
 
-- Local Domain Registrar: The Registrar discovered on the Local Domain.
+Local Domain Registrar:
+: The Registrar discovered on the Local Domain.
 There may not be a Local Domain Registrar in all deployment scenarios.
 
-- EST: Enrollment over Secure Transport {{!RFC7030}}
-- 
-- VAR: Value Added Reseller
+EST:
+: Enrollment over Secure Transport {{!RFC7030}}
+
+VAR:
+: Value Added Reseller
 
 ## Target Use Cases
 
@@ -139,7 +144,7 @@ There are two different mechanisms for a cloud registrar to handle voucher reque
 
 Both mechanisms are described in detail later in this document.
 
-~~~
+~~~ aasvg
 |<--------------OWNER------------------------>|     MANUFACTURER
 
  On-site                Cloud
@@ -299,7 +304,7 @@ This flow illustrates the Owner Registrar Discovery flow. A pledge is bootstrapp
 The assumption is that the owner registrar domain is accessible and the pledge can establish a network connection with the owner registrar.
 This may require that the owner network firewall exposes the registrar on the public internet.
 
-~~~
+~~~ aasvg
 +--------+                                       +----------+
 | Pledge |                                       | Cloud RA |
 |        |                                       |          |
@@ -359,7 +364,7 @@ The returned voucher contains an attribute, "est-domain", defined in {{redirecte
 The pledge is directed to continue enrollment using the EST registrar found at that URI.
 The pledge uses the pinned-domain-cert from the voucher to authenticate the EST registrar.
 
-~~~
+~~~ aasvg
 +--------+                                       +----------+
 | Pledge |                                       | Cloud RA |
 |        |                                       | / MASA   |
