@@ -53,7 +53,7 @@ RFCED REMOVE: It is being actively worked on at https://github.com/anima-wg/brsk
 
 # Introduction
 
-Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} specifies automated bootstrapping of an Autonomic Control Plane.
+Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} specifies automated network onboarding of devices,  referred to as pledges, within an Autonomic Control Plane or other managed network infrastructure.
 BRSKI Section 2.7 describes how a pledge "MAY contact a well-known URI of a cloud registrar if a local registrar cannot be discovered or if the pledge's target use cases do not include a local registrar".
 
 This document further specifies use of a BRSKI cloud registrar and clarifies operations that are not sufficiently specified in BRSKI.
