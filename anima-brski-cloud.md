@@ -202,7 +202,7 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 ### Pledge - Cloud Registrar TLS Establishment Details
 
 The pledge MUST use an Implicit Trust Anchor database (see {{EST}}) to authenticate the cloud registrar service.
-The Pledge may be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
+In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
 The TLS connection can be validated using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
 
