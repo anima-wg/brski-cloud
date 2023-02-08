@@ -176,7 +176,7 @@ Often operated by end owner (company), or by outsourced IT entity.
 
 The assumption is that the pledge already has network connectivity prior to connecting to the cloud registrar.
 The pledge must have an IP address, must be able to make DNS queries, and must be able to send HTTP requests to the cloud registrar.
-The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document.
+The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document. Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the pledge and the cloud registar are all out of scope of this document.
 
 ## Pledge Certificate Identity Considerations
 
