@@ -49,9 +49,9 @@ venue:
 
 --- abstract
 
-BRSKI defines how a boostrapping device discovers an element of the network domain that it will belong to called a registrar, and how the device interacts with the registrar in order to bootstrap a secure key infrastructure. BRSKI outlines how a device may contact a well-known cloud registrar if no local nework registrar is discovered. This document specifies the behavior of BRSKI cloud registrars and how bootstrapping devices interact with cloud registrars.
+Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and to help the device.   This document extends the new device behaviour so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well defined "call-home" mechanism to find the operator maintained infrastructure.
 
-RFCED REMOVE: It is being actively worked on at https://github.com/anima-wg/brski-cloud
+To this, this document defines how to contact a well-known cloud registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure.
 
 --- middle
 
