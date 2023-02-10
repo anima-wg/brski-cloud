@@ -42,12 +42,16 @@ informative:
       ins: "IEEE Standard"
     date: 2018
 
+venue:
+  group: anima
+  mail: anima@ietf.org
+  github: anima-wg/brski-cloud
+
 --- abstract
 
-This document specifies the behavior of a BRSKI Cloud Registrar, and how a
-pledge can interact with a BRSKI Cloud Registrar when bootstrapping.
+Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and to help the device.   This document extends the new device behaviour so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well defined "call-home" mechanism to find the operator maintained infrastructure.
 
-RFCED REMOVE: It is being actively worked on at https://github.com/anima-wg/brski-cloud
+To this, this document defines how to contact a well-known cloud registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure.
 
 --- middle
 
@@ -167,15 +171,18 @@ Both mechanisms are described in detail later in this document.
 ~~~
 {: #architecture-figure title="High Level Architecture"}
 
-## Interested Parties
+As depicted in {{architecture-figure}}, there are a number of parties involve in the process.
+The Manufacturer, or Original Equipment Maker (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
 
-1. OEM - Equipment manufacturer.  Operate the MASA.
+The network operator or enterprise is the intended owner of the new device: the pledge.
+This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
+They operator the Registrar or EST Server.
+They may operate the CA, or they may contract those services from another entity.
 
-2. Network operator. Operate the Owner Registrar.
-Often operated by end owner (company), or by outsourced IT entity.
-
-3. Network integrator. They operate a Cloud Registrar.
-
+Unlike in {{RFC8995}} there is a potential additional party involved, the network integrator, who may operate the Cloud Registrar.
+This is typically a value added reseller who works with the OEM to ship products with the right configuration to the owner.
+For example, SIP telephones or other conferencing systems may be installed by this VAR, often shipped directly from a warehouse to the customer's remote office location.
+The network integrator and manufacturer are aware of which devices have been shipped to the integrator through sales channel integrations, and so the manufacturer's Cloud Registrar is able to redirect the pledge through a chain of Cloud Registrars, as explained in {{redirect-response}}.
 
 ## Network Connectivity
 
@@ -274,12 +281,12 @@ Pledge and Registrar behavior for handling and specifying the "additional-config
 
 ## Pledge Handles Cloud Registrar Response
 
-### Redirect Response
+### Redirect Response {#redirect-response}
 
 The cloud registrar returned a 307 response to the voucher request.
 
 The pledge SHOULD restart the process using a new voucher request using the location provided in the HTTP redirect.
-Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept another 307 redirect.
+Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.redirect.
 The pledge MUST never visit a location that it has already been to.
 If that happens then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
 
