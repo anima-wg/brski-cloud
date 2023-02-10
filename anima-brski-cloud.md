@@ -42,6 +42,11 @@ informative:
       ins: "IEEE Standard"
     date: 2018
 
+venue:
+  group: anima
+  mail: anima@ietf.org
+  github: anima-wg/brski-cloud
+
 --- abstract
 
 BRSKI defines how a boostrapping device discovers an element of the network domain that it will belong to called a registrar, and how the device interacts with the registrar in order to bootstrap a secure key infrastructure. BRSKI outlines how a device may contact a well-known cloud registrar if no local nework registrar is discovered. This document specifies the behavior of BRSKI cloud registrars and how bootstrapping devices interact with cloud registrars.
