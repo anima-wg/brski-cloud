@@ -137,22 +137,22 @@ The two functions could of course be integrated into a single service.
 
 There are two different mechanisms for a cloud registrar to handle voucher requests:
 1. the Cloud Registrar redirects the request to Owner Registrar for handling
-2. the Cloud Registrar returns a voucher pinning the Owner Register and includes additional bootstrapping information embedded in the voucher\
+2. the Cloud Registrar returns a voucher pinning the Owner Register and includes additional bootstrapping information embedded in the voucher.
 
 Both mechanisms are described in detail later in this document.
 
 ~~~ aasvg
-|<--------------OWNER------------------------>|     MANUFACTURER
+|<--------------OWNER--------------------------->|   MANUFACTURER
 
  On-site                Cloud
-+--------+                                         +-----------+
-| Pledge |---------------------------------------->| Cloud     |
-+--------+                                         | Registrar |
-    |                                              +-----+-----+
-    |                                                    |
-    |                 +-----------+                +-----+-----+
-    +---------------->|  Owner    |--------------->|   MASA    |
-    |   VR-sign(N)    | Registrar |sign(VR-sign(N))+-----------+
++--------+                                          +-----------+
+| Pledge |----------------------------------------->| Cloud     |
++--------+                                          | Registrar |
+    |                                               +-----+-----+
+    |                                                     |
+    |                 +-----------+                 +-----+-----+
+    +---------------->|  Owner    |---------------->|   MASA    |
+    |   VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
     |                 +-----------+
     |                       |    +-----------+
     |                       +--->|    CA     |
