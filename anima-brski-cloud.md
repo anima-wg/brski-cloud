@@ -32,6 +32,7 @@ normative:
 
 informative:
   RFC6125:
+  RFC8994:
   I-D.irtf-t2trg-taxonomy-manufacturer-anchors:
 
 venue:
@@ -49,7 +50,7 @@ To this, this document defines how to contact a well-known cloud registrar, and 
 
 # Introduction
 
-Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} specifies automated network onboarding of devices,  referred to as pledges, within an Autonomic Control Plane or other managed network infrastructure.
+Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} and {{RFC8994}} specifies automated network onboarding of devices,  referred to as pledges, within an Autonomic Control Plane or other managed network infrastructure.
 BRSKI Section 2.7 describes how a pledge "MAY contact a well-known URI of a cloud registrar if a local registrar cannot be discovered or if the pledge's target use cases do not include a local registrar".
 
 This document further specifies use of a BRSKI cloud registrar and clarifies operations that are not sufficiently specified in BRSKI.
