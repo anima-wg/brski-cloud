@@ -32,6 +32,7 @@ normative:
 
 informative:
   RFC6125:
+  RFC8994:
   I-D.irtf-t2trg-taxonomy-manufacturer-anchors:
 
 venue:
@@ -49,7 +50,7 @@ To this, this document defines how to contact a well-known cloud registrar, and 
 
 # Introduction
 
-Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} specifies automated network onboarding of devices,  referred to as pledges, within an Autonomic Control Plane or other managed network infrastructure.
+Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} and {{RFC8994}} specifies automated network onboarding of devices,  referred to as pledges, within an Autonomic Control Plane or other managed network infrastructure.
 BRSKI Section 2.7 describes how a pledge "MAY contact a well-known URI of a cloud registrar if a local registrar cannot be discovered or if the pledge's target use cases do not include a local registrar".
 
 This document further specifies use of a BRSKI cloud registrar and clarifies operations that are not sufficiently specified in BRSKI.
@@ -134,24 +135,24 @@ The mechanisms and protocols by which the registrar interacts with the CA are tr
 The architecture shows the cloud registrar and MASA as being logically separate entities.
 The two functions could of course be integrated into a single service.
 
-There are two different mechanisms for a cloud registrar to handle voucher requests:
-1. the Cloud Registrar redirects the request to Owner Registrar for handling
-2. the Cloud Registrar returns a voucher pinning the Owner Register and includes additional bootstrapping information embedded in the voucher\
-
+There are two different mechanisms for a cloud registrar to handle voucher requests.
+It can redirect the request to Owner Registrar for handling, or it can return a voucher
+that pins the actual Owner Register.
+When returning a voucher, additional bootstrapping information embedded in the voucher.
 Both mechanisms are described in detail later in this document.
 
 ~~~ aasvg
-|<--------------OWNER------------------------>|     MANUFACTURER
+|<--------------OWNER--------------------------->|   MANUFACTURER
 
  On-site                Cloud
-+--------+                                         +-----------+
-| Pledge |---------------------------------------->| Cloud     |
-+--------+                                         | Registrar |
-    |                                              +-----+-----+
-    |                                                    |
-    |                 +-----------+                +-----+-----+
-    +---------------->|  Owner    |--------------->|   MASA    |
-    |   VR-sign(N)    | Registrar |sign(VR-sign(N))+-----------+
++--------+                                          +-----------+
+| Pledge |----------------------------------------->| Cloud     |
++--------+                                          | Registrar |
+    |                                               +-----+-----+
+    |                                                     |
+    |                 +-----------+                 +-----+-----+
+    +---------------->|  Owner    |---------------->|   MASA    |
+    |   VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
     |                 +-----------+
     |                       |    +-----------+
     |                       +--->|    CA     |
@@ -179,8 +180,13 @@ The network integrator and manufacturer are aware of which devices have been shi
 ## Network Connectivity
 
 The assumption is that the pledge already has network connectivity prior to connecting to the cloud registrar.
-The pledge must have an IP address, must be able to make DNS queries, and must be able to send HTTP requests to the cloud registrar.
-The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document. Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the pledge and the cloud registar are all out of scope of this document.
+The pledge must have an IP address that is able to make DNS queries, and be able to send HTTP requests to the cloud registrar.
+There are many ways to accomplish this, from routeable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
+There are are DHCP options that a network operator can configure to accomplish any of these options.
+The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document.
+For many telephony applications, this is typically going to be a wired connection.
+For wireless use cases, some kind of existing WiFi onboarding mechanism such as WPS.
+Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the pledge and the cloud registar are all out of scope of this document.
 
 ## Pledge Certificate Identity Considerations
 
@@ -188,8 +194,8 @@ BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR 
 The registrar may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject must have a specific value in order to complete enrollment with the CA.
 
-EST {{?RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
-{{?I-D.ietf-lamps-rfc7030-csrattrs}} clarifies how a server can use CSR Attributes response to specify specific values for attributes that the client should include in its CSR.
+EST {{!RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
+{{!I-D.ietf-lamps-rfc7030-csrattrs}} clarifies how a server can use CSR Attributes response to specify specific values for attributes that the client should include in its CSR.
 
 For example, the pledge may only be aware of its IDevID Subject which includes a manufacturer serial number, but must include a specific fully qualified domain name in the CSR in order to complete domain ownership proofs required by the CA.
 
