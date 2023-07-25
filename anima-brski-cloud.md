@@ -237,15 +237,19 @@ After the pledge has established a full TLS connection with the cloud registrar 
 ## Cloud Registrar Handles Voucher Request
 
 The cloud registrar must determine pledge ownership.
-if the registrar is unwilling or unable to handle the voucher request, for example it is unable to determine ownership, then the cloud registrar MUST return a suitable 4xx or 5xx error response to the pledge.
+Prior to ownership determination, the registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the pledge as defined by {{BRSKI}} and HTTP.
+In the case of an unknown pledge a 404 is returned, for a malformed request 400 is returned, or in case of server overload 503.
 
-If the cloud registrar successfully determines ownership, then the registrar MUST take one of the following actions:
+If the request is correct and the registrar is able to handle it, but unable to determine ownership, then it MUST return a 401 Unauthorized response to the pledge.
+This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
+The Registrar MAY also include a Retry-After header that includes a time to defer.
+A pledge with some kind of indicator (such as a screen or LED) SHOULD consider this an onboarding failure, and indicate this to the operator.
 
-- return a suitable 4xx or 5xx error response to the pledge if the registrar is unwilling or unable to handle the voucher request for any reason
+If the cloud registrar successfully determines ownership, then it MUST take one of the following actions:
 
-- redirect the pledge to an owner register via 307 response code
-
-- issue a voucher and return a 200 response code
+* return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
+* redirect the pledge to an owner register via 307 response code
+* issue a voucher and return a 200 response code
 
 ### Pledge Ownership Lookup {#pledgeOwnershipLookup}
 
