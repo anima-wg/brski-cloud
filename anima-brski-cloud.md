@@ -288,15 +288,20 @@ Pledge and Registrar behavior for handling and specifying the "additional-config
 The cloud registrar returned a 307 response to the voucher request.
 
 The pledge SHOULD restart the process using a new voucher request using the location provided in the HTTP redirect.
-Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.redirect.
-The pledge MUST never visit a location that it has already been to.
-If that happens then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
+Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.
 
+The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
+If it happens that a location is repeated, then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
+The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
+That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affects.
 
-The pledge SHOULD establish a provisional TLS connection with specified local domain registrar.
-The pledge SHOULD NOT use its Implicit Trust Anchor database for validating the local domain registrar identity.
-The pledge SHOULD send a voucher request message via the local domain registrar.
+The pledge MUST establish a provisional TLS connection with specified local domain registrar.
+The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain registrar identity.
+The pledge MUST send a voucher request message via the local domain registrar.
 When the pledge downloads a voucher, it can validate the TLS connection to the local domain registrar and continue with enrollment and bootstrap as per standard BRSKI operation.
+
+The pledge MUST process any error messages as defined in {{BRSKI}}, and MUST restart the process from it's provisioned cloud registry anchor.
+The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
 ### Voucher Response
 
