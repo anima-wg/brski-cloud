@@ -169,8 +169,8 @@ The Manufacturer, or Original Equipment Maker (OEM) builds the device, but also 
 
 The network operator or enterprise is the intended owner of the new device: the pledge.
 This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
-They operator the Registrar or EST Server.
-They may operate the CA, or they may contract those services from another entity.
+They are the operator of the Registrar or EST Server.
+They may also operate the CA, or they may contract those services from another entity.
 
 Unlike in {{BRSKI}} there is a potential additional party involved, the network integrator, who may operate the Cloud Registrar.
 This is typically a value added reseller who works with the OEM to ship products with the right configuration to the owner.
@@ -497,7 +497,7 @@ This list is built-in by the manufacturer along with a DNS name to which to conn
 
 The Cloud Registrar does not have a certificate that can be validated using a public (WebPKI) anchor.
 The pledge may have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
-There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addresses in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
+There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addressed in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
 
 ## Issues with Redirect via Voucher
 
