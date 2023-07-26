@@ -293,7 +293,7 @@ Note if the pledge is able to validate the new server using a trust anchor found
 The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
 If it happens that a location is repeated, then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
 The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
-That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affects.
+That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
 The pledge MUST establish a provisional TLS connection with specified local domain Registrar.
 The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain Registrar identity.
