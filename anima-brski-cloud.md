@@ -169,8 +169,8 @@ The Manufacturer, or Original Equipment Maker (OEM) builds the device, but also 
 
 The network operator or enterprise is the intended owner of the new device: the pledge.
 This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
-They operator the Registrar or EST Server.
-They may operate the CA, or they may contract those services from another entity.
+They are the operator of the Registrar or EST Server.
+They may also operate the CA, or they may contract those services from another entity.
 
 Unlike in {{BRSKI}} there is a potential additional party involved, the network integrator, who may operate the Cloud Registrar.
 This is typically a value added reseller who works with the OEM to ship products with the right configuration to the owner.
@@ -237,15 +237,19 @@ After the pledge has established a full TLS connection with the cloud registrar 
 ## Cloud Registrar Handles Voucher Request
 
 The cloud registrar must determine pledge ownership.
-if the registrar is unwilling or unable to handle the voucher request, for example it is unable to determine ownership, then the cloud registrar MUST return a suitable 4xx or 5xx error response to the pledge.
+Prior to ownership determination, the registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the pledge as defined by {{BRSKI}} and HTTP.
+In the case of an unknown pledge a 404 is returned, for a malformed request 400 is returned, or in case of server overload 503.
 
-If the cloud registrar successfully determines ownership, then the registrar MUST take one of the following actions:
+If the request is correct and the registrar is able to handle it, but unable to determine ownership, then it MUST return a 401 Unauthorized response to the pledge.
+This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
+The Registrar MAY also include a Retry-After header that includes a time to defer.
+A pledge with some kind of indicator (such as a screen or LED) SHOULD consider this an onboarding failure, and indicate this to the operator.
 
-- return a suitable 4xx or 5xx error response to the pledge if the registrar is unwilling or unable to handle the voucher request for any reason
+If the cloud registrar successfully determines ownership, then it MUST take one of the following actions:
 
-- redirect the pledge to an owner register via 307 response code
-
-- issue a voucher and return a 200 response code
+* return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
+* redirect the pledge to an owner register via 307 response code
+* issue a voucher and return a 200 response code
 
 ### Pledge Ownership Lookup {#pledgeOwnershipLookup}
 
@@ -284,15 +288,20 @@ Pledge and Registrar behavior for handling and specifying the "additional-config
 The cloud registrar returned a 307 response to the voucher request.
 
 The pledge SHOULD restart the process using a new voucher request using the location provided in the HTTP redirect.
-Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.redirect.
-The pledge MUST never visit a location that it has already been to.
-If that happens then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
+Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.
 
+The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
+If it happens that a location is repeated, then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
+The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
+That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affects.
 
-The pledge SHOULD establish a provisional TLS connection with specified local domain registrar.
-The pledge SHOULD NOT use its Implicit Trust Anchor database for validating the local domain registrar identity.
-The pledge SHOULD send a voucher request message via the local domain registrar.
+The pledge MUST establish a provisional TLS connection with specified local domain registrar.
+The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain registrar identity.
+The pledge MUST send a voucher request message via the local domain registrar.
 When the pledge downloads a voucher, it can validate the TLS connection to the local domain registrar and continue with enrollment and bootstrap as per standard BRSKI operation.
+
+The pledge MUST process any error messages as defined in {{BRSKI}}, and MUST restart the process from it's provisioned cloud registry anchor.
+The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
 ### Voucher Response
 
@@ -493,7 +502,7 @@ This list is built-in by the manufacturer along with a DNS name to which to conn
 
 The Cloud Registrar does not have a certificate that can be validated using a public (WebPKI) anchor.
 The pledge may have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
-There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addresses in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
+There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addressed in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
 
 ## Issues with Redirect via Voucher
 
