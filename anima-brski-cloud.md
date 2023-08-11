@@ -266,7 +266,7 @@ Once the cloud registrar has determined pledge ownership, the cloud registrar MA
 Ownership registration will require the owner to register their local domain.
 The mechanism by which pledge owners register their domain with the cloud registrar is out-of-scope of this document.
 
-The cloud registrar replies to the voucher request with a suitable HTTP 307 response code, including the owner's local domain in the HTTP Location header.
+In case of redirection, the cloud registrar replies to the voucher request with a HTTP 307 Temporary Redirect response code, including the owner's local domain in the HTTP Location header.
 
 ### Cloud Registrar Issues Voucher
 
