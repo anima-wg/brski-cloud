@@ -298,7 +298,8 @@ That limit MUST be in the dozens or more redirects such that no reasonable deleg
 The pledge MUST establish a provisional TLS connection with specified local domain Registrar.
 The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain Registrar identity.
 The pledge MUST send a voucher request message via the local domain Registrar.
-When the pledge downloads a voucher, it can validate the TLS connection to the local domain Registrar and continue with enrollment and bootstrap as per standard BRSKI operation.
+
+After the pledge receives the voucher, it validates the TLS connection to the local domain Registrar and continue with enrollment and bootstrap as per standard BRSKI operation.
 
 The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from it's provisioned cloud registry anchor.
 
