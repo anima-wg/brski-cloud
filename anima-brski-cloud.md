@@ -515,7 +515,7 @@ Whether or not this is the case, it behaves as if it was separate.
 
 It may be the case that one or more 307-Redirects have taken the Pledge from the built-in Cloud Registrar to one operated by a VAR.
 
-When the Pledge is directed to the Owner's EST {{!RFC7030}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
+When the Pledge is directed to the Owner's {{!RFC7030}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
 There is no provisional TLS connection, and therefore there are no risks associated with being behind a captive portal.
 
 # Acknowledgements
