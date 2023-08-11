@@ -515,3 +515,11 @@ It may be the case that one or more 307-Redirects have taken the Pledge from the
 
 When the Pledge is directed to the Owner's EST {{!RFC7030}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
 There is no provisional TLS connection, and therefore there are no risks associated with being behind a captive portal.
+
+# Acknowledgements
+{: numbered="no"}
+
+The authors would like to thank for following for their detailed reviews: (ordered
+by last name): Esko Dijk, Sheng Jiang.
+
+
