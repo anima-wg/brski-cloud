@@ -274,7 +274,7 @@ If the Cloud Registrar issues a voucher, it returns the voucher in a HTTP respon
 
 The Cloud Registrar MAY issue a 202 response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
 
-The voucher MUST include the "est-domain" field as defined below.
+The voucher MUST include the "est-domain" field as defined in {{RFC8366bis}}
 This tells the pledge where the domain of the EST service to use for completing certificate enrollment.
 
 The voucher MAY include the "additional-configuration" field.
@@ -378,7 +378,7 @@ The Voucher includes the EST domain to use for EST enroll.
 It is assumed services are accessed at that domain too.
 As trust is already established via the Voucher, the pledge does a full TLS handshake against the local RA indicated by the voucher response.
 
-The returned voucher contains an attribute, "est-domain", defined in {{redirected}} below.
+The returned voucher will contain the attribute "est-domain".
 The pledge is directed to continue enrollment using the EST server found at that URI.
 The pledge uses the pinned-domain-cert from the voucher to authenticate the EST server.
 
