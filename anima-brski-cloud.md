@@ -300,7 +300,8 @@ The pledge MUST NOT use its Implicit Trust Anchor database for validating the lo
 The pledge MUST send a voucher request message via the local domain Registrar.
 When the pledge downloads a voucher, it can validate the TLS connection to the local domain Registrar and continue with enrollment and bootstrap as per standard BRSKI operation.
 
-The pledge MUST process any error messages as defined in {{BRSKI}}, and MUST restart the process from it's provisioned cloud registry anchor.
+The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from it's provisioned cloud registry anchor.
+
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
 ### Voucher Response
