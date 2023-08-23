@@ -301,7 +301,7 @@ The pledge MUST send a voucher request message via the local domain Registrar.
 
 After the pledge receives the voucher, it validates the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
 
-The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from it's provisioned cloud registry anchor.
+The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
