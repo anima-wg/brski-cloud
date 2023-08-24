@@ -210,7 +210,7 @@ As another example, the Registrar may deem the manufacturer serial number in an 
 BRSKI defines how a pledge MAY contact a well-known URI of a Cloud Registrar if a local domain Registrar cannot be discovered.
 Additionally, certain pledge types might never attempt to discover a local domain Registrar and might automatically bootstrap against a Cloud Registrar.
 
-The details of the URI are manufacturer specific, with BRSKI giving the example "brski-Registrar.manufacturer.example".
+The details of the URI are manufacturer specific, with BRSKI giving the example "brski-registrar.manufacturer.example.com".
 
 The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, including the path component, which is typically "/.well-known/brski/requestvoucher", but may be another value.
 
