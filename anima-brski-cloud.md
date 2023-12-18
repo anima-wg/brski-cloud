@@ -278,9 +278,13 @@ The Cloud Registrar MAY issue a 202 response code if it is willing to issue a vo
 The voucher MUST include the new "est-domain" field as defined in {{RFC8366bis}}.
 This tells the pledge where the domain of the EST service to use for completing certificate enrollment.
 
-The voucher MAY include the "additional-configuration" field.
-This points the pledge to a URI where application specific additional configuration information may be retrieved.
-Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
+The voucher MAY include the new "additional-configuration" field.
+This field points the pledge to a URI where pledge specific additional configuration information may be retrieved.
+For example, a SIP phone might retrieve a manufacturer specific configuration file that contains information about how to do SIP Registration.
+One advantage of this mechanism over current mechanisms like DHCP options 120 and 125 is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
+
+The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
+
 
 ## Pledge Handles Cloud Registrar Response
 
