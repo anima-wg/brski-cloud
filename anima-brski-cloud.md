@@ -331,8 +331,8 @@ This may require that the owner network firewall exposes the owner Registrar on 
 
 ~~~ aasvg
 +--------+                                       +----------+
-| Pledge |                                       | Cloud RA |
-|        |                                       |          |
+| Pledge |                                       | Cloud    |
+|        |                                       |Registrar |
 +--------+                                       +----------+
     |                                                 |
     | 1. Mutual-authenticated TLS                     |
@@ -371,7 +371,7 @@ The process starts, in step 1, when the Pledge establishes a Mutual TLS channel 
 
 In step 2, the Pledge sends a voucher request to the Cloud RA.
 
-The Cloud RA completes pledge ownership lookup as outlined in {{pledgeOwnershipLookup}}, and determines the owner Registrar domain.
+The Cloud Registrar determines pledge ownership lookup as outlined in {{pledgeOwnershipLookup}}, and determines the owner Registrar domain.
 In step 3, the Cloud RA redirects the pledge to the owner Registrar domain.
 
 Steps 4 and onwards follow the standard BRSKI flow.
