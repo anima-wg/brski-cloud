@@ -300,8 +300,10 @@ If it happens that a location is repeated, then the pledge MUST fail the onboard
 The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
-The pledge MUST establish a provisional TLS connection with specified local domain Registrar.
+The pledge MUST establish a provisional TLS connection with specified local domain Registrar at the location specified.
+
 The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain Registrar identity.
+
 The pledge MUST send a voucher request message via the local domain Registrar.
 
 After the pledge receives the voucher, it validates the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
@@ -325,7 +327,7 @@ The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD co
 
 This flow illustrates the Owner Registrar Discovery flow. A pledge is bootstrapping in a remote location with no local domain Registrar.
 The assumption is that the owner Registrar domain is accessible and the pledge can establish a network connection with the owner Registrar.
-This may require that the owner network firewall exposes the Registrar on the public internet.
+This may require that the owner network firewall exposes the owner Registrar on the public internet.
 
 ~~~ aasvg
 +--------+                                       +----------+
