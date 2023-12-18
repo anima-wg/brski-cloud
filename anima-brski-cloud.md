@@ -381,7 +381,7 @@ Assuming the MASA issues a voucher, then the pledge validates the TLS connection
 
 ## Voucher Request Handled when Bootstrapping with no Owner Registrar {#voucher2EST}
 
-The Voucher includes the EST domain to use for EST enroll.
+The Voucher includes the new "est-domain" attribute indicating the server to use for EST.
 It is assumed services are accessed at that domain too.
 As trust is already established via the Voucher, the pledge does a full TLS handshake against the local RA indicated by the voucher response.
 
@@ -428,18 +428,18 @@ The pledge uses the pinned-domain-cert from the voucher to authenticate the EST 
 ~~~
 
 The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud RA/MASA using artifacts created during the manufacturing process of the Pledge.
-In step 2, the Pledge sends a voucher request to the Cloud RA/MASA, and in response the Pledge receives an {{RFC8366}} format voucher from the Cloud RA/MASA that includes its assigned EST domain in the est-domain attribute.
+In step 2, the Pledge sends a voucher request to the Cloud RA/MASA, and in response the Pledge receives an {{RFC8366bis}} format voucher from the Cloud RA/MASA that includes its assigned EST domain in the est-domain attribute.
 
-At this stage, the Pledge should be able to establish a TLS channel with the EST server.
+At this stage, the Pledge should be able to establish a TLS connection with the EST server.
 The connection may involve crossing the Internet requiring a DNS lookup on the provided name.
-It may also be a local address that includes an IP address literal including both {{?RFC1918}} and IPv6 Unique Local Address.
+It may also be a local address that includes an IP address literal including both {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
 The EST server is validated using the pinned-domain-cert value provided in the voucher as described in {{BRSKI}} section 5.6.2.
 This involves treating the artifact provided in the pinned-domain-cert as a trust anchor, and attempting to validate the EST server from this anchor only.
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID validation on the certificate against the URL provided in the est-domain attribute.
-If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned.
+If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
