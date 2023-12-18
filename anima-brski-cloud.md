@@ -247,9 +247,9 @@ A pledge with some kind of indicator (such as a screen or LED) SHOULD consider t
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
-* return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
-* redirect the pledge to an owner register via 307 response code
-* issue a voucher and return a 200 response code
+* error: return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
+* redirect to owner registrar: redirect the pledge to an owner registrar via 307 response code
+* redirect to owner EST server: issue a voucher (containing an est-domain attribute) and return a 200 response code
 
 ### Pledge Ownership Lookup {#pledgeOwnershipLookup}
 
