@@ -275,7 +275,7 @@ If the Cloud Registrar issues a voucher, it returns the voucher in a HTTP respon
 
 The Cloud Registrar MAY issue a 202 response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
 
-The voucher MUST include the "est-domain" field as defined in {{RFC8366bis}}.
+The voucher MUST include the new "est-domain" field as defined in {{RFC8366bis}}.
 This tells the pledge where the domain of the EST service to use for completing certificate enrollment.
 
 The voucher MAY include the "additional-configuration" field.
