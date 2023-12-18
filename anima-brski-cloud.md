@@ -323,7 +323,7 @@ The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD co
 # Protocol Details
 
 
-## Voucher Request Redirected to Local Domain Registrar {#redirect2Registrar}
+## Voucher Request Redirected to Owner Registrar {#redirect2Registrar}
 
 This flow illustrates the Owner Registrar Discovery flow. A pledge is bootstrapping in a remote location with no local domain Registrar.
 The assumption is that the owner Registrar domain is accessible and the pledge can establish a network connection with the owner Registrar.
@@ -379,7 +379,7 @@ The pledge establishes a provisional TLS connection with the owner Registrar, an
 The Registrar forwards the voucher request to the MASA.
 Assuming the MASA issues a voucher, then the pledge validates the TLS connection with the Registrar using the pinned-domain-cert from the voucher and completes the BRSKI flow.
 
-## Voucher Request Handled by Cloud Registrar {#voucher2EST}
+## Voucher Request Handled when Bootstrapping with no Owner Registrar {#voucher2EST}
 
 The Voucher includes the EST domain to use for EST enroll.
 It is assumed services are accessed at that domain too.
