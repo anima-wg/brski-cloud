@@ -439,7 +439,7 @@ This involves treating the artifact provided in the pinned-domain-cert as a trus
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID validation on the certificate against the URL provided in the est-domain attribute.
-If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
+If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate r an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
@@ -481,7 +481,7 @@ There is another case where a connection problem may occur: when the pledge is b
 Captive portals that do not follow the requirements of {{?RFC8952}} section 1 may forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-On the first connection, the incorrect connection will be discovered because the Pledge will be unable to validate the connection to its Cloud Registrar via DNS-ID.
+On the first connection, the incorrect connection will be discovered because the Pledge will be unable to validate the connection to its Cloud Registrar via DNS-ID check {{?RFC9525, Section 6.3}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), may then permit that connection.
@@ -489,7 +489,7 @@ This enables the first connection to go through.
 
 The connection is then redirected to the Registrar, either via 307, or via est-domain in a voucher.
 If it is a 307 redirect, then a provisional TLS connection will be initiated, and it will succeed.
-The provisional TLS connection does not do {{RFC6125}} DNS-ID validation at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
+The provisional TLS connection does not do {{RFC9525, Section 6.3}} DNS-ID validation at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
 The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 HTTP code.
 As the connection is provisional, the pledge will be unable to determine this.
 
