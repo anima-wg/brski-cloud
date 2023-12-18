@@ -253,12 +253,13 @@ If the Cloud Registrar successfully determines ownership, then it MUST take one 
 
 ### Pledge Ownership Lookup {#pledgeOwnershipLookup}
 
-The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting pledge based on the presented identity certificate.
+The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting pledge based on the presented identity certificate or raw public key.
 For example, if the pledge establishes TLS using an IDevID that is signed by a known manufacturing CA, the Registrar could extract the serial number from the IDevID and use this to lookup a database of pledge IDevID serial numbers to owners.
 
-Alternatively, if the Cloud Registrar allows pledges to connect using self-signed certificates, the Registrar could use the thumbprint of the self-signed certificate to lookup a database of pledge self-signed certificate thumbprints to owners.
+Alternatively, if the Cloud Registrar allows pledges to connect using self-signed certificates, the Registrar could use the thumbprint of the self-signed certificate to lookup in a private database of pledge self-signed certificate thumbprints to owners.
 
-The mechanism by which the Cloud Registrar determines pledge ownership is out-of-scope of this document.
+The mechanism by which the Cloud Registrar determines pledge ownership is, however, out-of-scope of this document.
+The Cloud Registrar is strongly tied to the manufacturers' processes for device identity.
 
 ### Cloud Registrar Redirects to Owner Registrar
 
