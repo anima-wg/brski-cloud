@@ -125,7 +125,7 @@ The high level architecture is illustrated in {{architecture-figure}}.
 
 The pledge connects to the Cloud Registrar during bootstrap.
 
-The Cloud Registrar may redirect the pledge to an owner Registrar in order to complete bootstrap against the owner Registrar.
+The Cloud Registrar may redirect the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar.
 
 If the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response.
 
@@ -133,7 +133,7 @@ Finally, when bootstrapping against an owner Registrar, this Registrar may inter
 The mechanisms and protocols by which the Registrar interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
 The architecture shows the Cloud Registrar and MASA as being logically separate entities.
-The two functions could of course be integrated into a single service.
+The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
 It can redirect the request to Owner Registrar for handling, or it can return a voucher
@@ -216,7 +216,7 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
-The pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
+According to {{RFC8995, Section 2.7}}, the pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
 In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
 The TLS connection can be validated using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
@@ -228,11 +228,11 @@ The Cloud Registrar MAY include a certificate_authorities field in the message t
 
 The Cloud Registrar MAY only allow connections from pledges that have an IDevID that is signed by one of a specific set of CAs, e.g. IDevIDs issued by certain manufacturers.
 
-The Cloud Registrar MAY allow pledges to connect using self-signed identity certificates or using Raw Public Key {{?RFC7250}} certificates.
+The Cloud Registrar MAY allow pledges to authenticate using self-signed identity certificates or using Raw Public Key {{?RFC7250}} certificates.
 
 ### Pledge Issues Voucher Request
 
-After the pledge has established a full TLS connection with the Cloud Registrar and has verified the Cloud Registrar PKI identity, the pledge generates a voucher request message as outlined in BRSKI section 5.2, and sends the voucher request message to the Cloud Registrar.
+After the pledge has established a mutually authenticated TLS connection with the Cloud Registrar and has verified the Cloud Registrar PKI identity, the pledge generates a voucher request message as outlined in BRSKI section 5.2, and sends the voucher request message to the Cloud Registrar.
 
 ## Cloud Registrar Handles Voucher Request
 
