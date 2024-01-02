@@ -63,7 +63,12 @@ Internet.
 The Internet ("Cloud") connected Registrar will then determine ownership of the Pledge
 and redirect the Plege to its owners Registar.
 
-THis work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge "MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the pledge's target use cases do not include a local Registrar".
+This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge
+
+    MAY contact a well-known URI of a Cloud Registrar if a
+    local Registrar  cannot be discovered or if the pledge's
+    target use cases do not include a local Registrar.
+
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
 
