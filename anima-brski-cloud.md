@@ -32,7 +32,6 @@ normative:
 
 informative:
   RFC6125:
-  RFC8994:
   I-D.irtf-t2trg-taxonomy-manufacturer-anchors:
 
 venue:
