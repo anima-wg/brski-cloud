@@ -91,10 +91,6 @@ Owner Registrar:
 : The Registrar that is operated by the Owner, or the Owner's delegate.
 There may not be an Owner Registrar in all deployment scenarios.
 
-Local Domain Registrar:
-: The Registrar discovered on the Local Domain.
-There may not be a Local Domain Registrar in all deployment scenarios.
-
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}
 
