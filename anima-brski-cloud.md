@@ -50,8 +50,21 @@ To this, this document defines how to contact a well-known Cloud Registrar, and 
 
 # Introduction
 
-Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} and {{RFC8994}} specifies automated network onboarding of devices,  referred to as pledges, within an Autonomic Control Plane or other managed network infrastructure.
-BRSKI Section 2.7 describes how a pledge "MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the pledge's target use cases do not include a local Registrar".
+Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} BRSKI specifies automated and secure provisioning  of nodes (which are called pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarily enrolled nodes.
+This is also called enrolment.
+
+In BRSKI, the pledge performs enrolment by communicating with a BRSKI Registrar
+belonging to the owner of the pledge.
+The pledge does not know who its owner will be when manufacturer.
+Instead, in BRSKI it is assumed that the network to which the pledge connects belongs to the owner of the pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner  specific names to the owners Registrar.
+
+To support enrolment of pledges without such an owner based access network, the mechanisms
+of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
+Internet.
+The Internet ("Cloud") connected Registrar will then determine ownership of the Pledge
+and redirect the Plege to its owners Registar.
+
+THis work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge "MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the pledge's target use cases do not include a local Registrar".
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
 
@@ -216,7 +229,7 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
-According to {{RFC8995, Section 2.7}}, the pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
+According to {{BRSKI, Section 2.7}}, the pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
 In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
 The TLS connection can be validated using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
