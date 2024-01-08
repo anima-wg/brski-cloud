@@ -63,7 +63,12 @@ Internet.
 The Internet ("Cloud") connected Registrar will then determine ownership of the Pledge
 and redirect the Plege to its owners Registar.
 
-THis work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge "MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the pledge's target use cases do not include a local Registrar".
+This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge
+
+    MAY contact a well-known URI of a Cloud Registrar if a
+    local Registrar  cannot be discovered or if the pledge's
+    target use cases do not include a local Registrar.
+
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
 
@@ -85,10 +90,6 @@ Cloud Registrar:
 Owner Registrar:
 : The Registrar that is operated by the Owner, or the Owner's delegate.
 There may not be an Owner Registrar in all deployment scenarios.
-
-Local Domain Registrar:
-: The Registrar discovered on the Local Domain.
-There may not be a Local Domain Registrar in all deployment scenarios.
 
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}
