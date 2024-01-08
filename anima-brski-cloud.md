@@ -509,7 +509,7 @@ The Implicit TA database is used to authenticate the Cloud Registrar.
 This list is built-in by the manufacturer along with a DNS name to which to connect.
 (The manufacturer could even build in IP addresses as a last resort)
 
-The Cloud Registrar does not have a have a certificate that can be validated using a public (WebPKI) anchor.
+The Cloud Registrar does not have a certificate that can be validated using a public (WebPKI) anchor.
 The pledge may have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
 There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addressed in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
 
