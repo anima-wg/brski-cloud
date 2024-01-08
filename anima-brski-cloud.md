@@ -125,7 +125,7 @@ The high level architecture is illustrated in {{architecture-figure}}.
 
 The pledge connects to the Cloud Registrar during bootstrap.
 
-The Cloud Registrar may redirect the pledge to an owner Registrar in order to complete bootstrap against the owner Registrar.
+The Cloud Registrar may redirect the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar.
 
 If the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response.
 
@@ -133,7 +133,7 @@ Finally, when bootstrapping against an owner Registrar, this Registrar may inter
 The mechanisms and protocols by which the Registrar interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
 The architecture shows the Cloud Registrar and MASA as being logically separate entities.
-The two functions could of course be integrated into a single service.
+The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
 It can redirect the request to Owner Registrar for handling, or it can return a voucher
@@ -216,7 +216,7 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
-The pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
+According to {{RFC8995, Section 2.7}}, the pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
 In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
 The TLS connection can be validated using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
@@ -228,11 +228,11 @@ The Cloud Registrar MAY include a certificate_authorities field in the message t
 
 The Cloud Registrar MAY only allow connections from pledges that have an IDevID that is signed by one of a specific set of CAs, e.g. IDevIDs issued by certain manufacturers.
 
-The Cloud Registrar MAY allow pledges to connect using self-signed identity certificates or using Raw Public Key {{?RFC7250}} certificates.
+The Cloud Registrar MAY allow pledges to authenticate using self-signed identity certificates or using Raw Public Key {{?RFC7250}} certificates.
 
 ### Pledge Issues Voucher Request
 
-After the pledge has established a full TLS connection with the Cloud Registrar and has verified the Cloud Registrar PKI identity, the pledge generates a voucher request message as outlined in BRSKI section 5.2, and sends the voucher request message to the Cloud Registrar.
+After the pledge has established a mutually authenticated TLS connection with the Cloud Registrar and has verified the Cloud Registrar PKI identity, the pledge generates a voucher request message as outlined in BRSKI section 5.2, and sends the voucher request message to the Cloud Registrar.
 
 ## Cloud Registrar Handles Voucher Request
 
@@ -247,18 +247,19 @@ A pledge with some kind of indicator (such as a screen or LED) SHOULD consider t
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
-* return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
-* redirect the pledge to an owner register via 307 response code
-* issue a voucher and return a 200 response code
+* error: return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
+* redirect to owner registrar: redirect the pledge to an owner registrar via 307 response code
+* redirect to owner EST server: issue a voucher (containing an est-domain attribute) and return a 200 response code
 
 ### Pledge Ownership Lookup {#pledgeOwnershipLookup}
 
-The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting pledge based on the presented identity certificate.
+The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting pledge based on the presented identity certificate or raw public key.
 For example, if the pledge establishes TLS using an IDevID that is signed by a known manufacturing CA, the Registrar could extract the serial number from the IDevID and use this to lookup a database of pledge IDevID serial numbers to owners.
 
-Alternatively, if the Cloud Registrar allows pledges to connect using self-signed certificates, the Registrar could use the thumbprint of the self-signed certificate to lookup a database of pledge self-signed certificate thumbprints to owners.
+Alternatively, if the Cloud Registrar allows pledges to connect using self-signed certificates, the Registrar could use the thumbprint of the self-signed certificate to lookup in a private database of pledge self-signed certificate thumbprints to owners.
 
-The mechanism by which the Cloud Registrar determines pledge ownership is out-of-scope of this document.
+The mechanism by which the Cloud Registrar determines pledge ownership is, however, out-of-scope of this document.
+The Cloud Registrar is strongly tied to the manufacturers' processes for device identity.
 
 ### Cloud Registrar Redirects to Owner Registrar
 
@@ -274,12 +275,16 @@ If the Cloud Registrar issues a voucher, it returns the voucher in a HTTP respon
 
 The Cloud Registrar MAY issue a 202 response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
 
-The voucher MUST include the "est-domain" field as defined in {{RFC8366bis}}.
+The voucher MUST include the new "est-domain" field as defined in {{RFC8366bis}}.
 This tells the pledge where the domain of the EST service to use for completing certificate enrollment.
 
-The voucher MAY include the "additional-configuration" field.
-This points the pledge to a URI where application specific additional configuration information may be retrieved.
-Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
+The voucher MAY include the new "additional-configuration" field.
+This field points the pledge to a URI where pledge specific additional configuration information may be retrieved.
+For example, a SIP phone might retrieve a manufacturer specific configuration file that contains information about how to do SIP Registration.
+One advantage of this mechanism over current mechanisms like DHCP options 120 and 125 is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
+
+The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
+
 
 ## Pledge Handles Cloud Registrar Response
 
@@ -295,8 +300,10 @@ If it happens that a location is repeated, then the pledge MUST fail the onboard
 The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
-The pledge MUST establish a provisional TLS connection with specified local domain Registrar.
+The pledge MUST establish a provisional TLS connection with specified local domain Registrar at the location specified.
+
 The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain Registrar identity.
+
 The pledge MUST send a voucher request message via the local domain Registrar.
 
 After the pledge receives the voucher, it validates the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
@@ -316,16 +323,16 @@ The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD co
 # Protocol Details
 
 
-## Voucher Request Redirected to Local Domain Registrar {#redirect2Registrar}
+## Voucher Request Redirected to Owner Registrar {#redirect2Registrar}
 
 This flow illustrates the Owner Registrar Discovery flow. A pledge is bootstrapping in a remote location with no local domain Registrar.
 The assumption is that the owner Registrar domain is accessible and the pledge can establish a network connection with the owner Registrar.
-This may require that the owner network firewall exposes the Registrar on the public internet.
+This may require that the owner network firewall exposes the owner Registrar on the public internet.
 
 ~~~ aasvg
 +--------+                                       +----------+
-| Pledge |                                       | Cloud RA |
-|        |                                       |          |
+| Pledge |                                       | Cloud    |
+|        |                                       |Registrar |
 +--------+                                       +----------+
     |                                                 |
     | 1. Mutual-authenticated TLS                     |
@@ -364,7 +371,7 @@ The process starts, in step 1, when the Pledge establishes a Mutual TLS channel 
 
 In step 2, the Pledge sends a voucher request to the Cloud RA.
 
-The Cloud RA completes pledge ownership lookup as outlined in {{pledgeOwnershipLookup}}, and determines the owner Registrar domain.
+The Cloud Registrar determines pledge ownership lookup as outlined in {{pledgeOwnershipLookup}}, and determines the owner Registrar domain.
 In step 3, the Cloud RA redirects the pledge to the owner Registrar domain.
 
 Steps 4 and onwards follow the standard BRSKI flow.
@@ -372,9 +379,9 @@ The pledge establishes a provisional TLS connection with the owner Registrar, an
 The Registrar forwards the voucher request to the MASA.
 Assuming the MASA issues a voucher, then the pledge validates the TLS connection with the Registrar using the pinned-domain-cert from the voucher and completes the BRSKI flow.
 
-## Voucher Request Handled by Cloud Registrar {#voucher2EST}
+## Voucher Request Handled when Bootstrapping with no Owner Registrar {#voucher2EST}
 
-The Voucher includes the EST domain to use for EST enroll.
+The Voucher includes the new "est-domain" attribute indicating the server to use for EST.
 It is assumed services are accessed at that domain too.
 As trust is already established via the Voucher, the pledge does a full TLS handshake against the local RA indicated by the voucher response.
 
@@ -421,18 +428,18 @@ The pledge uses the pinned-domain-cert from the voucher to authenticate the EST 
 ~~~
 
 The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud RA/MASA using artifacts created during the manufacturing process of the Pledge.
-In step 2, the Pledge sends a voucher request to the Cloud RA/MASA, and in response the Pledge receives an {{RFC8366}} format voucher from the Cloud RA/MASA that includes its assigned EST domain in the est-domain attribute.
+In step 2, the Pledge sends a voucher request to the Cloud RA/MASA, and in response the Pledge receives an {{RFC8366bis}} format voucher from the Cloud RA/MASA that includes its assigned EST domain in the est-domain attribute.
 
-At this stage, the Pledge should be able to establish a TLS channel with the EST server.
+At this stage, the Pledge should be able to establish a TLS connection with the EST server.
 The connection may involve crossing the Internet requiring a DNS lookup on the provided name.
-It may also be a local address that includes an IP address literal including both {{?RFC1918}} and IPv6 Unique Local Address.
+It may also be a local address that includes an IP address literal including both {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
 The EST server is validated using the pinned-domain-cert value provided in the voucher as described in {{BRSKI}} section 5.6.2.
 This involves treating the artifact provided in the pinned-domain-cert as a trust anchor, and attempting to validate the EST server from this anchor only.
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID validation on the certificate against the URL provided in the est-domain attribute.
-If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned.
+If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
@@ -474,7 +481,7 @@ There is another case where a connection problem may occur: when the pledge is b
 Captive portals that do not follow the requirements of {{?RFC8952}} section 1 may forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-On the first connection, the incorrect connection will be discovered because the Pledge will be unable to validate the connection to its Cloud Registrar via DNS-ID.
+On the first connection, the incorrect connection will be discovered because the Pledge will be unable to validate the connection to its Cloud Registrar via DNS-ID check {{?RFC9525, Section 6.3}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), may then permit that connection.
@@ -482,7 +489,7 @@ This enables the first connection to go through.
 
 The connection is then redirected to the Registrar, either via 307, or via est-domain in a voucher.
 If it is a 307 redirect, then a provisional TLS connection will be initiated, and it will succeed.
-The provisional TLS connection does not do {{RFC6125}} DNS-ID validation at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
+The provisional TLS connection does not do {{RFC9525, Section 6.3}} DNS-ID validation at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
 The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 HTTP code.
 As the connection is provisional, the pledge will be unable to determine this.
 
