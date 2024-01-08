@@ -439,7 +439,7 @@ This involves treating the artifact provided in the pinned-domain-cert as a trus
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID validation on the certificate against the URL provided in the est-domain attribute.
-If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate r an EE certificate will be pinned by the voucher.
+If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
