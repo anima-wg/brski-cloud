@@ -124,9 +124,9 @@ For example, an enduser is deploying an IP phone in a home office and the phone 
 
 ### Bootstrapping with no Owner Registrar
 
-A pledge is bootstrapping where the owner organization does not yet have an owner Registrar deployed.
+A pledge is bootstrapping where the owner organization does not yet have an owner Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed.
 The Cloud Registrar issues a voucher, and the pledge completes trust bootstrap using the Cloud Registrar.
-The voucher issued by the cloud includes domain information for the owner's Enrollment over Secure Transport (EST) {{!RFC7030}} service the pledge should use for certificate enrollment.
+The voucher issued by the cloud includes domain information for the owner's EST service that the pledge should use for certificate enrollment.
 
 In one use case, an organization has an EST service deployed, but does not have yet a BRSKI capable Registrar service deployed.
 The pledge is deployed in the organization's domain, but does not discover a local domain Registrar or owner Registrar.
