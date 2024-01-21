@@ -380,12 +380,12 @@ This may require that the owner network firewall exposes the owner Registrar on 
     |--------------------->|                          |
 ~~~
 
-The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud RA using artifacts created during the manufacturing process of the Pledge.
+The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar using artifacts created during the manufacturing process of the Pledge.
 
-In step 2, the Pledge sends a voucher request to the Cloud RA.
+In step 2, the Pledge sends a voucher request to the Cloud Registrar.
 
 The Cloud Registrar determines pledge ownership lookup as outlined in {{pledgeOwnershipLookup}}, and determines the owner Registrar domain.
-In step 3, the Cloud RA redirects the pledge to the owner Registrar domain.
+In step 3, the Cloud Registrar redirects the pledge to the owner Registrar domain.
 
 Steps 4 and onwards follow the standard BRSKI flow.
 The pledge establishes a provisional TLS connection with the owner Registrar, and sends a voucher request to the owner Registrar.
@@ -404,7 +404,8 @@ The pledge uses the pinned-domain-cert from the voucher to authenticate the EST 
 
 ~~~ aasvg
 +--------+                                       +----------+
-| Pledge |                                       | Cloud RA |
+| Pledge |                                       | Cloud    |
+|        |                                       |Registrar |
 |        |                                       | / MASA   |
 +--------+                                       +----------+
     |                                                 |
@@ -440,8 +441,8 @@ The pledge uses the pinned-domain-cert from the voucher to authenticate the EST 
     |--------------------->|                          |
 ~~~
 
-The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud RA/MASA using artifacts created during the manufacturing process of the Pledge.
-In step 2, the Pledge sends a voucher request to the Cloud RA/MASA, and in response the Pledge receives an {{RFC8366bis}} format voucher from the Cloud RA/MASA that includes its assigned EST domain in the est-domain attribute.
+The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar/MASA using artifacts created during the manufacturing process of the Pledge.
+In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA, and in response the Pledge receives an {{RFC8366bis}} format voucher from the Cloud Registrar/MASA that includes its assigned EST domain in the est-domain attribute.
 
 At this stage, the Pledge should be able to establish a TLS connection with the EST server.
 The connection may involve crossing the Internet requiring a DNS lookup on the provided name.
@@ -456,10 +457,10 @@ If the est-domain was provided by with an IP address literal, then it is unlikel
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
-In step 4, the Pledge establishes a TLS channel with the Cloud RA/MASA, and optionally the pledge should send a request, steps 3.a and 3.b, to the Cloud RA/MASA to inform it that the Pledge was able to establish a secure TLS channel with the EST server.
+In step 4, the Pledge establishes a TLS channel with the Cloud Registrar/MASA, and optionally the pledge should send a request, steps 3.a and 3.b, to the Cloud Registrar/MASA to inform it that the Pledge was able to establish a secure TLS channel with the EST server.
 
 The Pledge then follows that, in step 5, with an EST Enroll request with the CSR and obtains the requested certificate.
-The Pledge must validate that the issued certificate has the expected identifier obtained from the Cloud RA/MASA in step 3.
+The Pledge must validate that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
 
 # YANG extension for Voucher based redirect {#redirected}
 
