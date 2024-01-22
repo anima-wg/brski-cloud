@@ -122,7 +122,7 @@ A typical example is an enduser deploying a pledge in a home or small branch off
 There is no local domain Registrar, and the pledge needs to discover and bootstrap with the employer's Registrar which is deployed in headquarters.
 For example, an enduser is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
-### Bootstrapping via Cloud Registrar and Owner EST Service
+### Bootstrap via Cloud Registrar and Owner EST Service
 
 A pledge is bootstrapping where the owner organization does not yet have an owner Registrar deployed.
 The Cloud Registrar issues a voucher, and the pledge completes trust bootstrap using the Cloud Registrar.
