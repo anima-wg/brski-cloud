@@ -118,8 +118,8 @@ A pledge is bootstrapping from a remote location with no local domain Registrar 
 The Cloud Registrar is used by the pledge to discover the owner Registrar.
 The Cloud Registrar redirects the pledge to the owner Registrar, and the pledge completes bootstrap against the owner Registrar.
 
-A typical example is an enduser deploying a pledge in a home or small branch office, where the pledge belongs to the enduser's employer.
-There is no local domain Registrar, and the pledge needs to discover and bootstrap with the employer's Registrar which is deployed in headquarters.
+A typical example is an employee who is deploying a pledge in a home or small branch office, where the pledge belongs to the employer.
+There is no local domain Registrar, the pledge needs to discover and bootstrap with the employer's Registrar which is deployed in headquarters, and the pledge needs the keying material to trust the Registrar.
 For example, an enduser is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
 ### Bootstrapping with no Owner Registrar
