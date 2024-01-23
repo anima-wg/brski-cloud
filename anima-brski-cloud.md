@@ -128,9 +128,15 @@ A pledge is bootstrapping where the owner organization does not yet have an owne
 The Cloud Registrar issues a voucher, and the pledge completes trust bootstrap using the Cloud Registrar.
 The voucher issued by the cloud includes domain information for the owner's EST service that the pledge should use for certificate enrollment.
 
-In one use case, an organization has an EST service deployed, but does not have yet a BRSKI capable Registrar service deployed.
+For example, an organization has an EST service deployed, but does not have yet a BRSKI capable Registrar service deployed.
 The pledge is deployed in the organization's domain, but does not discover a local domain Registrar or owner Registrar.
 The pledge uses the Cloud Registrar to bootstrap, and the Cloud Registrar provides a voucher that includes instructions on finding the organization's EST service.
+
+This option can be used to introduce the benefits of BRSKI for an initial period when BRSKI is not available in existing EST-Servers.
+Additionally, it can also be used long-term as an security-equivalent solution in which BRSKI and EST-Server are set up in a modular fashion.
+
+The use of an EST-Server instead of a BRSKI Registrar may mean that not all the EST options required by [BRSKI] may be available and hence this option may not support all BRSKI deployment cases.
+For example, certificates to enroll into an ACP [RFC8994] needs to include an AcpNodeName (see [RFC8994], Section 6.2.2), which non-BRSKI capable EST-Servers may not support.
 
 # Architecture
 
