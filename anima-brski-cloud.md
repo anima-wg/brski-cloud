@@ -134,24 +134,23 @@ The pledge uses the Cloud Registrar to bootstrap, and the Cloud Registrar provid
 
 # Architecture
 
-The high level architecture is illustrated in {{architecture-figure}}.
+The high level architectures for the two high level use cases are illustrated in {{arch-one}} and {{arch-two}}.
 
-The pledge connects to the Cloud Registrar during bootstrap.
+In both use cases, the pledge connects to the Cloud Registrar during bootstrap.
 
-The Cloud Registrar may redirect the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar.
+For use case one, as described in {{Bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar. When bootstrapping against an owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge.This is illustrated in {{arch-one}}.
 
-If the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response.
+For use case two, as described {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enrol. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
 
-Finally, when bootstrapping against an owner Registrar, this Registrar may interact with a backend CA to assist in issuing certificates to the pledge.
-The mechanisms and protocols by which the Registrar interacts with the CA are transparent to the pledge and are out-of-scope of this document.
+The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
-The architecture shows the Cloud Registrar and MASA as being logically separate entities.
+The architectures shows the Cloud Registrar and MASA as being logically separate entities.
 The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
 It can redirect the request to Owner Registrar for handling, or it can return a voucher
 that pins the actual Owner Registrar.
-When returning a voucher, additional bootstrapping information embedded in the voucher.
+When returning a voucher, additional bootstrapping information is embedded in the voucher.
 Both mechanisms are described in detail later in this document.
 
 ~~~ aasvg
@@ -165,19 +164,37 @@ Both mechanisms are described in detail later in this document.
     |                                                     |
     |                 +-----------+                 +-----+-----+
     +---------------->|  Owner    |---------------->|   MASA    |
-    |   VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
-    |                 +-----------+
-    |                       |    +-----------+
-    |                       +--->|    CA     |
-    |                            +-----------+
-    |
-    |                 +-----------+
-    +---------------->| Services  |
+        VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
                       +-----------+
+                            |    +-----------+
+                            +--->|    CA     |
+                                 +-----------+
 ~~~
-{: #architecture-figure title="High Level Architecture"}
+{: #arch-one title="Architecture: Bootstrap via Cloud Registrar and Owner Registrar"}
 
-As depicted in {{architecture-figure}}, there are a number of parties involve in the process.
+~~~ aasvg
+|<--------------OWNER--------------------------->|   MANUFACTURER
+
+ On-site                Cloud
++--------+                                          +-----------+
+| Pledge |----------------------------------------->| Cloud     |
++--------+                                          | Registrar |
+    |                                               +-----+-----+
+    |                                                     |
+    |                                               +-----+-----+
+    |                                               |   MASA    |
+    |                                               +-----------+
+    |                 +-----------+
+    +---------------->| EST       |
+                      | Server    |
+                      +-----------+
+                            |    +-----------+
+                            +--->|    CA     |
+                                 +-----------+
+~~~
+{: #arch-two title="Architecture: Bootstrap via Cloud Registrar and Owner EST Service"}
+
+As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involve in the process.
 The Manufacturer, or Original Equipment Maker (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
 
 The network operator or enterprise is the intended owner of the new device: the pledge.
