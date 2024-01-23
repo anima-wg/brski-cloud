@@ -111,10 +111,10 @@ A Cloud Registrar will typically handle all the devices of a particular product 
 It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
 Such an effort would require unboxing each device in a controlled environment, but the provisioning could occur using a regular BRSKI or SZTP {{?RFC8572}} process.
 
-### Owner Registrar Discovery
+### Bootstrap via Cloud Registrar and Owner Registrar
 
 
-A pledge is bootstrapping from a remote location with no local domain Registrar (specifically: with no local infrastructure to provide for automated discovery), and needs to discover its owner Registrar.
+A pledge is bootstrapping from a location with no local domain Registrar (for example, the small site or teleworker use case with no local infrastructure to provide for automated discovery), and needs to discover its owner Registrar.
 The Cloud Registrar is used by the pledge to discover the owner Registrar.
 The Cloud Registrar redirects the pledge to the owner Registrar, and the pledge completes bootstrap against the owner Registrar.
 
