@@ -138,7 +138,7 @@ The high level architectures for the two high level use cases are illustrated in
 
 In both use cases, the pledge connects to the Cloud Registrar during bootstrap.
 
-For use case one, as described in {{Bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar. When bootstrapping against an owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge.This is illustrated in {{arch-one}}.
+For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar. When bootstrapping against an owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge.This is illustrated in {{arch-one}}.
 
 For use case two, as described {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enrol. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
 
@@ -220,8 +220,11 @@ Similarly, what address space the IP address belongs to, whether it is an IPv4 o
 
 ## Pledge Certificate Identity Considerations
 
-BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the Registrar. The Registrar MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
-The Registrar may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
+BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
+For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registar operates as the EST server, as described in BRSKI section 2.5.3.
+For the use case described in {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}. 
+The EST server MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
+The EST server may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject must have a specific value in order to complete enrollment with the CA.
 
 EST {{!RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
