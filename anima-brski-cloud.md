@@ -216,7 +216,7 @@ The network integrator and manufacturer are aware of which devices have been shi
 ## Network Connectivity
 
 The assumption is that the pledge already has network connectivity prior to connecting to the Cloud Registrar.
-The pledge must have an IP address that is able to make DNS queries, and be able to send HTTP requests to the Cloud Registrar.
+The pledge must have an IP address that is able to make DNS queries, and be able to send requests to the Cloud Registrar.
 There are many ways to accomplish this, from routeable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
 There are are DHCP options that a network operator can configure to accomplish any of these options.
 The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document.
