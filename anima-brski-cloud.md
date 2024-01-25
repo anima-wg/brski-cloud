@@ -221,7 +221,7 @@ There are many ways to accomplish this, from routeable IPv4 or IPv6 addresses, t
 There are are DHCP options that a network operator can configure to accomplish any of these options.
 The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document.
 For many telephony applications, this is typically going to be a wired connection.
-For wireless use cases, some kind of existing WiFi onboarding mechanism such as WPS.
+For wireless use cases, some kind of existing WiFi bootstrapping mechanism such as WPS.
 Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the pledge and the cloud registar are all out of scope of this document.
 
 ## Pledge Certificate Identity Considerations
@@ -282,7 +282,7 @@ In the case of an unknown pledge a 404 is returned, for a malformed request 400 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership, then it MUST return a 401 Unauthorized response to the pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
 The Registrar MAY also include a Retry-After header that includes a time to defer.
-A pledge with some kind of indicator (such as a screen or LED) SHOULD consider this an onboarding failure, and indicate this to the operator.
+A pledge with some kind of indicator (such as a screen or LED) SHOULD consider this a bootstrapping failure, and indicate this to the operator.
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
@@ -335,7 +335,7 @@ The pledge SHOULD restart the process using a new voucher request using the loca
 Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.
 
 The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
-If it happens that a location is repeated, then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
+If it happens that a location is repeated, then the pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
 The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
@@ -539,9 +539,9 @@ It is RECOMMENDED therefore that the pledge look for {{?RFC8910}} attributes in 
 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network on which there is addressing and connectivity, but there is no other local configuration available.
 
-There is another advantage to being online: the pledge may be able to contact the manufacturer before onboarding in order to apply the latest firmware updates.
+There is another advantage to being online: the pledge may be able to contact the manufacturer before bootstrapping in order to apply the latest firmware updates.
 This may also include updates to the Implicit list of Trust Anchors.
-In this way, a Pledge that may have been in a dusty box in a warehouse for a long time can be updated to the latest (exploit-free) firmware before attempting onboarding.
+In this way, a Pledge that may have been in a dusty box in a warehouse for a long time can be updated to the latest (exploit-free) firmware before attempting bootstrapping.
 
 ## Trust Anchors for Cloud Registrar
 
