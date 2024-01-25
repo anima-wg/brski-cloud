@@ -61,7 +61,7 @@ To support enrolment of pledges without such an owner based access network, the 
 of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
 Internet.
 The Internet ("Cloud") connected Registrar will then determine ownership of the Pledge
-and redirect the Plege to its owners Registar.
+and redirect the Plege to its owners Registrar.
 
 This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge
 
@@ -126,7 +126,7 @@ The Cloud Registrar redirects the pledge to the owner Registrar, and the pledge 
 
 A typical example is an employee who is deploying a pledge in a home or small branch office, where the pledge belongs to the employer.
 There is no local domain Registrar, the pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the pledge needs the keying material to trust the Registrar.
-For example, an enduser is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
+For example, an employee is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
 ### Bootstrap via Cloud Registrar and Owner EST Service
 
@@ -228,7 +228,7 @@ There are are DHCP options that a network operator can configure to accomplish a
 The pledge operator has already connected the pledge to the network, and the mechanism by which this has happened is out of scope of this document.
 For many telephony applications, this is typically going to be a wired connection.
 For wireless use cases, some kind of existing WiFi onboarding mechanism such as WPS.
-Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the pledge and the cloud registar are all out of scope of this document.
+Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the pledge and the cloud registrar are all out of scope of this document.
 
 ## Pledge Certificate Identity Considerations
 
