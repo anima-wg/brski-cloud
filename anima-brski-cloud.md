@@ -94,6 +94,12 @@ There may not be an Owner Registrar in all deployment scenarios.
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}
 
+Manufacturer:
+: The term manufacturer is used throughout this document as the entity that created the pledge. This is typically the original equipment manufacturer (OEM), but in more complex situations, it could be a value added retailer (VAR), or possibly even a systems integrator. Refer to {{BRSKI}} for more detailed descriptions of manufacturer, VAR and OEM.
+
+OEM:
+: Original Equipment Manufacturer
+
 VAR:
 : Value Added Reseller
 
@@ -201,7 +207,7 @@ Both mechanisms are described in detail later in this document.
 {: #arch-two title="Architecture: Bootstrap via Cloud Registrar and Owner EST Service"}
 
 As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involve in the process.
-The Manufacturer, or Original Equipment Maker (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
+The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
 
 The network operator or enterprise is the intended owner of the new device: the pledge.
 This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
