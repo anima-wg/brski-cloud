@@ -41,7 +41,7 @@ venue:
 
 --- abstract
 
-Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and to help the device.   This document extends the new device behaviour so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well defined "call-home" mechanism to find the operator maintained infrastructure.
+Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and help the device.   This document extends the new device behaviour so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well defined "call-home" mechanism to find the operator maintained infrastructure.
 
 To this, this document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure.
 
@@ -125,7 +125,7 @@ The Cloud Registrar is used by the pledge to discover the owner Registrar.
 The Cloud Registrar redirects the pledge to the owner Registrar, and the pledge completes bootstrap against the owner Registrar.
 
 A typical example is an employee who is deploying a pledge in a home or small branch office, where the pledge belongs to the employer.
-There is no local domain Registrar, the pledge needs to discover and bootstrap with the employer's Registrar which is deployed in headquarters, and the pledge needs the keying material to trust the Registrar.
+There is no local domain Registrar, the pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the pledge needs the keying material to trust the Registrar.
 For example, an enduser is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
 ### Bootstrap via Cloud Registrar and Owner EST Service
@@ -160,7 +160,7 @@ The architectures shows the Cloud Registrar and MASA as being logically separate
 The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
-It can redirect the request to Owner Registrar for handling, or it can return a voucher
+It can redirect the request to the Owner Registrar for handling, or it can return a voucher
 that pins the actual Owner Registrar.
 When returning a voucher, additional bootstrapping information is embedded in the voucher.
 Both mechanisms are described in detail later in this document.
@@ -234,7 +234,7 @@ Similarly, what address space the IP address belongs to, whether it is an IPv4 o
 
 BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registar operates as the EST server as described in BRSKI section 2.5.3, and the pledge sends the CSR Attributes request to the Owner Registrar.
-For the use case described in {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the pledge sends the CSR Attributes request to the EST server. 
+For the use case described in {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the pledge sends the CSR Attributes request to the EST server.
 Note that the pledge only sends the CSR Attributes request to the entity acting as the EST server as per {{RFC7030}} section 2.6, and MUST NOT send the CSR Attributes request to the Cloud Registrar.
 The EST server MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
@@ -284,7 +284,7 @@ After the pledge has established a mutually authenticated TLS connection with th
 
 The Cloud Registrar must determine pledge ownership.
 Prior to ownership determination, the Registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the pledge as defined by {{BRSKI}} and HTTP.
-In the case of an unknown pledge a 404 is returned, for a malformed request 400 is returned, or in case of server overload 503.
+In the case of an unknown pledge a 404 is returned, for a malformed request 400 is returned, or in case of server overload 503 is returned.
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership, then it MUST return a 401 Unauthorized response to the pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
@@ -346,7 +346,7 @@ If it happens that a location is repeated, then the pledge MUST fail the onboard
 The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
-The pledge MUST establish a provisional TLS connection with specified local domain Registrar at the location specified.
+The pledge MUST establish a provisional TLS connection with the specified local domain Registrar at the location specified.
 
 The pledge MUST NOT use its Implicit Trust Anchor database for verifying the local domain Registrar identity.
 
