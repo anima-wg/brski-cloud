@@ -263,13 +263,13 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 ### Pledge - Cloud Registrar TLS Establishment Details
 
 According to {{BRSKI, Section 2.7}}, the pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
-In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to validate the TLS connection.
-The TLS connection can be validated using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
+In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to verify the identity of the Cloud Registar when establishing the TLS connection.
+The TLS connection can be verified using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
 
 The pledge MUST NOT establish a provisional TLS connection (see BRSKI section 5.1) with the Cloud Registrar.
 
-The Cloud Registrar MUST validate the identity of the pledge by sending a TLS CertificateRequest message to the pledge during TLS session establishment.
+The Cloud Registrar MUST verify the identity of the pledge by sending a TLS CertificateRequest message to the pledge during TLS session establishment.
 The Cloud Registrar MAY include a certificate_authorities field in the message to specify the set of allowed IDevID issuing CAs that pledges may use when establishing connections with the Cloud Registrar.
 
 The Cloud Registrar MAY only allow connections from pledges that have an IDevID that is signed by one of a specific set of CAs, e.g. IDevIDs issued by certain manufacturers.
@@ -339,7 +339,7 @@ The exact Pledge and Registrar behavior for handling and specifying the "additio
 The Cloud Registrar returned a 307 response to the voucher request.
 
 The pledge SHOULD restart the process using a new voucher request using the location provided in the HTTP redirect.
-Note if the pledge is able to validate the new server using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.
+Note if the pledge is able to verify the new server identity using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.
 
 The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
 If it happens that a location is repeated, then the pledge MUST fail the onboarding attempt and go back to the beginning, which includes listening to other sources of onboarding information as specified in {{BRSKI}} section 4.1 and 5.0.
@@ -348,11 +348,11 @@ That limit MUST be in the dozens or more redirects such that no reasonable deleg
 
 The pledge MUST establish a provisional TLS connection with specified local domain Registrar at the location specified.
 
-The pledge MUST NOT use its Implicit Trust Anchor database for validating the local domain Registrar identity.
+The pledge MUST NOT use its Implicit Trust Anchor database for verifying the local domain Registrar identity.
 
 The pledge MUST send a voucher request message via the local domain Registrar.
 
-After the pledge receives the voucher, it validates the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
+After the pledge receives the voucher, it verifies the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
 
 The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 
@@ -406,7 +406,7 @@ This may require that the owner network firewall exposes the owner Registrar on 
     | 8. Voucher Response  |                          |
     |<---------------------|                          |
     |                      |                          |
-    | 9. Validate TLS      |                          |
+    | 9. Verify TLS        |                          |
     |<-------------------->|                          |
     |                      |                          |
     | 10. etc.             |                          |
@@ -423,7 +423,7 @@ In step 3, the Cloud Registrar redirects the pledge to the owner Registrar domai
 Steps 4 and onwards follow the standard BRSKI flow.
 The pledge establishes a provisional TLS connection with the owner Registrar, and sends a voucher request to the owner Registrar.
 The Registrar forwards the voucher request to the MASA.
-Assuming the MASA issues a voucher, then the pledge validates the TLS connection with the Registrar using the pinned-domain-cert from the voucher and completes the BRSKI flow.
+Assuming the MASA issues a voucher, then the pledge verifies the TLS connection with the Registrar using the pinned-domain-cert from the voucher and completes the BRSKI flow.
 
 ## Voucher Request Handled when Bootstrapping with no Owner Registrar {#voucher2EST}
 
@@ -480,20 +480,20 @@ In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA, and i
 At this stage, the Pledge should be able to establish a TLS connection with the EST server.
 The connection may involve crossing the Internet requiring a DNS lookup on the provided name.
 It may also be a local address that includes an IP address literal including both {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
-The EST server is validated using the pinned-domain-cert value provided in the voucher as described in {{BRSKI}} section 5.6.2.
-This involves treating the artifact provided in the pinned-domain-cert as a trust anchor, and attempting to validate the EST server from this anchor only.
+The EST server identity is verified using the pinned-domain-cert value provided in the voucher as described in {{BRSKI}} section 5.6.2.
+This involves treating the artifact provided in the pinned-domain-cert as a trust anchor, and attempting to verify the EST server identity from this anchor only.
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
-If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID validation on the certificate against the URL provided in the est-domain attribute.
-If the est-domain was provided by with an IP address literal, then it is unlikely that it can be validated, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
+If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID verification on the certificate against the URL provided in the est-domain attribute.
+If the est-domain was provided by with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
 In step 4, the Pledge establishes a TLS channel with the Cloud Registrar/MASA, and optionally the pledge should send a request, steps 3.a and 3.b, to the Cloud Registrar/MASA to inform it that the Pledge was able to establish a secure TLS channel with the EST server.
 
 The Pledge then follows that, in step 5, with an EST Enroll request with the CSR and obtains the requested certificate.
-The Pledge must validate that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
+The Pledge must verify that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
 
 # YANG extension for Voucher based redirect {#redirected}
 
@@ -528,7 +528,7 @@ There is another case where a connection problem may occur: when the pledge is b
 Captive portals that do not follow the requirements of {{?RFC8952}} section 1 may forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-On the first connection, the incorrect connection will be discovered because the Pledge will be unable to validate the connection to its Cloud Registrar via DNS-ID check {{?RFC9525, Section 6.3}}.
+On the first connection, the incorrect connection will be discovered because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check {{?RFC9525, Section 6.3}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), may then permit that connection.
@@ -536,7 +536,7 @@ This enables the first connection to go through.
 
 The connection is then redirected to the Registrar, either via 307, or via est-domain in a voucher.
 If it is a 307 redirect, then a provisional TLS connection will be initiated, and it will succeed.
-The provisional TLS connection does not do {{RFC9525, Section 6.3}} DNS-ID validation at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
+The provisional TLS connection does not do {{RFC9525, Section 6.3}} DNS-ID verification at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
 The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 HTTP code.
 As the connection is provisional, the pledge will be unable to determine this.
 
@@ -556,8 +556,8 @@ The Implicit Trust Anchor database is used to authenticate the Cloud Registrar.
 This list is built-in by the manufacturer along with a DNS name to which to connect.
 (The manufacturer could even build in IP addresses as a last resort)
 
-The Cloud Registrar may have a certificate that can be validated using a public (WebPKI) anchor.
-As another option, the Cloud Registrar may have a certificate that can be validated using a Private/Cloud PKI anchor as described in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
+The Cloud Registrar may have a certificate that can be verified using a public (WebPKI) anchor.
+As another option, the Cloud Registrar may have a certificate that can be verified using a Private/Cloud PKI anchor as described in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
 The trust anchor, or trust anchors, to use is an implementation decision and out of scope of this document.
 
 The pledge may have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
@@ -572,7 +572,7 @@ Whether or not this is the case, it behaves as if it was separate.
 
 It may be the case that one or more 307-Redirects have taken the Pledge from the built-in Cloud Registrar to one operated by a VAR.
 
-When the Pledge is directed to the owner {{!RFC7030}} Registrar, the Pledge validates the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
+When the Pledge is directed to the owner {{!RFC7030}} Registrar, the Pledge verifies the TLS connection with this server using the "pinned-domain-cert" attribute in the voucher.
 There is no provisional TLS connection, and therefore there are no risks associated with being behind a captive portal.
 
 # Acknowledgements
