@@ -52,10 +52,9 @@ To this, this document defines how to contact a well-known Cloud Registrar, and 
 Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} BRSKI specifies automated and secure provisioning  of nodes (which are called pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarily enrolled nodes.
 This is also called enrolment.
 
-In BRSKI, the pledge performs enrolment by communicating with a BRSKI Registrar
-belonging to the owner of the pledge.
+In BRSKI, the pledge performs enrolment by communicating with a BRSKI Registrarbelonging to the owner of the pledge.
 The pledge does not know who its owner will be when manufactured.
-Instead, in BRSKI it is assumed that the network to which the pledge connects belongs to the owner of the pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner  specific names to the owners Registrar.
+Instead, in BRSKI it is assumed that the network to which the pledge connects belongs to the owner of the pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar. 
 
 To support enrolment of pledges without such an owner based access network, the mechanisms
 of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
@@ -105,15 +104,21 @@ VAR:
 
 ## Target Use Cases
 
-Two high level use cases are documented here.
-There are more details provided in sections {{redirect2Registrar}} and {{voucher2EST}}.
-While both use cases aid with incremental deployment of BRSKI infrastructure, for many smaller sites (such as teleworkers) no further infrastructure is expected.
+This document specifies and standardizes procedures for two high level use cases.
 
-The pledge is not expected to know which of these two situations it is in.
-The pledge determines this based upon signals that it receives from the Cloud Registrar.
-The Cloud Registrar is expected to make the determination based upon the identity presented by the pledge.
+- Bootstrap via Cloud Registrar and Owner Registrar: The operator maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
+- Bootstrap via Cloud Registrar and Owner EST Service: The operator maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
-A Cloud Registrar will typically handle all the devices of a particular product line from a particular manufacturer. This document places no restrictions on how many different deployments or owner sites the Cloud Registrar can handle, or how many devices per site that the Cloud Registrar can handle.
+Common to both uses cases is that they aid with the use of BRSKI in the presence of many small sites, such as teleworkers, with minimum expectations against their network infrastructure.
+
+The pledge is not expected to know whether the operator maintaned infrastructure has a BRSKI Registrar deployed or not.
+The pledge determines this based upon the response to its Voucher Request message that it receives from the Cloud Registrar.
+The Cloud Registrar is expected to determine whether the operator maintaned infrastructure has a BRSKI Registrar deployed based upon the identity presented by the pledge.
+
+A Cloud Registrar will receive BRSKI communications from all devices configured with its URI.
+This could be, for example, all devices of a particular product line from a particular manufacturer.
+When this is a significantly large number, a Cloud  Registrar may need to be scaled with the usual web-service scaling mechansisms.
+
 It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
 Such an effort would require unboxing each device in a controlled environment, but the provisioning could occur using a regular BRSKI or SZTP {{?RFC8572}} process.
 
@@ -128,9 +133,11 @@ A typical example is an employee who is deploying a pledge in a home or small br
 There is no local domain Registrar, the pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the pledge needs the keying material to trust the Registrar.
 For example, an employee is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
+Protocol details for this use case are provided in {{redirect2Registrar}}.
+
 ### Bootstrap via Cloud Registrar and Owner EST Service
 
-A pledge is bootstrapping where the owner organization does not yet have an owner Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed.
+A pledge is bootstrapping where the owner organization does not yet have an owner Registrar deployed, but does have an EST service deployed.
 The Cloud Registrar issues a voucher, and the pledge completes trust bootstrap using the Cloud Registrar.
 The voucher issued by the cloud includes domain information for the owner's EST service that the pledge should use for certificate enrollment.
 
@@ -143,6 +150,8 @@ Additionally, it can also be used long-term as an security-equivalent solution i
 
 The use of an EST-Server instead of a BRSKI Registrar may mean that not all the EST options required by [BRSKI] may be available and hence this option may not support all BRSKI deployment cases.
 For example, certificates to enroll into an ACP [RFC8994] needs to include an AcpNodeName (see [RFC8994], Section 6.2.2), which non-BRSKI capable EST-Servers may not support.
+
+Protocol details for this use case are provided in {{voucher2EST}}.
 
 # Architecture
 
