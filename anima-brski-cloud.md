@@ -52,7 +52,7 @@ To this, this document defines how to contact a well-known Cloud Registrar, and 
 Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} BRSKI specifies automated and secure provisioning  of nodes (which are called pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarily enrolled nodes.
 This is also called enrolment.
 
-In BRSKI, the pledge performs enrolment by communicating with a BRSKI Registrarbelonging to the owner of the pledge.
+In BRSKI, the pledge performs enrolment by communicating with a BRSKI Registrar belonging to the owner of the pledge.
 The pledge does not know who its owner will be when manufactured.
 Instead, in BRSKI it is assumed that the network to which the pledge connects belongs to the owner of the pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar. 
 
