@@ -278,7 +278,7 @@ The Cloud Registrar MAY allow pledges to authenticate using self-signed identity
 
 ### Pledge Issues Voucher Request
 
-After the pledge has established a mutually authenticated TLS connection with the Cloud Registrar and has verified the Cloud Registrar PKI identity, the pledge generates a voucher request message as outlined in BRSKI section 5.2, and sends the voucher request message to the Cloud Registrar.
+After the pledge has established a mutually authenticated TLS connection with the Cloud Registrar, the pledge generates a voucher request message as outlined in BRSKI section 5.2, and sends the voucher request message to the Cloud Registrar.
 
 ## Cloud Registrar Handles Voucher Request
 
