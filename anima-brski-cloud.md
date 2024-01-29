@@ -310,8 +310,8 @@ The Cloud Registrar is strongly tied to the manufacturers' processes for device 
 ### Cloud Registrar Redirects to Owner Registrar
 
 Once the Cloud Registrar has determined pledge ownership, the Cloud Registrar MAY redirect the pledge to the owner Registrar in order to complete bootstrap.
-Ownership registration will require the owner to register their local domain.
-The mechanism by which pledge owners register their domain with the Cloud Registrar is out-of-scope of this document.
+If the owner wants the Cloud Registar to redirect pledges to their Owner Registrar, the owner must register their Owner Registrar URI with cloud Registar.
+The mechanism by which pledge owners register their Owner Registrar URI with the Cloud Registrar is out-of-scope of this document.
 
 In case of redirection, the Cloud Registrar replies to the voucher request with an HTTP 307 Temporary Redirect response code, including the owner's local domain in the HTTP Location header.
 
