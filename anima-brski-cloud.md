@@ -43,7 +43,7 @@ venue:
 
 Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and help the device.   This document extends the new device behaviour so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well-defined "call-home" mechanism to find the operator maintained infrastructure.
 
-To this, this document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure.
+To this, this document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure. The Cloud Registrar enables discovery of the operator maintained infrastructure, and may enable establishment of trust with operator maintained infrastructure that does not support BRSKI mechanisms.
 
 --- middle
 
