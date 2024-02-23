@@ -263,11 +263,13 @@ The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, includ
 ### Pledge - Cloud Registrar TLS Establishment Details
 
 According to {{BRSKI, Section 2.7}}, the pledge MUST use an Implicit Trust Anchor database (see EST {{!RFC7030}}) to authenticate the Cloud Registrar service.
-In order to make use of a Cloud Registrar, the Pledge MUST be manufactured with pre-loaded trust-anchors that are used to verify the identity of the Cloud Registar when establishing the TLS connection.
-The TLS connection can be verified using a public Web PKI trust anchors using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
-This is a local implementation decision.
+The pledge MUST establish a mutually authenticated TLS connection with the Cloud Registrar.
+Unlike the procedures documented in BRSKI section 5.1, the pledge MUST NOT establish a provisional TLS connection with the Cloud Registrar.
 
-The pledge MUST NOT establish a provisional TLS connection (see BRSKI section 5.1) with the Cloud Registrar.
+The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registar when establishing the TLS connection.
+The TLS connection can be verified using a public Web PKI trust anchor using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
+This is a local implementation decision.
+Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security considerations.
 
 The Cloud Registrar MUST verify the identity of the pledge by sending a TLS CertificateRequest message to the pledge during TLS session establishment.
 The Cloud Registrar MAY include a certificate_authorities field in the message to specify the set of allowed IDevID issuing CAs that pledges may use when establishing connections with the Cloud Registrar.
@@ -557,6 +559,7 @@ This list is built-in by the manufacturer along with a DNS name to which to conn
 (The manufacturer could even build in IP addresses as a last resort)
 
 The Cloud Registrar may have a certificate that can be verified using a public (WebPKI) anchor.
+If one or more public WebPKI anchors are used, it is recommended to limit the number of WebPKI anchors to only those necessary for establishing trust with the Cloud Registrar.
 As another option, the Cloud Registrar may have a certificate that can be verified using a Private/Cloud PKI anchor as described in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
 The trust anchor, or trust anchors, to use is an implementation decision and out of scope of this document.
 
