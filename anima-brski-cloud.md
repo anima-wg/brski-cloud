@@ -54,7 +54,7 @@ This is also called enrolment.
 
 In BRSKI, the pledge performs enrolment by communicating with a BRSKI Registrar belonging to the owner of the pledge.
 The pledge does not know who its owner will be when manufactured.
-Instead, in BRSKI it is assumed that the network to which the pledge connects belongs to the owner of the pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar. 
+Instead, in BRSKI it is assumed that the network to which the pledge connects belongs to the owner of the pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar.
 
 To support enrolment of pledges without such an owner based access network, the mechanisms
 of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
@@ -161,7 +161,7 @@ In both use cases, the pledge connects to the Cloud Registrar during bootstrap.
 
 For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar. When bootstrapping against an owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge.This is illustrated in {{arch-one}}.
 
-For use case two, as described {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enrol. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
+For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enrol. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
@@ -244,7 +244,7 @@ Similarly, what address space the IP address belongs to, whether it is an IPv4 o
 
 BRSKI section 5.9.2 specifies that the pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registar operates as the EST server as described in BRSKI section 2.5.3, and the pledge sends the CSR Attributes request to the Owner Registrar.
-For the use case described in {{bootstrap-via-rloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the pledge sends the CSR Attributes request to the EST server.
+For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the pledge sends the CSR Attributes request to the EST server.
 Note that the pledge only sends the CSR Attributes request to the entity acting as the EST server as per {{RFC7030}} section 2.6, and MUST NOT send the CSR Attributes request to the Cloud Registrar.
 The EST server MAY use this mechanism to instruct the pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server may use this mechanism to tell the pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
@@ -348,21 +348,26 @@ The exact Pledge and Registrar behavior for handling and specifying the "additio
 
 ### Redirect Response {#redirect-response}
 
-The Cloud Registrar returned a 307 response to the voucher request.
+The Cloud Registrar has returned a 307 response to a voucher request.
 
-The pledge SHOULD restart the process using a new voucher request using the location provided in the HTTP redirect.
-Note if the pledge is able to verify the new server identity using a trust anchor found in its Implicit Trust Anchor database, then it MAY accept additional 307 redirects.
+The pledge SHOULD restart its bootstrapping process using a new voucher
+request (with a fresh nonce) using the location provided in the HTTP redirect.
+Note the pledge can be redirected to a Registrar, in which case a provisional
+TLS connection will be necessary.
+The pledge might also be redirected to another Cloud Registrar, in which case
+the server certificate does need to be validated using its Implicit Trust
+Anchor database.
+Only when the certificate can be validated then additional additional 307
+redirects MAY be accepted.
 
 The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
 If it happens that a location is repeated, then the pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
-The pledge MUST also have a limit on the number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
+The pledge MUST also have a limit on the total number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
-The pledge MUST establish a provisional TLS connection with the specified local domain Registrar at the location specified.
+When the pledge MUST can not validate the connection, then it MUST establish a provisional TLS connection with the specified local domain Registrar at the location specified.
 
-The pledge MUST NOT use its Implicit Trust Anchor database for verifying the local domain Registrar identity.
-
-The pledge MUST send a voucher request message via the local domain Registrar.
+The pledge then sends a voucher request message via the local domain Registrar.
 
 After the pledge receives the voucher, it verifies the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
 
