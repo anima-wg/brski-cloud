@@ -119,7 +119,7 @@ A Cloud Registrar will receive BRSKI communications from all devices configured 
 This could be, for example, all devices of a particular product line from a particular manufacturer.
 When this is a significantly large number, a Cloud  Registrar may need to be scaled with the usual web-service scaling mechansisms.
 
-It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URL to point to a VAR.
+It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URI to point to a VAR.
 Such an effort would require unboxing each device in a controlled environment, but the provisioning could occur using a regular BRSKI or SZTP {{?RFC8572}} process.
 
 ### Bootstrap via Cloud Registrar and Owner Registrar
@@ -270,7 +270,7 @@ Additionally, certain pledge types might never attempt to discover a local domai
 
 The details of the URI are manufacturer specific, with BRSKI giving the example "brski-registrar.manufacturer.example.com".
 
-The Pledge SHOULD be provided with the entire URL of the Cloud Registrar, including the path component, which is typically "/.well-known/brski/requestvoucher", but may be another value.
+The Pledge SHOULD be provided with the entire URI of the Cloud Registrar, including the protocol and path components, which are typically "https://" and "/.well-known/brski", respectively.
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
@@ -504,7 +504,7 @@ This involves treating the artifact provided in the pinned-domain-cert as a trus
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
-If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID verification on the certificate against the URL provided in the est-domain attribute.
+If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC6125}} DNS-ID verification on the certificate against the domain provided in the est-domain attribute.
 If the est-domain was provided by with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
@@ -543,7 +543,7 @@ The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 H
 
 It is RECOMMENDED therefore that the pledge look for {{?RFC8910}} attributes in DHCP, and if present, use the {{?RFC8908}} API to learn if it is captive.
 
-The scenarios outlined here when a Pledge is deployed behind a captive portal may result in failure scenarios, but do not constitute a security risk, as the Pledge is correctly verifyng all TLS connections as per {{BRSKI}}.
+The scenarios outlined here when a Pledge is deployed behind a captive portal may result in failure scenarios, but do not constitute a secty risk, as the Pledge is correctly verifyng all TLS connections as per {{BRSKI}}.
 
 ## Multiple HTTP Redirects
 
@@ -555,7 +555,7 @@ A "helpful" programmer might instead decide to redirect back to the manufacturer
 Instead, the VAR MUST return a 404 error if it cannot process the device.
 This will force the device to stop, timeout, and then try all mechanisms again.
 
-# Security Considerations
+# Secty Considerations
 
 The Cloud Registrar described in this document inherits all the issues that are described in {{BRSKI}}.
 This includes dependency upon continued operation of the manufacturer provided MASA, as well as potential complications where a manufacturer might interfere with
@@ -565,7 +565,7 @@ In addition to the dependency upon the MASA, the successful enrollment of a devi
 This internet accessible service may be operated by the manufacturer and/or by one or more value-added-resellers.
 All the considerations for operation of the MASA also apply to operation of the Cloud Registrar.
 
-## Security Updates for the Pledge
+## Secty Updates for the Pledge
 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network on which there is addressing and connectivity, but there is no other local configuration available.
 
