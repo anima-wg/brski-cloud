@@ -223,10 +223,10 @@ This could be the enterprise itself, or in many cases there is some outsourced I
 They are the operator of the Registrar or EST Server.
 They may also operate the CA, or they may contract those services from another entity.
 
-Unlike in {{BRSKI}} there is a potential additional party involved, the network integrator, who may operate the Cloud Registrar.
-This is typically a value added reseller who works with the OEM to ship products with the right configuration to the owner.
+There is a potential additional party involved who may operate the Cloud Registrar: the value added reseller (VAR).
+The VAR works with the OEM to ship products with the right configuration to the owner.
 For example, SIP telephones or other conferencing systems may be installed by this VAR, often shipped directly from a warehouse to the customer's remote office location.
-The network integrator and manufacturer are aware of which devices have been shipped to the integrator through sales channel integrations, and so the manufacturer's Cloud Registrar is able to redirect the pledge through a chain of Cloud Registrars, as explained in {{redirect-response}}.
+The VAR and manufacturer are aware of which devices have been shipped to the VAR through sales channel integrations, and so the manufacturer's Cloud Registrar is able to redirect the pledge through a chain of Cloud Registrars, as explained in {{redirect-response}}.
 
 ## Network Connectivity
 
