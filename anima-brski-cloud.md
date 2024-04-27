@@ -365,7 +365,7 @@ If it happens that a location is repeated, then the pledge MUST fail the bootstr
 The pledge MUST also have a limit on the total number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
-When the pledge MUST can not validate the connection, then it MUST establish a provisional TLS connection with the specified local domain Registrar at the location specified.
+When the pledge cannot validate the connection, then it MUST establish a provisional TLS connection with the specified local domain Registrar at the location specified.
 
 The pledge then sends a voucher request message via the local domain Registrar.
 
