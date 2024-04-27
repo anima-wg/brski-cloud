@@ -541,6 +541,8 @@ The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 H
 
 It is RECOMMENDED therefore that the pledge look for {{?RFC8910}} attributes in DHCP, and if present, use the {{?RFC8908}} API to learn if it is captive.
 
+The scenarios outlined here when a Pledge is deployed behind a captive portal may result in failure scenarios, but do not constitute a security risk, as the Pledge is correctly verifyng all TLS connections as per {{BRSKI}}.
+
 ## Multiple HTTP Redirects
 
 If the Redirect to Registrar method is used, as described in {{redirect2Registrar}}, there may be a series of 307 redirects.
