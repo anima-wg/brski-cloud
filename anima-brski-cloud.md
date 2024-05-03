@@ -70,6 +70,8 @@ This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge
 
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
+Two modes of operation are specified in this document.
+The Cloud Registrar may redirect the Pledge to the owner's Registrar, or the Cloud Registrar may issue a voucher to the Pledge that includes the domain of thw owner's Enrollment over Secure Transport {{!RFC7030}} (EST) server.
 
 ## Terminology
 
