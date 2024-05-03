@@ -380,10 +380,9 @@ The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a
 ### Voucher Response
 
 The Cloud Registrar returned a voucher to the pledge.
-The pledge SHOULD perform voucher verification as per standard BRSKI operation.
-The pledge SHOULD verify the voucher signature using the manufacturer-installed trust anchor(s), SHOULD verify the serial number in the voucher, and SHOULD verify any nonce information in the voucher.
+The pledge MUST perform voucher verification as per BRSKI section 5.6.1.
 
-The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD continue with EST enrollment as per standard BRSKI operation.
+The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD continue with EST enrollment as per standard EST operation. Note that the pledge has been instructed to connect to the EST server specified in the "est-domain" field, and therefore SHOULD use EST mechanisms, and not BRSKI mechanisms, when connecting to the EST server.
 
 # Protocol Details
 
