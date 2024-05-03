@@ -280,6 +280,9 @@ According to {{BRSKI, Section 2.7}}, the pledge MUST use an Implicit Trust Ancho
 The pledge MUST establish a mutually authenticated TLS connection with the Cloud Registrar.
 Unlike the procedures documented in BRSKI section 5.1, the pledge MUST NOT establish a provisional TLS connection with the Cloud Registrar.
 
+Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server_name" TLS extension (SNI, RFC6066).
+Pledges SHOULD send a valid "server_name" extension whenever they know the domain name of the registrar they connect to, unless it is known that Cloud or Owner Registrars for this pledge implementation will never need to be deployed in a cloud setting requiring the "server_name" extension.
+
 The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registar when establishing the TLS connection.
 The TLS connection can be verified using a public Web PKI trust anchor using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
 This is a local implementation decision.
