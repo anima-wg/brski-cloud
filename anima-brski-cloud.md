@@ -555,7 +555,7 @@ A "helpful" programmer might instead decide to redirect back to the manufacturer
 Instead, the VAR MUST return a 404 error if it cannot process the device.
 This will force the device to stop, timeout, and then try all mechanisms again.
 
-# Secty Considerations
+# Security Considerations
 
 The Cloud Registrar described in this document inherits all the issues that are described in {{BRSKI}}.
 This includes dependency upon continued operation of the manufacturer provided MASA, as well as potential complications where a manufacturer might interfere with
