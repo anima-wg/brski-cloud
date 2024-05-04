@@ -263,6 +263,8 @@ As another example, the Registrar may deem the manufacturer serial number in an 
 
 # Protocol Operation
 
+This section outlines the high level protocol requirements and operations that take place. Section {{protocol-details}} outlines the exact sequence of message interactions between the pledge, the Cloud Registrar, the Owner Registrar and the Owner EST server.
+
 ## Pledge Sends Voucher Request to Cloud Registrar
 
 ### Cloud Registrar Discovery
