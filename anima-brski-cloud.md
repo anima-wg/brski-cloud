@@ -307,7 +307,7 @@ In the case of an unknown pledge a 404 is returned, for a malformed request 400 
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership, then it MUST return a 401 Unauthorized response to the pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
-The Registrar MAY also include a Retry-After header that includes a time to defer.
+In this scenario, the Registrar SHOULD include a Retry-After header that includes a time to defer.
 A pledge with some kind of indicator (such as a screen or LED) SHOULD consider this a bootstrapping failure, and indicate this to the operator.
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
