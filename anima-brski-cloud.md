@@ -565,7 +565,7 @@ In addition to the dependency upon the MASA, the successful enrollment of a devi
 This internet accessible service may be operated by the manufacturer and/or by one or more value-added-resellers.
 All the considerations for operation of the MASA also apply to operation of the Cloud Registrar.
 
-## Secty Updates for the Pledge
+## Security Updates for the Pledge
 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network on which there is addressing and connectivity, but there is no other local configuration available.
 
