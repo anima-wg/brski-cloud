@@ -363,7 +363,7 @@ request message (with a fresh nonce) using the location provided in the HTTP red
 The pledge SHOULD attempt to validate the identity of the Cloud Registrar specified in the 307 response using its Implicit Trust Anchor Database.
 If validation of this identity succeeds using the Implicit Trust Anchor Database, then the pledge MAY accept a subsequent 307 response from this Cloud Registrar.
 The pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
-However, if validation a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the pledge MUST NOT accept any further 307 responses from the Registrar, MUST establish a provisional TLS connection with the Registar, and MUST validate the identity of the Registrar using standard BRSKI mechanisms.
+However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the pledge MUST NOT accept any further 307 responses from the Registrar, MUST establish a provisional TLS connection with the Registar, and MUST validate the identity of the Registrar using standard BRSKI mechanisms.
 
 The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
