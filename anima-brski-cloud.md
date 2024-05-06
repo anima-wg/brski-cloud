@@ -165,7 +165,7 @@ For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-regi
 For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enrol. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
 
 It also also possible that the Cloud Registrar may redirect the pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the pledge to the Owner Registrar.
-This scenarios is discussed further in sections {{multiple-http-redirects}} and {{considerationsofor-http-redirect}}.
+This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsofor-http-redirect}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
