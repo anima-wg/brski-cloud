@@ -514,7 +514,7 @@ If the est-domain was provided by with an IP address literal, then it is unlikel
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
-In steps 5.a and 5.b, the pledge may optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to to establish a secure TLS channel with the EST server.
+In steps 5.a and 5.b, the pledge may optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
 
 The Pledge then follows that, in step 6, with an EST Enroll request with the CSR and obtains the requested certificate.
 The Pledge must verify that the issued certificate in step 7 has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
