@@ -356,31 +356,22 @@ The exact Pledge and Registrar behavior for handling and specifying the "additio
 ### Redirect Response {#redirect-response}
 
 The Cloud Registrar has returned a 307 response to a voucher request.
+The Cloud Registrar may be redirecting the pledge to the Owner Registrar, or to a different Cloud Registrar operated by a VAR.
 
-The pledge SHOULD restart its bootstrapping process using a new voucher
-request (with a fresh nonce) using the location provided in the HTTP redirect.
-Note the pledge can be redirected to a Registrar, in which case a provisional
-TLS connection will be necessary.
-The pledge might also be redirected to another Cloud Registrar, in which case
-the server certificate does need to be validated using its Implicit Trust
-Anchor database.
-Only when the certificate can be validated then additional additional 307
-redirects MAY be accepted.
+The pledge MUST restart its bootstrapping process by sending a new voucher
+request message (with a fresh nonce) using the location provided in the HTTP redirect.
+The pledge SHOULD attempt to validate the identity of the Cloud Registrar specified in the 307 response using its Implicit Trust Anchor Database.
+If validation of this identity succeeds using the Implicit Trust Anchor Database, then the pledge MAY accept a subsequent 307 response from this Cloud Registrar.
+The pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
+However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the pledge MUST NOT accept any further 307 responses from the Registrar, MUST establish a provisional TLS connection with the Registar, and MUST validate the identity of the Registrar using standard BRSKI mechanisms.
+
+The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
+The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
 The pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
 If it happens that a location is repeated, then the pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
 The pledge MUST also have a limit on the total number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
-
-When the pledge cannot validate the connection, then it MUST establish a provisional TLS connection with the specified local domain Registrar at the location specified.
-
-The pledge then sends a voucher request message via the local domain Registrar.
-
-After the pledge receives the voucher, it verifies the TLS connection to the local domain Registrar and continues with enrollment and bootstrap as per standard BRSKI operation.
-
-The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
-
-The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
 ### Voucher Response
 
