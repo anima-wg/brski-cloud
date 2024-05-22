@@ -325,7 +325,7 @@ For example, if the pledge establishes TLS using an IDevID that is signed by a k
 
 Alternatively, if the Cloud Registrar allows pledges to connect using self-signed certificates, the Registrar could use the thumbprint of the self-signed certificate to look up in a private database of pledge self-signed certificate thumbprints to owners.
 
-The mechanism by which the Cloud Registrar determines pledge ownership is, however, out-of-scope of this document.
+The mechanism by which the Cloud Registrar determines pledge ownership is out-of-scope of this document, however, this could for example be via a direct integration between the Cloud Registrar and the MASA as illustrated in {{arch-one}} and {{arch-two}}.
 The Cloud Registrar is strongly tied to the manufacturers' processes for device identity.
 
 ### Bootstrap via Cloud Registrar and Owner Registrar
