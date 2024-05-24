@@ -348,7 +348,7 @@ This tells the pledge where the domain of the EST service to use for completing 
 The voucher MAY include the new "additional-configuration" field.
 This field points the pledge to a URI where pledge specific additional configuration information may be retrieved.
 For example, a SIP phone might retrieve a manufacturer specific configuration file that contains information about how to do SIP Registration.
-One advantage of this mechanism over current mechanisms like DHCP options 120 and 125 is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
+One advantage of this mechanism over current mechanisms like DHCP options 120 defined in {{?RFC3361}} or option 125 defined in {{?RFC3925}} is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
 
 The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
 
