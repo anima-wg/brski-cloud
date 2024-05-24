@@ -286,7 +286,7 @@ Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server_na
 Pledges SHOULD send a valid "server_name" extension whenever they know the domain name of the registrar they connect to, unless it is known that Cloud or Owner Registrars for this pledge implementation will never need to be deployed in a cloud setting requiring the "server_name" extension.
 
 The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registar when establishing the TLS connection.
-The TLS connection can be verified using a public Web PKI trust anchor using {{RFC6125}} DNS-ID mechanisms, a pinned certification authority, or even a pinned raw public key.
+The TLS connection can be verified using a public Web PKI trust anchor using {{RFC6125}} DNS-ID mechanisms or a pinned certification authority.
 This is a local implementation decision.
 Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security considerations.
 
@@ -294,8 +294,6 @@ The Cloud Registrar MUST verify the identity of the pledge by sending a TLS Cert
 The Cloud Registrar MAY include a certificate_authorities field in the message to specify the set of allowed IDevID issuing CAs that pledges may use when establishing connections with the Cloud Registrar.
 
 To protect itself against DoS attacks, the Cloud Registrar SHOULD reject TLS connections when it can determine during TLS authentication that it cannot support the pledge, for example because the plege cannot provide an IDevID signed by a CA recognized/supported by the Cloud Registrar.
-
-The Cloud Registrar MAY allow pledges to authenticate using self-signed identity certificates or using Raw Public Key {{?RFC7250}} certificates.
 
 ### Pledge Sends Voucher Request Message
 
@@ -320,10 +318,8 @@ If the Cloud Registrar successfully determines ownership, then it MUST take one 
 
 ### Pledge Ownership Look Up {#pledgeOwnershipLookup}
 
-The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting pledge based on the presented identity certificate or raw public key.
+The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting pledge based on the presented identity certificate.
 For example, if the pledge establishes TLS using an IDevID that is signed by a known manufacturing CA, the Registrar could extract the serial number from the IDevID and use this to look up a database of pledge IDevID serial numbers to owners.
-
-Alternatively, if the Cloud Registrar allows pledges to connect using self-signed certificates, the Registrar could use the thumbprint of the self-signed certificate to look up in a private database of pledge self-signed certificate thumbprints to owners.
 
 The mechanism by which the Cloud Registrar determines pledge ownership is, however, out-of-scope of this document.
 The Cloud Registrar is strongly tied to the manufacturers' processes for device identity.
