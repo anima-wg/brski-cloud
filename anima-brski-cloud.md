@@ -562,7 +562,8 @@ This will force the device to stop, timeout, and then try all mechanisms again.
 
 # Security Considerations
 
-The Cloud Registrar described in this document inherits all the issues that are described in {{BRSKI}}.
+The Cloud Registrar described in this document inherits all the strong security properties that are described in {{BRSKI}}, and none of the security mechanisms that are defined in {{BRSKI}} are bypassed or weakened by this document.
+The Cloud Registrar also inherits all the potential issues that are described in {{BRSKI}}.
 This includes dependency upon continued operation of the manufacturer provided MASA, as well as potential complications where a manufacturer might interfere with
 resale of a device.
 
