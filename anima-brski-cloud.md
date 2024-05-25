@@ -601,7 +601,7 @@ A Cloud Registrar supporting the same set of pledges as a MASA may be integrated
 When a Cloud Registrar handles the scenario described in {bootstrapping-with-no-owner-registrar} by the returning "est-domain" attribute in the voucher, the Cloud Registrar actually does all the voucher processing as specified in {{BRSKI}}.
 This is an example deployment scenario where the Cloud Registrar may be operated by the same entity as the MASA, and it may even be integrated with the MASA.
 
-When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
+When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain" attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
 
 # Acknowledgements
 {: numbered="no"}
