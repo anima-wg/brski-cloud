@@ -557,7 +557,7 @@ Instead, the VAR MUST return a 404 error if it cannot process the device.
 This will force the device to stop, timeout, and then try all mechanisms again.
 
 There are additional considerations regarding TLS certificate validation that must be accounted for as outlined in {redirect-response}.
-When the pledge follows a 307 redirect from the default Cloud Registrar, it will attempt to establish a TLS connection with the redirect target Registrar.
+When the pledge follows a 307 redirect from the default Cloud Registrar, it will attempt to establish a TLS connection with the redirected target Registrar.
 The pledge implementation will typically register a callback with the TLS stack, where the TLS stack allows the implementation to validate the identity of the Registrar.
 The pledge should check whether the identity of the Registrar can be validated with its Implicit Trust Anchor Database and track the result, but should always return a successful validation result to the TLS stack, thus allowing the {{BRSKI}} provisional TLS connection to be established.
 The pledge will then send a Voucher Request to the Registrar.
