@@ -600,6 +600,10 @@ This is an example deployment scenario where the Cloud Registrar may be operated
 
 When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain" attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
 
+The reduced operational security mechanisms outlined in {{BRSKI}} sections 7.3 and 11 MAY be supported when the pledge connects with the EST server.
+These mechanisms reduce the security checks that take place when the pledge enrolls with the EST server.
+Refer to {{BRSKI}} sections 7.3 and 11 for further details.
+
 # Acknowledgements
 {: numbered="no"}
 
