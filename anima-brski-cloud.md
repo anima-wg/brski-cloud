@@ -121,9 +121,6 @@ A Cloud Registrar will receive BRSKI communications from all devices configured 
 This could be, for example, all devices of a particular product line from a particular manufacturer.
 When this is a significantly large number, a Cloud  Registrar may need to be scaled with the usual web-service scaling mechansisms.
 
-It is also entirely possible that all devices sold by through a particular Value Added Reseller (VAR) might be preloaded with a configuration that changes the Cloud Registrar URI to point to a VAR.
-Such an effort would require unboxing each device in a controlled environment, but the provisioning could occur using a regular BRSKI or SZTP {{?RFC8572}} process.
-
 ### Bootstrap via Cloud Registrar and Owner Registrar
 
 A pledge is bootstrapping from a location with no local domain Registrar (for example, the small site or teleworker use case with no local infrastructure to provide for automated discovery), and needs to discover its owner Registrar.
