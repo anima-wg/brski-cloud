@@ -559,7 +559,7 @@ This will force the device to stop, timeout, and then try all mechanisms again.
 There are additional considerations regarding TLS certificate validation that must be accounted for as outlined in {redirect-response}.
 When the pledge follows a 307 redirect from the default Cloud Registrar, it will attempt to establish a TLS connection with the redirect target Registrar.
 The pledge implementation will typically register a callback with the TLS stack, where the TLS stack allows the implementation to validate the identity of the Registrar.
-The pledge should check whether the identity of the Registrar can be validated with its Implicit Trust Anchor Database and track the result, but should always return a successful validation result to the TLS stack, thus allowing the TLS connection to be established.
+The pledge should check whether the identity of the Registrar can be validated with its Implicit Trust Anchor Database and track the result, but should always return a successful validation result to the TLS stack, thus allowing the {{BRSKI}} provisional TLS connection to be established.
 The pledge will then send a Voucher Request to the Registrar.
 If the Registrar returns a 307 response, the pledge MUST NOT follow this redirect if the Registrar identity was not validated using its Implicit Trust Anchor Database.
 If the Registar identity was validated using the Implicit Trust Anchor Database, then the pledge MAY follow the redirect.
