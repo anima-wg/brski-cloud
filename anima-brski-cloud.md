@@ -574,7 +574,9 @@ All the considerations for operation of the MASA also apply to operation of the 
 
 ## Security Updates for the Pledge
 
-Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network on which there is addressing and connectivity, but there is no other local configuration available.
+Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
+(Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be connectivity possible.
+For instance, the device could be without a default route or NAT44, but able to make HTTP requests via an HTTP proxy configured via DHCP)
 
 There is another advantage to being online: the pledge may be able to contact the manufacturer before bootstrapping in order to apply the latest firmware updates.
 This may also include updates to the Implicit list of Trust Anchors.
