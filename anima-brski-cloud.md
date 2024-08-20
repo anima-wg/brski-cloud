@@ -162,7 +162,7 @@ For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-regi
 For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enrol. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
 
 It also also possible that the Cloud Registrar may redirect the pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the pledge to the Owner Registrar.
-This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsofor-http-redirect}}.
+This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsfor-http-redirect}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
@@ -596,7 +596,7 @@ The trust anchor, or trust anchors, to use is an implementation decision and out
 The pledge may have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
 There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addressed in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
 
-## Considerations for HTTP Redirect
+## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
 When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST establish a provisional TLS connection with the Registrar as specified in {{BRSKI}}.
 The Pledge is unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or it it has been redirected to an Owner Registrar, and does not differentiate between the two scenarios.
