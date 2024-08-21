@@ -154,7 +154,7 @@ The high level architectures for the two high level use cases are illustrated in
 
 In both use cases, the pledge connects to the Cloud Registrar during bootstrap.
 
-For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an Owner Registrar in order to complete bootstrap with the Owner Registrar. When bootstrapping against an Owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge. This is illustrated in {{arch-one}}.
+For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an Owner Registrar in order to complete bootstrap with the Owner Registrar. When bootstrapping against an Owner Registrar, the Owner Registrar will interact with a CA to assist in issuing certificates to the pledge. This is illustrated in {{arch-one}}.
 
 For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an Owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing a certificate to the pledge. This is illustrated in {{arch-two}}.
 
