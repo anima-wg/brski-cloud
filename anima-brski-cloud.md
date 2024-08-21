@@ -31,7 +31,7 @@ normative:
   RFC8366bis: I-D.ietf-anima-rfc8366bis
 
 informative:
-  RFC6125:
+  RFC9525:
   I-D.irtf-t2trg-taxonomy-manufacturer-anchors:
 
 venue:
@@ -43,7 +43,7 @@ venue:
 
 Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and help the device.   This document extends the new device behavior so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well-defined "call-home" mechanism to find the operator maintained infrastructure.
 
-To this, this document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure. The Cloud Registrar enables discovery of the operator maintained infrastructure, and may enable establishment of trust with operator maintained infrastructure that does not support BRSKI mechanisms.
+This document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure. The Cloud Registrar enables discovery of the operator maintained infrastructure, and may enable establishment of trust with operator maintained infrastructure that does not support BRSKI mechanisms.
 
 --- middle
 
@@ -62,12 +62,7 @@ Internet.
 The Internet ("Cloud") connected Registrar will then determine ownership of the pledge
 and redirect the pledge to its owners Registrar.
 
-This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge
-
-    MAY contact a well-known URI of a Cloud Registrar if a
-    local Registrar  cannot be discovered or if the pledge's
-    target use cases do not include a local Registrar.
-
+This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the pledge's target use cases do not include a local Registrar.
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
 Two modes of operation are specified in this document.
@@ -80,7 +75,7 @@ The Cloud Registrar may redirect the pledge to the owner's Registrar, or the Clo
 This document uses the terms pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366}}.
 
 Local Domain:
-: The domain where the pledge is physically located and bootstrapping from. This may be different to the pledge owner's domain.
+: The domain where the pledge is physically located and bootstrapping from. This may be different from the pledge owner's domain.
 
 Owner Domain:
 : The domain that the pledge needs to discover and bootstrap with.
@@ -144,7 +139,7 @@ The pledge is deployed in the organization's domain, but does not discover a loc
 The pledge uses the Cloud Registrar to bootstrap, and the Cloud Registrar provides a voucher that includes instructions on finding the organization's EST service.
 
 This option can be used to introduce the benefits of BRSKI for an initial period when BRSKI is not available in existing EST-Servers.
-Additionally, it can also be used long-term as an security-equivalent solution in which BRSKI and EST-Server are set up in a modular fashion.
+Additionally, it can also be used long-term as a security-equivalent solution in which BRSKI and EST-Server are set up in a modular fashion.
 
 The use of an EST-Server instead of a BRSKI Registrar may mean that not all the EST options required by [BRSKI] may be available and hence this option may not support all BRSKI deployment cases.
 For example, certificates to enroll into an ACP [RFC8994] needs to include an AcpNodeName (see [RFC8994], Section 6.2.2), which non-BRSKI capable EST-Servers may not support.
@@ -161,12 +156,12 @@ For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-regi
 
 For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an Owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing a certificate to the pledge. This is illustrated in {{arch-two}}.
 
-It also possible that the Cloud Registrar may redirect the pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the pledge to the Owner Registrar.
+It is also possible that the Cloud Registrar may redirect the pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the pledge to the Owner Registrar.
 This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsfor-http-redirect}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the pledge and are out-of-scope of this document.
 
-The architectures shows the Cloud Registrar and MASA as being logically separate entities.
+The architectures show the Cloud Registrar and MASA as being logically separate entities.
 The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
@@ -283,7 +278,7 @@ Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server_na
 Pledges SHOULD send a valid "server_name" extension whenever they know the domain name of the registrar they connect to, unless it is known that Cloud or Owner Registrars for this pledge implementation will never need to be deployed in a cloud setting requiring the "server_name" extension.
 
 The pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
-The TLS connection can be verified using a public Web PKI trust anchor using {{RFC6125}} DNS-ID mechanisms or a pinned certification authority.
+The TLS connection can be verified using a public Web PKI trust anchor using {{RFC9525}} DNS-ID mechanisms or a pinned certification authority.
 This is a local implementation decision.
 Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security considerations.
 
@@ -502,7 +497,7 @@ The EST server identity MUST be verified using the pinned-domain-cert value prov
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
-If the certificate is not a self-signed or EE certificate, then the pledge SHOULD apply {{RFC6125}} DNS-ID verification on the certificate against the domain provided in the est-domain attribute.
+If the certificate is not a self-signed or EE certificate, then the pledge SHOULD apply {{RFC9525}} DNS-ID verification on the certificate against the domain provided in the est-domain attribute.
 If the est-domain was provided by with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
