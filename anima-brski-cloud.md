@@ -26,7 +26,9 @@ author:
     email: mcr+ietf@sandelman.ca
 
 normative:
+  RFC6066: SNI
   RFC8366: VOUCHER
+  RFC8994: ACP
   BRSKI: RFC8995
   RFC8366bis: I-D.ietf-anima-rfc8366bis
 
