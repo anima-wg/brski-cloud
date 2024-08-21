@@ -123,9 +123,9 @@ When this is a significantly large number, a Cloud  Registrar may need to be sca
 
 ### Bootstrap via Cloud Registrar and Owner Registrar
 
-A pledge is bootstrapping from a location with no local domain Registrar (for example, the small site or teleworker use case with no local infrastructure to provide for automated discovery), and needs to discover its owner Registrar.
-The Cloud Registrar is used by the pledge to discover the owner Registrar.
-The Cloud Registrar redirects the pledge to the owner Registrar, and the pledge completes bootstrap against the owner Registrar.
+A pledge is bootstrapping from a location with no local domain Registrar (for example, the small site or teleworker use case with no local infrastructure to provide for automated discovery), and needs to discover its Owner Registrar.
+The Cloud Registrar is used by the pledge to discover the Owner Registrar.
+The Cloud Registrar redirects the pledge to the Owner Registrar, and the pledge completes bootstrap against the Owner Registrar.
 
 A typical example is an employee who is deploying a pledge in a home or small branch office, where the pledge belongs to the employer.
 There is no local domain Registrar, the pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the pledge needs the keying material to trust the Registrar.
@@ -135,12 +135,12 @@ Protocol details for this use case are provided in {{redirect2Registrar}}.
 
 ### Bootstrap via Cloud Registrar and Owner EST Service
 
-A pledge is bootstrapping where the owner organization does not yet have an owner Registrar deployed, but does have an EST service deployed.
+A pledge is bootstrapping where the owner organization does not yet have an Owner Registrar deployed, but does have an EST service deployed.
 The Cloud Registrar issues a voucher, and the pledge completes trust bootstrap using the Cloud Registrar.
 The voucher issued by the cloud includes domain information for the owner's EST service that the pledge should use for certificate enrollment.
 
 For example, an organization has an EST service deployed, but does not have yet a BRSKI capable Registrar service deployed.
-The pledge is deployed in the organization's domain, but does not discover a local domain Registrar or owner Registrar.
+The pledge is deployed in the organization's domain, but does not discover a local domain Registrar or Owner Registrar.
 The pledge uses the Cloud Registrar to bootstrap, and the Cloud Registrar provides a voucher that includes instructions on finding the organization's EST service.
 
 This option can be used to introduce the benefits of BRSKI for an initial period when BRSKI is not available in existing EST-Servers.
@@ -157,9 +157,9 @@ The high level architectures for the two high level use cases are illustrated in
 
 In both use cases, the pledge connects to the Cloud Registrar during bootstrap.
 
-For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an owner Registrar in order to complete bootstrap with the owner Registrar. When bootstrapping against an owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge. This is illustrated in {{arch-one}}.
+For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the pledge to an Owner Registrar in order to complete bootstrap with the Owner Registrar. When bootstrapping against an Owner Registrar, this Registrar will interact with a CA to assist in issuing certificates to the pledge. This is illustrated in {{arch-one}}.
 
-For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
+For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the pledge to an Owner Registrar, the Cloud Registrar will inform the pledge what domain to use for accessing EST services in the voucher response. In this model, the pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing certificated to the pledge. This is illustrated in {{arch-two}}.
 
 It also possible that the Cloud Registrar may redirect the pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the pledge to the Owner Registrar.
 This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsfor-http-redirect}}.
@@ -310,7 +310,7 @@ A pledge with some kind of indicator (such as a screen or LED) SHOULD consider t
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
 * error: return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the pledge if the request processing failed for any reason
-* redirect to owner registrar: redirect the pledge to an owner registrar via 307 response code
+* redirect to Owner Registrar: redirect the pledge to an Owner Registrar via 307 response code
 * redirect to owner EST server: issue a voucher (containing an est-domain attribute) and return a 200 response code
 
 ### Pledge Ownership Look Up {#pledgeOwnershipLookup}
@@ -323,7 +323,7 @@ The Cloud Registrar is strongly tied to the manufacturers' processes for device 
 
 ### Bootstrap via Cloud Registrar and Owner Registrar
 
-Once the Cloud Registrar has determined pledge ownership, the Cloud Registrar MAY redirect the pledge to the owner Registrar in order to complete bootstrap.
+Once the Cloud Registrar has determined pledge ownership, the Cloud Registrar MAY redirect the pledge to the Owner Registrar in order to complete bootstrap.
 If the owner wants the Cloud Registrar to redirect pledges to their Owner Registrar, the owner must register their Owner Registrar URI with cloud Registrar.
 The mechanism by which pledge owners register their Owner Registrar URI with the Cloud Registrar is out-of-scope of this document.
 
@@ -392,8 +392,8 @@ The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD co
 
 This flow illustrates the "Bootstrap via Cloud Registrar and Owner Registrar" use case.
 A pledge is bootstrapping in a remote location with no local domain Registrar.
-The assumption is that the owner Registrar domain is accessible, and the pledge can establish a network connection with the owner Registrar.
-This may require that the owner network firewall exposes the owner Registrar on the public internet.
+The assumption is that the Owner Registrar domain is accessible, and the pledge can establish a network connection with the Owner Registrar.
+This may require that the owner network firewall exposes the Owner Registrar on the public internet.
 
 ~~~ aasvg
 +--------+                                       +----------+
@@ -437,11 +437,11 @@ The process starts, in step 1, when the pledge establishes a Mutual TLS channel 
 
 In step 2, the pledge sends a voucher request to the Cloud Registrar.
 
-The Cloud Registrar determines pledge ownership look up as outlined in {{pledgeOwnershipLookup}}, and determines the owner Registrar domain.
-In step 3, the Cloud Registrar redirects the pledge to the owner Registrar domain.
+The Cloud Registrar determines pledge ownership look up as outlined in {{pledgeOwnershipLookup}}, and determines the Owner Registrar domain.
+In step 3, the Cloud Registrar redirects the pledge to the Owner Registrar domain.
 
 Steps 4 and onwards follow the standard BRSKI flow.
-The pledge establishes a provisional TLS connection with the owner Registrar, and sends a voucher request to the owner Registrar.
+The pledge establishes a provisional TLS connection with the Owner Registrar, and sends a voucher request to the Owner Registrar.
 The Registrar forwards the voucher request to the MASA.
 Assuming the MASA issues a voucher, then the pledge verifies the TLS connection with the Registrar using the pinned-domain-cert from the voucher and completes the BRSKI flow.
 
