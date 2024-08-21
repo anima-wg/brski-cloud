@@ -390,7 +390,7 @@ The pledge SHOULD extract the "est-domain" field from the voucher, and SHOULD co
 
 ## Bootstrap via Cloud Registrar and Owner Registrar {#redirect2Registrar}
 
-This flow illustrates the Bootstrap via Cloud Registrar and Owner Registrar use case.
+This flow illustrates the "Bootstrap via Cloud Registrar and Owner Registrar" use case.
 A pledge is bootstrapping in a remote location with no local domain Registrar.
 The assumption is that the owner Registrar domain is accessible, and the pledge can establish a network connection with the owner Registrar.
 This may require that the owner network firewall exposes the owner Registrar on the public internet.
@@ -447,7 +447,7 @@ Assuming the MASA issues a voucher, then the pledge verifies the TLS connection 
 
 ## Bootstrap via Cloud Registrar and Owner EST Service {#voucher2EST}
 
-This flow illustrates the Bootstrap via Cloud Registrar and Owner EST Service use case.
+This flow illustrates the "Bootstrap via Cloud Registrar and Owner EST Service" use case.
 A pledge is bootstrapping in a location with no local domain Registrar.
 The Cloud Registrar is instructing the pledge to connect directly to an EST server for enrolment using EST mechanisms.
 The assumption is that the EST domain is accessible, and the pledge can establish a network connection with the EST server.
