@@ -106,6 +106,10 @@ Provisional TLS:
 VAR:
 : Value Added Reseller
 
+Cloud VAR Registrar:
+: The non-default Registrar that is operated by a value added reseller (VAR).
+
+
 ## Target Use Cases
 
 This document specifies and standardizes procedures for two high level use cases.
@@ -114,6 +118,20 @@ This document specifies and standardizes procedures for two high level use cases
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
 Common to both uses cases is that they aid with the use of BRSKI in the presence of many small sites, such as teleworkers, with minimum expectations against their network infrastructure.
+
+This use case also supports situations where a manufacturer sells a number of devices (in bulk) to a Value Added Resller (VAR).
+The manufacturer knows which devices have been sold to which VAR, but not who the ultimate owner will be.
+The VAR then sells devices to other entities, such as enterprises, and records this.
+A typical example is a VoIP phone manufacturer provides telephones to a local system integration company (a VAR).
+The VAR records this sale to it's Cloud VAR Registrar system.
+
+In this use case, this VAR has sold and services a VoIP system to an enterprise (e.g., a SIP PBX).
+When a new employee needs a phone at their home office, the VAR ships that unit across town to the employee.  When the employee plugs in the device and turns it on, the device will be provisioned with a LDevID and configuration that connections the phone with the Enterprises' VoIP PBX.
+The home employee's network has no special provisions.
+
+This use case also supports a chain of VARs through chained HTTP redirects.
+This also supports a situation where in effect, a large enterprise might also stock devices in a central location.
+
 
 The pledge is not expected to know whether the operator maintained infrastructure has a BRSKI Registrar deployed or not.
 The pledge determines this based upon the response to its Voucher Request message that it receives from the Cloud Registrar.
