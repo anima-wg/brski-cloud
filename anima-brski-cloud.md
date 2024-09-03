@@ -304,10 +304,13 @@ The Cloud Registrar must determine pledge ownership.
 Prior to ownership determination, the Registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the pledge as defined by {{BRSKI}} and HTTP.
 In the case of an unknown pledge a 404 is returned, for a malformed request 400 is returned, or in case of server overload 503 is returned.
 
-If the request is correct and the Registrar is able to handle it, but unable to determine ownership, then it MUST return a 401 Unauthorized response to the pledge.
+If the request is correct and the Registrar is able to handle it, but unable to determine ownership at that time, then it MUST return a 401 Unauthorized response to the pledge.
 This signals to the pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
 In this scenario, the Registrar SHOULD include a Retry-After header that includes a time to defer.
-A pledge with some kind of indicator (such as a screen or LED) SHOULD consider this a bootstrapping failure, and indicate this to the operator.
+The absense of a Retry-After header indicates to the pledge not to attempt again.
+The Pledge MUST restart the bootstrapping process from the beginning.
+
+A pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errros to be a bootstrapping failure, and indicate this to the operator.
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
