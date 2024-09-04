@@ -61,14 +61,16 @@ Instead, in BRSKI it is assumed that the network to which the pledge connects be
 To support enrolment of pledges without such an owner based access network, the mechanisms
 of BRSKI Cloud are required which assume that pledge and Registrar simply connect to the
 Internet.
-The Internet ("Cloud") connected Registrar will then determine ownership of the pledge
-and redirect the pledge to its owners Registrar.
 
 This work is in support of {{BRSKI, Section 2.7}}, which describes how a pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the pledge's target use cases do not include a local Registrar.
+
+This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in it's intended use.
+For instance, a SIP phone might have a client certificate to be used with a SIP proxy.
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
 Two modes of operation are specified in this document.
 The Cloud Registrar may redirect the pledge to the owner's Registrar, or the Cloud Registrar may issue a voucher to the pledge that includes the domain of the owner's Enrollment over Secure Transport {{!RFC7030}} (EST) server.
+
 
 ## Terminology
 
@@ -99,7 +101,7 @@ OEM:
 : Original Equipment Manufacturer
 
 Provisional TLS:
-: A mechanism defined in {{BRSKI, section 5.1}} whereby a pledge establishes a provisional TLS connection with a Registrar before the pledge is provisioned with a trust anchor that can be used for verifying the Registrar identity. 
+: A mechanism defined in {{BRSKI, Section 5.1}} whereby a pledge establishes a provisional TLS connection with a Registrar before the pledge is provisioned with a trust anchor that can be used for verifying the Registrar identity.
 
 VAR:
 : Value Added Reseller
@@ -511,6 +513,15 @@ In steps 5.a and 5.b, the pledge may optionally notify the Cloud Registrar/MASA 
 
 The pledge then follows that, in step 6, with an EST Enroll request with the CSR and obtains the requested certificate.
 The pledge must verify that the issued certificate in step 7 has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
+
+# Lifecycle Considerations
+
+BRSKI and the Cloud Registrar support provided in this document are dependant upon the manufacturer maintaining the required infrastructure.
+
+{{BRSKI, Section 10.7}} and Section 11.5 and 11.6 detail some additional considerations about device vs manufacturer life span.
+
+The well-known URL that is used is specified by the manufacturer when designing it's firmware, and is therefore completely under the manufacturer's control.
+If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
 
 # YANG extension for Voucher based redirect {#redirected}
 
