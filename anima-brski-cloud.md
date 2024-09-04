@@ -106,6 +106,10 @@ Provisional TLS:
 VAR:
 : Value Added Reseller
 
+Cloud VAR Registrar:
+: The non-default Registrar that is operated by a value added reseller (VAR).
+
+
 ## Target Use Cases
 
 This document specifies and standardizes procedures for two high level use cases.
@@ -114,6 +118,20 @@ This document specifies and standardizes procedures for two high level use cases
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
 Common to both uses cases is that they aid with the use of BRSKI in the presence of many small sites, such as teleworkers, with minimum expectations against their network infrastructure.
+
+This use case also supports situations where a manufacturer sells a number of devices (in bulk) to a Value Added Resller (VAR).
+The manufacturer knows which devices have been sold to which VAR, but not who the ultimate owner will be.
+The VAR then sells devices to other entities, such as enterprises, and records this.
+A typical example is a VoIP phone manufacturer provides telephones to a local system integration company (a VAR).
+The VAR records this sale to it's Cloud VAR Registrar system.
+
+In this use case, this VAR has sold and services a VoIP system to an enterprise (e.g., a SIP PBX).
+When a new employee needs a phone at their home office, the VAR ships that unit across town to the employee.  When the employee plugs in the device and turns it on, the device will be provisioned with a LDevID and configuration that connections the phone with the Enterprises' VoIP PBX.
+The home employee's network has no special provisions.
+
+This use case also supports a chain of VARs through chained HTTP redirects.
+This also supports a situation where in effect, a large enterprise might also stock devices in a central location.
+
 
 The pledge is not expected to know whether the operator maintained infrastructure has a BRSKI Registrar deployed or not.
 The pledge determines this based upon the response to its Voucher Request message that it receives from the Cloud Registrar.
@@ -360,10 +378,16 @@ The Cloud Registrar may be redirecting the pledge to the Owner Registrar, or to 
 
 The pledge MUST restart its bootstrapping process by sending a new voucher
 request message (with a fresh nonce) using the location provided in the HTTP redirect.
-The pledge SHOULD attempt to validate the identity of the Cloud Registrar specified in the 307 response using its Implicit Trust Anchor Database.
-If validation of this identity succeeds using the Implicit Trust Anchor Database, then the pledge MAY accept a subsequent 307 response from this Cloud Registrar.
+
+The pledge SHOULD attempt to validate the identity of the Cloud VAR Registrar specified in the 307 response using its Implicit Trust Anchor Database.
+If validation of this identity succeeds using the Implicit Trust Anchor Database, then the pledge MAY accept a subsequent 307 response from this Cloud VAR Registrar.
+
 The pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
-However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the pledge MUST NOT accept any further 307 responses from the Registrar, MUST establish a Provisional TLS connection with the Registrar, and MUST validate the identity of the Registrar using standard BRSKI mechanisms.
+
+However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the pledge MUST NOT accept any further 307 responses from the Registrar.
+At this point, the TLS connection that has been established is considered a Provisional TLS, as per {{BRSKI, Section 5.1}}.
+The Pledge then (re)sends a voucher-request on this connection.
+This connection is validated using the pinned data from the voucher, which is the standard BRSKI mechanism.
 
 The pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 The exception is that a 401 Unauthorized code SHOULD cause the pledge to retry a number of times over a period of a few hours.
