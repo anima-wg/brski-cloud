@@ -1,7 +1,7 @@
 ---
 title: "BRSKI Cloud Registrar"
 abbrev: BRSKI-CLOUD
-docname: draft-ietf-anima-brski-cloud-09
+docname: draft-ietf-anima-brski-cloud-10
 category: std
 ipr: trust200902
 
