@@ -184,7 +184,7 @@ For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-ser
 It is also possible that the Cloud Registrar may redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
 This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsfor-http-redirect}}.
 
-The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are out-of-scope of this document.
+The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
 
 The architectures show the Cloud Registrar and MASA as being logically separate entities.
 The two functions could of course be integrated into a single entity.
@@ -252,7 +252,7 @@ The VAR and manufacturer are aware of which devices have been shipped to the VAR
 ## Network Connectivity
 
 The assumption is that the Pledge already has network connectivity prior to connecting to the Cloud Registrar.
-The Pledge must have an IP address that is able to make DNS queries, and be able to send requests to the Cloud Registrar.
+The Pledge must have an IP address so that it is able to make DNS queries, and be able to send requests to the Cloud Registrar.
 There are many ways to accomplish this, from routable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
 There are DHCP options that a network operator can configure to accomplish any of these options.
 The Pledge operator has already connected the Pledge to the network, and the mechanism by which this has happened is out of scope of this document.
@@ -328,7 +328,7 @@ In this scenario, the Registrar SHOULD include a Retry-After header that include
 The absense of a Retry-After header indicates to the Pledge not to attempt again.
 The Pledge MUST restart the bootstrapping process from the beginning.
 
-A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errros to be a bootstrapping failure, and indicate this to the operator.
+A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errors to be a bootstrapping failure, and indicate this to the operator.
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
@@ -341,14 +341,14 @@ If the Cloud Registrar successfully determines ownership, then it MUST take one 
 The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting Pledge based on the presented identity certificate.
 For example, if the Pledge establishes TLS using an IDevID that is signed by a known manufacturing CA, the Registrar could extract the serial number from the IDevID and use this to look up a database of Pledge IDevID serial numbers to owners.
 
-The mechanism by which the Cloud Registrar determines Pledge ownership is, however, out-of-scope of this document.
+The mechanism by which the Cloud Registrar determines Pledge ownership is, however, outside the scope of this document.
 The Cloud Registrar is strongly tied to the manufacturers' processes for device identity.
 
 ### Bootstrap via Cloud Registrar and Owner Registrar
 
 Once the Cloud Registrar has determined Pledge ownership, the Cloud Registrar MAY redirect the Pledge to the Owner Registrar in order to complete bootstrap.
 If the owner wants the Cloud Registrar to redirect Pledges to their Owner Registrar, the owner must register their Owner Registrar URI with cloud Registrar.
-The mechanism by which Pledge owners register their Owner Registrar URI with the Cloud Registrar is out-of-scope of this document.
+The mechanism by which Pledge owners register their Owner Registrar URI with the Cloud Registrar is outside the scope of this document.
 
 In case of redirection, the Cloud Registrar replies to the voucher request with an HTTP 307 Temporary Redirect response code, including the owner's local domain in the HTTP Location header.
 
@@ -366,7 +366,7 @@ This field points the Pledge to a URI where Pledge specific additional configura
 For example, a SIP phone might retrieve a manufacturer specific configuration file that contains information about how to do SIP Registration.
 One advantage of this mechanism over current mechanisms like DHCP options 120 defined in {{?RFC3361}} or option 125 defined in {{?RFC3925}} is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
 
-The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
+The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is outside the scope of this document.
 
 
 ## Pledge Handles Cloud Registrar Response
