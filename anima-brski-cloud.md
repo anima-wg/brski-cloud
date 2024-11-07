@@ -52,13 +52,13 @@ This document defines how to contact a well-known Cloud Registrar, and two ways 
 # Introduction
 
 Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} BRSKI specifies automated and secure provisioning  of nodes (which are called Pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarly enrolled nodes.
-This is also called enrolment.
+This is also called enrollment.
 
-In BRSKI, the Pledge performs enrolment by communicating with a BRSKI Registrar belonging to the owner of the Pledge.
+In BRSKI, the Pledge performs enrollment by communicating with a BRSKI Registrar belonging to the owner of the Pledge.
 The Pledge does not know who its owner will be when manufactured.
 Instead, in BRSKI it is assumed that the network to which the Pledge connects belongs to the owner of the Pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar.
 
-To support enrolment of Pledges without such an owner based access network, the mechanisms
+To support enrollment of Pledges without such an owner based access network, the mechanisms
 of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
 Internet.
 
@@ -478,7 +478,7 @@ Assuming the MASA issues a voucher, then the Pledge verifies the TLS connection 
 
 This flow illustrates the "Bootstrap via Cloud Registrar and Owner EST Service" use case.
 A Pledge is bootstrapping in a location with no local domain Registrar.
-The Cloud Registrar is instructing the Pledge to connect directly to an EST server for enrolment using EST mechanisms.
+The Cloud Registrar is instructing the Pledge to connect directly to an EST server for enrollment using EST mechanisms.
 The assumption is that the EST domain is accessible, and the Pledge can establish a network connection with the EST server.
 
 ~~~ aasvg
