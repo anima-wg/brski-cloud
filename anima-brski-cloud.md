@@ -148,7 +148,7 @@ The Cloud Registrar is used by the Pledge to discover the Owner Registrar.
 The Cloud Registrar redirects the Pledge to the Owner Registrar, and the Pledge completes bootstrap against the Owner Registrar.
 
 A typical example is an employee who is deploying a Pledge in a home or small branch office, where the Pledge belongs to the employer.
-There is no local domain Registrar, the Pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the Pledge needs the keying material to trust the Registrar.
+As there is no local domain Registrar in the employee's local network, the Pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the Pledge needs the keying material to trust the Registrar.
 For example, an employee is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
 Protocol details for this use case are provided in {{redirect2Registrar}}.
