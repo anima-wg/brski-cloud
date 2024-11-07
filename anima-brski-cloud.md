@@ -525,7 +525,10 @@ The assumption is that the EST domain is accessible, and the Pledge can establis
 ~~~
 
 The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar/MASA using artifacts created during the manufacturing process of the Pledge.
-In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA, and in the response in step 3, the Pledge receives an {{RFC8366bis}} format voucher from the Cloud Registrar/MASA that includes its assigned EST domain in the est-domain attribute.
+
+In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA.
+
+In step 3, the the Cloud Registrar/MASA replies to the Pledge with an {{RFC8366bis}} format voucher that includes its assigned EST domain in the est-domain attribute.
 
 In step 4, the Pledge establishes a TLS connection with the EST RA specified in the voucher est-domain attribute.
 The connection may involve crossing the Internet requiring a DNS look up on the provided name.
@@ -542,8 +545,9 @@ The Pledge also has the details it needs to be able to create the CSR request to
 
 In steps 5.a and 5.b, the Pledge may optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
 
-The Pledge then follows that, in step 6, with an EST Enroll request with the CSR and obtains the requested certificate.
-The Pledge must verify that the issued certificate in step 7 has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
+in step 6, the Pledge sends an EST Enroll request with the CSR.
+
+In step 7, the EST server returns the requested certificate. The Pledge must verify that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
 
 # Lifecycle Considerations
 
