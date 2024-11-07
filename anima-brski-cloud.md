@@ -278,6 +278,10 @@ For example, the Pledge may only be aware of its IDevID Subject which includes a
 
 As another example, the Registrar may deem the manufacturer serial number in an IDevID as personally identifiable information, and may want to specify a new random opaque identifier that the Pledge should use in its CSR.
 
+## YANG extension for Voucher based redirect {#redirected}
+
+{{RFC8366bis}} contains the two needed voucher extensions: est-domain and additional-configuration which are needed when a client is redirected to a local EST server.
+
 # Protocol Operation
 
 This section outlines the high level protocol requirements and operations that take place. {{protocol-details}} outlines the exact sequence of message interactions between the Pledge, the Cloud Registrar, the Owner Registrar and the Owner EST server.
@@ -549,10 +553,6 @@ BRSKI and the Cloud Registrar support provided in this document are dependant up
 
 The well-known URL that is used is specified by the manufacturer when designing it's firmware, and is therefore completely under the manufacturer's control.
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
-
-# YANG extension for Voucher based redirect {#redirected}
-
-{{RFC8366bis}} contains the two needed voucher extensions: est-domain and additional-configuration which are needed when a client is redirected to a local EST server.
 
 # IANA Considerations
 
