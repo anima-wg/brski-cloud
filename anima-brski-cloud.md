@@ -191,7 +191,7 @@ The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
 It can redirect the request to the Owner Registrar for handling, or it can return a voucher
-that pins the actual Owner Registrar.
+that includes an an est-domain attribute that points to the Owner EST Service.
 When returning a voucher, additional bootstrapping information is embedded in the voucher.
 Both mechanisms are described in detail later in this document.
 
