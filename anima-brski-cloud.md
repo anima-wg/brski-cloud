@@ -546,7 +546,7 @@ The Pledge also has the details it needs to be able to create the CSR request to
 
 In steps 5.a and 5.b, the Pledge may optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
 
-in step 6, the Pledge sends an EST Enroll request with the CSR.
+In step 6, the Pledge sends an EST Enroll request with the CSR.
 
 In step 7, the EST server returns the requested certificate. The Pledge must verify that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
 
