@@ -661,6 +661,6 @@ Refer to {{BRSKI}} sections 7.3 and 11 for further details.
 {: numbered="no"}
 
 The authors would like to thank for following for their detailed reviews: (ordered
-by last name): Esko Dijk, Sheng Jiang.
+by last name): Esko Dijk, Toerless Eckert, Sheng Jiang.
 
 
