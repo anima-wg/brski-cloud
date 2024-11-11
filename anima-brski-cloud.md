@@ -52,13 +52,13 @@ This document defines how to contact a well-known Cloud Registrar, and two ways 
 # Introduction
 
 Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} BRSKI specifies automated and secure provisioning  of nodes (which are called Pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarly enrolled nodes.
-This is also called enrolment.
+This is also called enrollment.
 
-In BRSKI, the Pledge performs enrolment by communicating with a BRSKI Registrar belonging to the owner of the Pledge.
+In BRSKI, the Pledge performs enrollment by communicating with a BRSKI Registrar belonging to the owner of the Pledge.
 The Pledge does not know who its owner will be when manufactured.
 Instead, in BRSKI it is assumed that the network to which the Pledge connects belongs to the owner of the Pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar.
 
-To support enrolment of Pledges without such an owner based access network, the mechanisms
+To support enrollment of Pledges without such an owner based access network, the mechanisms
 of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
 Internet.
 
@@ -148,7 +148,7 @@ The Cloud Registrar is used by the Pledge to discover the Owner Registrar.
 The Cloud Registrar redirects the Pledge to the Owner Registrar, and the Pledge completes bootstrap against the Owner Registrar.
 
 A typical example is an employee who is deploying a Pledge in a home or small branch office, where the Pledge belongs to the employer.
-There is no local domain Registrar, the Pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the Pledge needs the keying material to trust the Registrar.
+As there is no local domain Registrar in the employee's local network, the Pledge needs to discover and bootstrap with the employer's Registrar which is deployed within the employer's network, and the Pledge needs the keying material to trust the Registrar.
 For example, an employee is deploying an IP phone in a home office and the phone needs to register to an IP PBX deployed in their employer's office.
 
 Protocol details for this use case are provided in {{redirect2Registrar}}.
@@ -184,14 +184,14 @@ For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-ser
 It is also possible that the Cloud Registrar may redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
 This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsfor-http-redirect}}.
 
-The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are out-of-scope of this document.
+The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
 
 The architectures show the Cloud Registrar and MASA as being logically separate entities.
 The two functions could of course be integrated into a single entity.
 
 There are two different mechanisms for a Cloud Registrar to handle voucher requests.
 It can redirect the request to the Owner Registrar for handling, or it can return a voucher
-that pins the actual Owner Registrar.
+that includes an est-domain attribute that points to the Owner EST Service.
 When returning a voucher, additional bootstrapping information is embedded in the voucher.
 Both mechanisms are described in detail later in this document.
 
@@ -252,7 +252,7 @@ The VAR and manufacturer are aware of which devices have been shipped to the VAR
 ## Network Connectivity
 
 The assumption is that the Pledge already has network connectivity prior to connecting to the Cloud Registrar.
-The Pledge must have an IP address that is able to make DNS queries, and be able to send requests to the Cloud Registrar.
+The Pledge must have an IP address so that it is able to make DNS queries, and be able to send requests to the Cloud Registrar.
 There are many ways to accomplish this, from routable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
 There are DHCP options that a network operator can configure to accomplish any of these options.
 The Pledge operator has already connected the Pledge to the network, and the mechanism by which this has happened is out of scope of this document.
@@ -277,6 +277,10 @@ EST {{!RFC7030}} is not clear on how the CSR Attributes response should be struc
 For example, the Pledge may only be aware of its IDevID Subject which includes a manufacturer serial number, but must include a specific fully qualified domain name in the CSR in order to complete domain ownership proofs required by the CA.
 
 As another example, the Registrar may deem the manufacturer serial number in an IDevID as personally identifiable information, and may want to specify a new random opaque identifier that the Pledge should use in its CSR.
+
+## YANG extension for Voucher based redirect {#redirected}
+
+{{RFC8366bis}} contains the two needed voucher extensions: est-domain and additional-configuration which are needed when a client is redirected to a local EST server.
 
 # Protocol Operation
 
@@ -328,7 +332,7 @@ In this scenario, the Registrar SHOULD include a Retry-After header that include
 The absense of a Retry-After header indicates to the Pledge not to attempt again.
 The Pledge MUST restart the bootstrapping process from the beginning.
 
-A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errros to be a bootstrapping failure, and indicate this to the operator.
+A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errors to be a bootstrapping failure, and indicate this to the operator.
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
@@ -341,14 +345,14 @@ If the Cloud Registrar successfully determines ownership, then it MUST take one 
 The Cloud Registrar needs some suitable mechanism for knowing the correct owner of a connecting Pledge based on the presented identity certificate.
 For example, if the Pledge establishes TLS using an IDevID that is signed by a known manufacturing CA, the Registrar could extract the serial number from the IDevID and use this to look up a database of Pledge IDevID serial numbers to owners.
 
-The mechanism by which the Cloud Registrar determines Pledge ownership is, however, out-of-scope of this document.
+The mechanism by which the Cloud Registrar determines Pledge ownership is, however, outside the scope of this document.
 The Cloud Registrar is strongly tied to the manufacturers' processes for device identity.
 
 ### Bootstrap via Cloud Registrar and Owner Registrar
 
 Once the Cloud Registrar has determined Pledge ownership, the Cloud Registrar MAY redirect the Pledge to the Owner Registrar in order to complete bootstrap.
 If the owner wants the Cloud Registrar to redirect Pledges to their Owner Registrar, the owner must register their Owner Registrar URI with cloud Registrar.
-The mechanism by which Pledge owners register their Owner Registrar URI with the Cloud Registrar is out-of-scope of this document.
+The mechanism by which Pledge owners register their Owner Registrar URI with the Cloud Registrar is outside the scope of this document.
 
 In case of redirection, the Cloud Registrar replies to the voucher request with an HTTP 307 Temporary Redirect response code, including the owner's local domain in the HTTP Location header.
 
@@ -366,7 +370,7 @@ This field points the Pledge to a URI where Pledge specific additional configura
 For example, a SIP phone might retrieve a manufacturer specific configuration file that contains information about how to do SIP Registration.
 One advantage of this mechanism over current mechanisms like DHCP options 120 defined in {{?RFC3361}} or option 125 defined in {{?RFC3925}} is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
 
-The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is out-of-scope of this document.
+The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is outside the scope of this document.
 
 
 ## Pledge Handles Cloud Registrar Response
@@ -392,7 +396,8 @@ This connection is validated using the pinned data from the voucher, which is th
 The Pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
-The Pledge MUST never visit a location that it has already been to, in order to avoid any kind of cycle.
+In order to avoid permanent bootstrap cycles, the Pledge MUST NOT revisit a prior location.
+However, in some scenarios, Pledges MAY visit the current location multiple times, for example when handling a 401 Unauthorized response, or when handling a 503 Service Unavailable that includes a Retry-After HTTP header.
 If it happens that a location is repeated, then the Pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
 The Pledge MUST also have a limit on the total number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
@@ -478,7 +483,7 @@ Assuming the MASA issues a voucher, then the Pledge verifies the TLS connection 
 
 This flow illustrates the "Bootstrap via Cloud Registrar and Owner EST Service" use case.
 A Pledge is bootstrapping in a location with no local domain Registrar.
-The Cloud Registrar is instructing the Pledge to connect directly to an EST server for enrolment using EST mechanisms.
+The Cloud Registrar is instructing the Pledge to connect directly to an EST server for enrollment using EST mechanisms.
 The assumption is that the EST domain is accessible, and the Pledge can establish a network connection with the EST server.
 
 ~~~ aasvg
@@ -521,7 +526,10 @@ The assumption is that the EST domain is accessible, and the Pledge can establis
 ~~~
 
 The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar/MASA using artifacts created during the manufacturing process of the Pledge.
-In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA, and in the response in step 3, the Pledge receives an {{RFC8366bis}} format voucher from the Cloud Registrar/MASA that includes its assigned EST domain in the est-domain attribute.
+
+In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA.
+
+In step 3, the the Cloud Registrar/MASA replies to the Pledge with an {{RFC8366bis}} format voucher that includes its assigned EST domain in the est-domain attribute.
 
 In step 4, the Pledge establishes a TLS connection with the EST RA specified in the voucher est-domain attribute.
 The connection may involve crossing the Internet requiring a DNS look up on the provided name.
@@ -538,8 +546,9 @@ The Pledge also has the details it needs to be able to create the CSR request to
 
 In steps 5.a and 5.b, the Pledge may optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
 
-The Pledge then follows that, in step 6, with an EST Enroll request with the CSR and obtains the requested certificate.
-The Pledge must verify that the issued certificate in step 7 has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
+In step 6, the Pledge sends an EST Enroll request with the CSR.
+
+In step 7, the EST server returns the requested certificate. The Pledge must verify that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
 
 # Lifecycle Considerations
 
@@ -549,10 +558,6 @@ BRSKI and the Cloud Registrar support provided in this document are dependant up
 
 The well-known URL that is used is specified by the manufacturer when designing it's firmware, and is therefore completely under the manufacturer's control.
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
-
-# YANG extension for Voucher based redirect {#redirected}
-
-{{RFC8366bis}} contains the two needed voucher extensions: est-domain and additional-configuration which are needed when a client is redirected to a local EST server.
 
 # IANA Considerations
 
@@ -656,6 +661,6 @@ Refer to {{BRSKI}} sections 7.3 and 11 for further details.
 {: numbered="no"}
 
 The authors would like to thank for following for their detailed reviews: (ordered
-by last name): Esko Dijk, Sheng Jiang.
+by last name): Esko Dijk, Toerless Eckert, Sheng Jiang.
 
 
