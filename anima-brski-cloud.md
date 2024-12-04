@@ -256,9 +256,9 @@ The Pledge must have an IP address so that it is able to make DNS queries, and b
 There are many ways to accomplish this, from routable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
 There are DHCP options that a network operator can configure to accomplish any of these options.
 The Pledge operator has already connected the Pledge to the network, and the mechanism by which this has happened is out of scope of this document.
-For many telephony applications, this is typically going to be a wired connection.
+For many telephony applications, this is typically going to be a wired
+connection. For wireless use cases, existing Wi-Fi onboarding mechanisms such as WPS can be used.
 
-For wireless use cases, some kind of existing Wi-Fi onboarding mechanism such as WPS.
 Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the Pledge and the cloud registrar are all out of scope of this document.
 
 ## Pledge Certificate Identity Considerations
