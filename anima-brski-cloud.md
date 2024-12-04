@@ -43,9 +43,9 @@ venue:
 
 --- abstract
 
-Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and help the device.   This document extends the new device behavior so that if no local infrastructure is available, such as in a home or remote office, that the device can use a well-defined "call-home" mechanism to find the operator maintained infrastructure.
+Bootstrapping Remote Secure Key Infrastructures defines how to onboard a device securely into an operator-maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and help the device.   This document extends the new device behavior so that if no local infrastructure is available, such as in a home or remote office, the device can use a well-defined "call-home" mechanism to find the operator-maintained infrastructure.
 
-This document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator maintained infrastructure. The Cloud Registrar enables discovery of the operator maintained infrastructure, and may enable establishment of trust with operator maintained infrastructure that does not support BRSKI mechanisms.
+This document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator-maintained infrastructure. The Cloud Registrar enables discovery of the operator-maintained infrastructure, and may enable establishment of trust with operator-maintained infrastructure that does not support BRSKI mechanisms.
 
 --- middle
 
@@ -114,8 +114,8 @@ Cloud VAR Registrar:
 
 This document specifies and standardizes procedures for two high level use cases.
 
-- Bootstrap via Cloud Registrar and Owner Registrar: The operator maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
-- Bootstrap via Cloud Registrar and Owner EST Service: The operator maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
+- Bootstrap via Cloud Registrar and Owner Registrar: The operator-maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
+- Bootstrap via Cloud Registrar and Owner EST Service: The operator-maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
 Common to both uses cases is that they aid with the use of BRSKI in the presence of many small sites, such as teleworkers, with minimum expectations against their network infrastructure.
 
@@ -133,9 +133,9 @@ This use case also supports a chain of VARs through chained HTTP redirects.
 This also supports a situation where in effect, a large enterprise might also stock devices in a central location.
 
 
-The Pledge is not expected to know whether the operator maintained infrastructure has a BRSKI Registrar deployed or not.
+The Pledge is not expected to know whether the operator-maintained infrastructure has a BRSKI Registrar deployed or not.
 The Pledge determines this based upon the response to its Voucher Request message that it receives from the Cloud Registrar.
-The Cloud Registrar is expected to determine whether the operator maintained infrastructure has a BRSKI Registrar deployed based upon the identity presented by the Pledge.
+The Cloud Registrar is expected to determine whether the operator-maintained infrastructure has a BRSKI Registrar deployed based upon the identity presented by the Pledge.
 
 A Cloud Registrar will receive BRSKI communications from all devices configured with its URI.
 This could be, for example, all devices of a particular product line from a particular manufacturer.
