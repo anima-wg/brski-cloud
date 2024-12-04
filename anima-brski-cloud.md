@@ -112,7 +112,7 @@ Cloud VAR Registrar:
 
 ## Target Use Cases
 
-This document specifies and standardizes procedures for two high level use cases.
+This document specifies and standardizes procedures for two high-level use cases.
 
 - Bootstrap via Cloud Registrar and Owner Registrar: The operator-maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator-maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
@@ -173,7 +173,7 @@ Protocol details for this use case are provided in {{voucher2EST}}.
 
 # Architecture
 
-The high level architectures for the two high level use cases are illustrated in {{arch-one}} and {{arch-two}}.
+The high-level architectures for the two high-level use cases are illustrated in {{arch-one}} and {{arch-two}}.
 
 In both use cases, the Pledge connects to the Cloud Registrar during bootstrap.
 
@@ -284,7 +284,7 @@ As another example, the Registrar may deem the manufacturer serial number in an 
 
 # Protocol Operation
 
-This section outlines the high level protocol requirements and operations that take place. {{protocol-details}} outlines the exact sequence of message interactions between the Pledge, the Cloud Registrar, the Owner Registrar and the Owner EST server.
+This section outlines the high-level protocol requirements and operations that take place. {{protocol-details}} outlines the exact sequence of message interactions between the Pledge, the Cloud Registrar, the Owner Registrar and the Owner EST server.
 
 ## Pledge Sends Voucher Request to Cloud Registrar
 
