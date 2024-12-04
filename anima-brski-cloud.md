@@ -264,7 +264,7 @@ Similarly, what address space the IP address belongs to, whether it is an IPv4 o
 ## Pledge Certificate Identity Considerations
 
 {{Section 5.9.2 of BRSKI}} specifies that the Pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
-For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registrar operates as the EST server as described in BRSKI section 2.5.3, and the Pledge sends the CSR Attributes request to the Owner Registrar.
+For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registrar operates as the EST server as described in {{BRSKI, Section 2.5.3}}, and the Pledge sends the CSR Attributes request to the Owner Registrar.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the Pledge sends the CSR Attributes request to the EST server.
 Note that the Pledge only sends the CSR Attributes request to the entity acting
 as the EST server as per {{Section 2.6 of !RFC7030}}, and MUST NOT send the CSR
