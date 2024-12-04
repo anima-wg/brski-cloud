@@ -167,7 +167,7 @@ This option can be used to introduce the benefits of BRSKI for an initial period
 Additionally, it can also be used long-term as a security-equivalent solution in which BRSKI and EST-Server are set up in a modular fashion.
 
 The use of an EST-Server instead of a BRSKI Registrar may mean that not all the EST options required by [BRSKI] may be available and hence this option may not support all BRSKI deployment cases.
-For example, certificates to enroll into an ACP [RFC8994] needs to include an AcpNodeName (see [RFC8994], Section 6.2.2), which non-BRSKI-capable EST-Servers may not support.
+For example, certificates to enroll into an ACP [RFC8994] needs to include an AcpNodeName (see {{RFC8994, Section 6.2.2}}, which non-BRSKI-capable EST-Servers may not support.
 
 Protocol details for this use case are provided in {{voucher2EST}}.
 
