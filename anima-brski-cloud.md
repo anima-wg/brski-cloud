@@ -56,7 +56,7 @@ This is also called enrollment.
 
 In BRSKI, the Pledge performs enrollment by communicating with a BRSKI Registrar belonging to the owner of the Pledge.
 The Pledge does not know who its owner will be when manufactured.
-Instead, in BRSKI it is assumed that the network to which the Pledge connects belongs to the owner of the Pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owners Registrar.
+Instead, in BRSKI it is assumed that the network to which the Pledge connects belongs to the owner of the Pledge and therefore network-supported discovery mechanisms can resolve generic, non-owner specific names to the owner's Registrar.
 
 To support enrollment of Pledges without such an owner based access network, the mechanisms
 of BRSKI Cloud are required which assume that Pledge and Registrar simply connect to the
@@ -64,7 +64,7 @@ Internet.
 
 This work is in support of {{BRSKI, Section 2.7}}, which describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge's target use cases do not include a local Registrar.
 
-This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in it's intended use.
+This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
 For instance, a SIP phone might have a client certificate to be used with a SIP proxy.
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are not sufficiently specified in BRSKI.
@@ -123,7 +123,7 @@ This use case also supports situations where a manufacturer sells a number of de
 The manufacturer knows which devices have been sold to which VAR, but not who the ultimate owner will be.
 The VAR then sells devices to other entities, such as enterprises, and records this.
 A typical example is a VoIP phone manufacturer provides telephones to a local system integration company (a VAR).
-The VAR records this sale to it's Cloud VAR Registrar system.
+The VAR records this sale to its Cloud VAR Registrar system.
 
 In this use case, this VAR has sold and services a VoIP system to an enterprise (e.g., a SIP PBX).
 When a new employee needs a phone at their home office, the VAR ships that unit across town to the employee.  When the employee plugs in the device and turns it on, the device will be provisioned with a LDevID and configuration that connections the phone with the Enterprises' VoIP PBX.
@@ -556,7 +556,7 @@ BRSKI and the Cloud Registrar support provided in this document are dependant up
 
 {{BRSKI, Section 10.7}} and Section 11.5 and 11.6 detail some additional considerations about device vs manufacturer life span.
 
-The well-known URL that is used is specified by the manufacturer when designing it's firmware, and is therefore completely under the manufacturer's control.
+The well-known URL that is used is specified by the manufacturer when designing its firmware, and is therefore completely under the manufacturer's control.
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
 
 # IANA Considerations
