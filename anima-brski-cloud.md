@@ -182,7 +182,7 @@ For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-regi
 For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the Pledge to an Owner Registrar. The Cloud Registrar will inform the Pledge what domain to use for accessing EST services in the voucher response. In this model, the Pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing a certificate to the Pledge. This is illustrated in {{arch-two}}.
 
 It is also possible that the Cloud Registrar may redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
-This scenario is discussed further in sections {{multiple-http-redirects}} and {{considerationsfor-http-redirect}}.
+This scenario is discussed further in Sections {{<multiple-http-redirects}} and {{<considerationsfor-http-redirect}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
 
@@ -263,10 +263,12 @@ Similarly, what address space the IP address belongs to, whether it is an IPv4 o
 
 ## Pledge Certificate Identity Considerations
 
-BRSKI section 5.9.2 specifies that the Pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
+{{Section 5.9.2 of BRSKI}} specifies that the Pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registrar operates as the EST server as described in BRSKI section 2.5.3, and the Pledge sends the CSR Attributes request to the Owner Registrar.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the Pledge sends the CSR Attributes request to the EST server.
-Note that the Pledge only sends the CSR Attributes request to the entity acting as the EST server as per {{RFC7030}} section 2.6, and MUST NOT send the CSR Attributes request to the Cloud Registrar.
+Note that the Pledge only sends the CSR Attributes request to the entity acting
+as the EST server as per {{Section 2.6 of !RFC7030}}, and MUST NOT send the CSR
+Attributes request to the Cloud Registrar.
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server may use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject must have a specific value in order to complete enrollment with the CA.
@@ -303,7 +305,7 @@ According to {{BRSKI, Section 2.7}}, the Pledge MUST use an Implicit Trust Ancho
 The Pledge MUST establish a mutually authenticated TLS connection with the Cloud Registrar.
 Unlike the Provisional TLS procedures documented in BRSKI section 5.1, the Pledge MUST NOT establish a Provisional TLS connection with the Cloud Registrar.
 
-Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server_name" TLS extension (SNI, RFC6066).
+Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server_name" TLS extension (SNI, [RFC6066]).
 Pledges SHOULD send a valid "server_name" extension whenever they know the domain name of the registrar they connect to, unless it is known that Cloud or Owner Registrars for this Pledge implementation will never need to be deployed in a cloud setting requiring the "server_name" extension.
 
 The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
@@ -596,7 +598,7 @@ A "helpful" programmer might instead decide to redirect back to the manufacturer
 Instead, the VAR MUST return a 404 error if it cannot process the device.
 This will force the device to stop, timeout, and then try all mechanisms again.
 
-There are additional considerations regarding TLS certificate validation that must be accounted for as outlined in {redirect-response}.
+There are additional considerations regarding TLS certificate validation that must be accounted for as outlined in {{redirect-response}}.
 When the Pledge follows a 307 redirect from the default Cloud Registrar, it will attempt to establish a TLS connection with the redirected target Registrar.
 The Pledge implementation will typically register a callback with the TLS stack, where the TLS stack allows the implementation to validate the identity of the Registrar.
 The Pledge should check whether the identity of the Registrar can be validated with its Implicit Trust Anchor Database and track the result, but should always return a successful validation result to the TLS stack, thus allowing the {{BRSKI}} Provisional TLS connection to be established.
