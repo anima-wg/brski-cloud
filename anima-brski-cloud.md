@@ -36,6 +36,12 @@ normative:
 informative:
   RFC9525:
   I-D.irtf-t2trg-taxonomy-manufacturer-anchors:
+  WPS:
+    title: "Wi-Fi Protected Setup (WPS)"
+    date: January 2025
+    target: https://www.wi-fi.org/discover-wi-fi/wi-fi-protected-setup
+    author:
+      org: "WiFi Alliance"
 
 venue:
   group: anima
@@ -259,7 +265,7 @@ There are many ways to accomplish this, from routable IPv4 or IPv6 addresses, to
 There are DHCP options that a network operator can configure to accomplish any of these options.
 The Pledge operator has already connected the Pledge to the network, and the mechanism by which this has happened is out of scope of this document.
 For many telephony applications, this is typically going to be a wired
-connection. For wireless use cases, existing Wi-Fi onboarding mechanisms such as WPS can be used.
+connection. For wireless use cases, existing Wi-Fi onboarding mechanisms such as {{WPS}} can be used.
 
 Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the Pledge and the cloud registrar are all out of scope of this document.
 
