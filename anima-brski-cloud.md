@@ -112,14 +112,14 @@ Cloud VAR Registrar:
 
 ## Target Use Cases
 
-This document specifies and standardizes procedures for two high-level use cases.
+This document specifies procedures for two high-level use cases.
 
 - Bootstrap via Cloud Registrar and Owner Registrar: The operator-maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator-maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
 Common to both uses cases is that they aid with the use of BRSKI in the presence of many small sites, such as teleworkers, with minimum expectations against their network infrastructure.
 
-This use case also supports situations where a manufacturer sells a number of devices (in bulk) to a Value Added Resller (VAR).
+This use case also supports situations where a manufacturer sells a number of devices (in bulk) to a Value Added Reseller (VAR).
 The manufacturer knows which devices have been sold to which VAR, but not who the ultimate owner will be.
 The VAR then sells devices to other entities, such as enterprises, and records this.
 A typical example is a VoIP phone manufacturer provides telephones to a local system integration company (a VAR).
