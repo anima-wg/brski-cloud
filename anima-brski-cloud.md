@@ -203,9 +203,9 @@ Both mechanisms are described in detail later in this document.
 +--------+                                          +-----------+
 | Pledge |----------------------------------------->| Cloud     |
 +--------+                                          | Registrar |
-    |                                               +-----+-----+
-    |                                                     |
-    |                 +-----------+                 +-----+-----+
+    |                                               +-+---------+
+    |                                                 | BRSKI-MASA
+    |                 +-----------+                 +-----------+
     +---------------->|  Owner    |---------------->|   MASA    |
         VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
                       +-----------+
@@ -222,9 +222,9 @@ Both mechanisms are described in detail later in this document.
 +--------+                                          +-----------+
 | Pledge |----------------------------------------->| Cloud     |
 +--------+                                          | Registrar |
-    |                                               +-----+-----+
-    |                                                     |
-    |                                               +-----+-----+
+    |                                               +--+--------+
+    |                                                  | BRSKI-MASA
+    |                                               +--+--------+
     |                                               |   MASA    |
     |                                               +-----------+
     |                 +-----------+
@@ -239,6 +239,7 @@ Both mechanisms are described in detail later in this document.
 
 As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involve in the process.
 The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
+The interation between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
 
 The network operator or enterprise is the intended owner of the new device: the Pledge.
 This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
