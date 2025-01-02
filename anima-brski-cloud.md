@@ -313,8 +313,12 @@ According to {{BRSKI, Section 2.7}}, the Pledge MUST use an Implicit Trust Ancho
 The Pledge MUST establish a mutually authenticated TLS connection with the Cloud Registrar.
 Unlike the Provisional TLS procedures documented in {{BRSKI, Section 5.1}}, the Pledge MUST NOT establish a Provisional TLS connection with the Cloud Registrar.
 
-Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server_name" TLS extension (SNI, [RFC6066]).
-Pledges SHOULD send a valid "server_name" extension whenever they know the domain name of the registrar they connect to, unless it is known that Cloud or Owner Registrars for this Pledge implementation will never need to be deployed in a cloud setting requiring the "server_name" extension.
+Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server\_name" TLS extension (SNI, [RFC6066]) when using TLS 1.2.
+Support for SNI is mandatory with TLS 1.3.
+
+Pledges SHOULD send a valid "server\_name" extension (SNI) whenever they know the domain name of the registrar they connect to.
+A Pledge creating a Provisional TLS connection according to {{BRSKI}} will often only know the IPv6 link local IP address of a Join Proxy that connects it to the Registrar.
+Registrars are according expected to ignore SNI information, as in most cases, the Pledge will not know how to set the SNI correctly.
 
 The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
 The TLS connection can be verified using a public Web PKI trust anchor using {{RFC9525}} DNS-ID mechanisms or a pinned certification authority.
@@ -334,7 +338,8 @@ After the Pledge has established a mutually authenticated TLS connection with th
 
 The Cloud Registrar must determine Pledge ownership.
 Prior to ownership determination, the Registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the Pledge as defined by {{BRSKI}} and HTTP.
-In the case of an unknown Pledge a 404 is returned, for a malformed request 400 is returned, or in case of server overload 503 is returned.
+In the case of an unknown Pledge, a 404 is returned, for a malformed request, 400 is returned,
+or in case of server overload, 503 is returned.
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership at that time, then it MUST return a 401 Unauthorized response to the Pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
