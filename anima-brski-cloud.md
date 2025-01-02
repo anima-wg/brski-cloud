@@ -658,7 +658,9 @@ There are many tradeoffs to having more or less of the PKI present in the Pledge
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
 When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST establish a Provisional TLS connection with the Registrar as specified in {{BRSKI}}.
-The Pledge is unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or if it has been redirected to an Owner Registrar, and does not differentiate between the two scenarios.
+The Pledge is will be unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or if it has been redirected to an Owner Registrar at this stage.
+The determination needs to be made based upon whether or not the Pledge is able to validate the certificate for the new server.
+If the pledge can not validate, then the connection is considered a provisional connection.
 
 ## Considerations for Voucher est-domain
 
