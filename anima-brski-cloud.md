@@ -74,7 +74,7 @@ This work is in support of {{BRSKI, Section 2.7}}, which describes how a Pledge 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
 For instance, a SIP phone might have a client certificate to be used with a SIP proxy.
 
-This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that ere left out of scope in {{BRSKI}}.
+This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are left out of scope in {{BRSKI}}.
 Two modes of operation are specified in this document.
 The Cloud Registrar may redirect the Pledge to the owner's Registrar, or the Cloud Registrar may issue a voucher to the Pledge that includes the domain of the owner's Enrollment over Secure Transport {{!RFC7030}} (EST) server.
 
@@ -318,7 +318,7 @@ Support for SNI is mandatory with TLS 1.3.
 
 Pledges SHOULD send a valid "server\_name" extension (SNI) whenever they know the domain name of the registrar they connect to.
 A Pledge creating a Provisional TLS connection according to {{BRSKI}} will often only know the IPv6 link local IP address of a Join Proxy that connects it to the Registrar.
-Registrars are according expected to ignore SNI information, as in most cases, the Pledge will not know how to set the SNI correctly.
+Registrars are accordingly expected to ignore SNI information, as in most cases, the Pledge will not know how to set the SNI correctly.
 
 The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
 The TLS connection can be verified using a public Web PKI trust anchor using {{RFC9525}} DNS-ID mechanisms or a pinned certification authority.
@@ -338,8 +338,11 @@ After the Pledge has established a mutually authenticated TLS connection with th
 
 The Cloud Registrar must determine Pledge ownership.
 Prior to ownership determination, the Registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the Pledge as defined by {{BRSKI}} and HTTP.
-In the case of an unknown Pledge, a 404 is returned, for a malformed request, 400 is returned,
-or in case of server overload, 503 is returned.
+The Registrar returns the following errors:
+
+* in the case of an unknown Pledge, a 404 is returned, 
+* for a malformed request, 400 is returned
+* in case of server overload, 503 is returned.
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership at that time, then it MUST return a 401 Unauthorized response to the Pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
@@ -658,7 +661,7 @@ There are many tradeoffs to having more or less of the PKI present in the Pledge
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
 When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST establish a Provisional TLS connection with the Registrar as specified in {{BRSKI}}.
-The Pledge is will be unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or if it has been redirected to an Owner Registrar at this stage.
+The Pledge will be unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or if it has been redirected to an Owner Registrar at this stage.
 The determination needs to be made based upon whether or not the Pledge is able to validate the certificate for the new server.
 If the pledge can not validate, then the connection is considered a provisional connection.
 
