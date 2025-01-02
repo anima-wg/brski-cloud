@@ -189,7 +189,7 @@ For use case one, as described in {{bootstrap-via-cloud-registrar-and-owner-regi
 For use case two, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the Pledge to an Owner Registrar. The Cloud Registrar will inform the Pledge what domain to use for accessing EST services in the voucher response. In this model, the Pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing a certificate to the Pledge. This is illustrated in {{arch-two}}.
 
 It is also possible that the Cloud Registrar may redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
-This scenario is discussed further in Sections {{<multiple-http-redirects}} and {{<considerationsfor-http-redirect}}.
+This scenario is discussed further in Sections {{multiplehttpredirects}} and {{<considerationsfor-http-redirect}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
 
@@ -412,6 +412,7 @@ The Pledge MUST process any error messages as defined in {{BRSKI}}, and in case 
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
 In order to avoid permanent bootstrap cycles, the Pledge MUST NOT revisit a prior location.
+{{multiplehttpredirects}} further outlines risks associated with redirects.
 However, in some scenarios, Pledges MAY visit the current location multiple times, for example when handling a 401 Unauthorized response, or when handling a 503 Service Unavailable that includes a Retry-After HTTP header.
 If it happens that a location is repeated, then the Pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
 The Pledge MUST also have a limit on the total number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
@@ -601,7 +602,7 @@ It is RECOMMENDED therefore that the Pledge look for {{?RFC8910}} attributes in 
 
 The scenarios outlined here when a Pledge is deployed behind a captive portal may result in failure scenarios, but do not constitute a security risk, as the Pledge is correctly verifying all TLS connections as per {{BRSKI}}.
 
-## Multiple HTTP Redirects
+## Multiple HTTP Redirects {#multiplehttpredirects}
 
 If the Redirect to Registrar method is used, as described in {{redirect2Registrar}}, there may be a series of 307 redirects.
 An example of why this might occur is that the manufacturer only knows that it resold the device to a particular value added reseller (VAR), and there may be a chain of such VARs.
