@@ -549,14 +549,14 @@ In step 3, the the Cloud Registrar/MASA replies to the Pledge with an {{RFC8366b
 
 In step 4, the Pledge establishes a TLS connection with the EST RA specified in the voucher est-domain attribute.
 The connection may involve crossing the Internet requiring a DNS look up on the provided name.
-It may also be a local address that includes an IP address literal including both {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
+It may also be a local address that includes an IP address literal including both ipv4 {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
 The artifact provided in the pinned-domain-cert is trusted as a trust anchor, and is used to verify the EST server identity.
 The EST server identity MUST be verified using the pinned-domain-cert value provided in the voucher as described in {{?RFC7030}} section 3.3.1.
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC9525}} DNS-ID verification on the certificate against the domain provided in the est-domain attribute.
-If the est-domain was provided by with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
+If the est-domain was provided with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
 
@@ -568,7 +568,7 @@ In step 7, the EST server returns the requested certificate. The Pledge must ver
 
 # Lifecycle Considerations
 
-BRSKI and the Cloud Registrar support provided in this document are dependant upon the manufacturer maintaining the required infrastructure.
+BRSKI and the Cloud Registrar support provided in this document are dependent upon the manufacturer maintaining the required infrastructure.
 
 {{BRSKI, Section 10.7}} and Section 11.5 and 11.6 detail some additional considerations about device vs manufacturer life span.
 
