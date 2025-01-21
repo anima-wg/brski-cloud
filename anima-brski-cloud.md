@@ -462,6 +462,7 @@ This may require that the owner network firewall exposes the Owner Registrar on 
     |                                                 |
     | 3. 307 Location: owner-ra.example.com           |
     |<------------------------------------------------|
+    |                                                 |
     |
     |                  +-----------+             +---------+
     |                  | Owner     |             |  MASA   |
@@ -482,8 +483,9 @@ This may require that the owner network firewall exposes the Owner Registrar on 
     | 9. Verify TLS        |                          |
     |<-------------------->|                          |
     |                      |                          |
-    | 10. etc.             |                          |
-    |--------------------->|                          |
+    | 10. etc.             |
+    |--------------------->|
+    |                      |
 ~~~
 
 The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar using artifacts created during the manufacturing process of the Pledge.
