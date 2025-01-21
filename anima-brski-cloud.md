@@ -340,7 +340,7 @@ The Cloud Registrar must determine Pledge ownership.
 Prior to ownership determination, the Registrar checks the request for correctness and if it is unwilling or unable to handle the request, it MUST return a suitable 4xx or 5xx error response to the Pledge as defined by {{BRSKI}} and HTTP.
 The Registrar returns the following errors:
 
-* in the case of an unknown Pledge, a 404 is returned, 
+* in the case of an unknown Pledge, a 404 is returned,
 * for a malformed request, 400 is returned
 * in case of server overload, 503 is returned.
 
