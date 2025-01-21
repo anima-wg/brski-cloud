@@ -211,7 +211,7 @@ Both mechanisms are described in detail later in this document.
 +--------+                                          | Registrar |
     |                                               +-+---------+
     |                                                 | BRSKI-MASA
-    |                 +-----------+                 +-----------+
+    |                 +-----------+                 +-+---------+
     +---------------->|  Owner    |---------------->|   MASA    |
         VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
                       +-----------+
