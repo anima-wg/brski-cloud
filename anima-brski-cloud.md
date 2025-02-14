@@ -32,6 +32,7 @@ normative:
   RFC8994: ACP
   BRSKI: RFC8995
   RFC8366bis: I-D.ietf-anima-rfc8366bis
+  I-D.ietf-lamps-rfc7030-csrattrs:
 
 informative:
   RFC9525:
