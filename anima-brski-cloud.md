@@ -556,7 +556,7 @@ In step 4, the Pledge establishes a TLS connection with the EST RA specified in 
 The connection may involve crossing the Internet requiring a DNS look up on the provided name.
 It may also be a local address that includes an IP address literal including both IPv4 {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
 The artifact provided in the pinned-domain-cert is trusted as a trust anchor, and is used to verify the EST server identity.
-The EST server identity MUST be verified using the pinned-domain-cert value provided in the voucher as described in {{?RFC7030}} section 3.3.1.
+The EST server identity MUST be verified using the pinned-domain-cert value provided in the voucher as described in {{!RFC7030}} section 3.3.1.
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it may also be an EE certificate that is part of a larger PKI.
