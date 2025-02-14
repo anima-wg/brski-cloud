@@ -320,7 +320,7 @@ Pledges SHOULD send a valid "server\_name" extension (SNI) whenever they know th
 A Pledge creating a Provisional TLS connection according to {{BRSKI}} will often only know the IPv6 link local IP address of a Join Proxy that connects it to the Registrar.
 Registrars are accordingly expected to ignore SNI information, as in most cases, the Pledge will not know how to set the SNI correctly.
 
-The Pledge MUST be manufactured with pre-loaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
+The Pledge MUST be manufactured with preloaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
 The TLS connection can be verified using a public Web PKI trust anchor using {{RFC9525}} DNS-ID mechanisms or a pinned certification authority.
 This is a local implementation decision.
 Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security considerations.
