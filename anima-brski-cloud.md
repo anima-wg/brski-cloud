@@ -41,7 +41,7 @@ informative:
     date: January 2025
     target: https://www.wi-fi.org/discover-wi-fi/wi-fi-protected-setup
     author:
-      org: "WiFi Alliance"
+      org: "Wi-Fi Alliance"
 
 venue:
   group: anima
