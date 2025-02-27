@@ -208,16 +208,16 @@ Both mechanisms are described in detail later in this document.
 
  On-site                Cloud
 +--------+                                          +-----------+
-| Pledge |----------------------------------------->| Cloud     |
+| Pledge |------------------------------------------| Cloud     |
 +--------+                                          | Registrar |
     |                                               +-+---------+
     |                                                 | BRSKI-MASA
     |                 +-----------+                 +-+---------+
-    +---------------->|  Owner    |---------------->|   MASA    |
+    +---------------->|  Owner    |-----------------|   MASA    |
         VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
                       +-----------+
                             |    +-----------+
-                            +--->|    CA     |
+                            +----|    CA     |
                                  +-----------+
 ~~~
 {: #arch-one title="Architecture: Bootstrap via Cloud Registrar and Owner Registrar"}
@@ -227,7 +227,7 @@ Both mechanisms are described in detail later in this document.
 
  On-site                Cloud
 +--------+                                          +-----------+
-| Pledge |----------------------------------------->| Cloud     |
+| Pledge |------------------------------------------| Cloud     |
 +--------+                                          | Registrar |
     |                                               +--+--------+
     |                                                  | BRSKI-MASA
@@ -235,7 +235,7 @@ Both mechanisms are described in detail later in this document.
     |                                               |   MASA    |
     |                                               +-----------+
     |                 +-----------+
-    +---------------->| EST       |
+    +-----------------| EST       |
                       | Server    |
                       +-----------+
                             |    +-----------+
