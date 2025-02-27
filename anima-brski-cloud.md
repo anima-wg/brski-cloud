@@ -489,7 +489,7 @@ This may require that the owner network firewall exposes the Owner Registrar on 
     |                      |
 ~~~
 
-The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar using artifacts created during the manufacturing process of the Pledge.
+The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar using the IDevID certificate and the trust anchors created during the manufacturing process of the Pledge.
 
 In step 2, the Pledge sends a voucher request to the Cloud Registrar.
 
