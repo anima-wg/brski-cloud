@@ -650,7 +650,8 @@ Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that 
 (Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be connectivity possible.
 For instance, the device could be without a default route or NAT44, but able to make HTTP requests via an HTTP proxy configured via DHCP)
 
-There is another advantage to being online: the Pledge may be able to contact the manufacturer before bootstrapping in order to apply the latest firmware updates.
+There is another advantage to being online: the Pledge SHOULD contact the manufacturer before bootstrapping in order to apply any available firmware patches.
+Manufacturers are encouraged to make MUD {{?RFC8520}} files available, and in those definitions to allow for retrieval of firmware updates.
 This may also include updates to the Implicit list of Trust Anchors.
 In this way, a Pledge that may have been in a dusty box in a warehouse for a long time can be updated to the latest (exploit-free) firmware before attempting bootstrapping.
 
