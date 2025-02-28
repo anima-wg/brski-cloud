@@ -280,7 +280,7 @@ as the EST server as per {{Section 2.6 of !RFC7030}}, and MUST NOT send the CSR
 Attributes request to the Cloud Registrar.
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server may use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
-This can be useful if the Subject must have a specific value in order to complete enrollment with the CA.
+This can be useful if the Subject or Subject Alternative Name identity must have a specific value in order to complete enrollment with the CA.
 
 EST {{!RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
 {{!I-D.ietf-lamps-rfc7030-csrattrs}} clarifies how a server can use CSR Attributes response to specify specific values for attributes that the client should include in its CSR.
