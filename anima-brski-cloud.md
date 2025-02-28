@@ -73,7 +73,7 @@ Internet.
 This work is in support of {{BRSKI, Section 2.7}}, which describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge's target use cases do not include a local Registrar.
 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
-For instance, a SIP phone might have a client certificate to be used with a SIP proxy.
+For instance, a SIP {{!RFC3261}} phone might have a client certificate to be used with a SIP proxy.
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are left out of scope in {{BRSKI}}.
 Two modes of operation are specified in this document.
@@ -244,7 +244,7 @@ Both mechanisms are described in detail later in this document.
 ~~~
 {: #arch-two title="Architecture: Bootstrap via Cloud Registrar and Owner EST Service"}
 
-As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involve in the process.
+As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involved in the process.
 The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
 The interation between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
 
@@ -590,7 +590,7 @@ This document makes no IANA requests.
 
 ## Captive Portals
 
-A Pledge may be deployed in a network where a captive portal or an intelligent home gateway that provides access control on all connections is also deployed.
+A Pledge might find itself deployed in a network where a captive portal or an intelligent home gateway that provides access control on all connections is also deployed.
 Captive portals that do not follow the requirements of {{?RFC8952}} section 1 may forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
@@ -635,7 +635,7 @@ This includes dependency upon continued operation of the manufacturer provided M
 resale of a device.
 
 In addition to the dependency upon the MASA, the successful enrollment of a device using a Cloud Registrar depends upon the correct and continued operation of this new service.
-This internet accessible service may be operated by the manufacturer and/or by one or more value-added-resellers.
+This internet accessible service might be operated by the manufacturer and/or by one or more value-added-resellers.
 All the considerations for operation of the MASA also apply to operation of the Cloud Registrar.
 
 ## Security Updates for the Pledge
@@ -673,7 +673,7 @@ If the pledge can not validate, then the connection is considered a provisional 
 
 A Cloud Registrar supporting the same set of Pledges as a MASA may be integrated with the MASA to avoid the need for a network based API between them, and without changing their external behavior as specified here.
 
-When a Cloud Registrar handles the scenario described in {bootstrapping-with-no-owner-registrar} by the returning "est-domain" attribute in the voucher, the Cloud Registrar actually does all the voucher processing as specified in {{BRSKI}}.
+When a Cloud Registrar handles the scenario described in {bootstrap-via-cloud-registrar-and-owner-est-service} by the returning "est-domain" attribute in the voucher, the Cloud Registrar actually does all the voucher processing as specified in {{BRSKI}}.
 This is an example deployment scenario where the Cloud Registrar may be operated by the same entity as the MASA, and it may even be integrated with the MASA.
 
 When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain" attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
