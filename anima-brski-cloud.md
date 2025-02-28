@@ -569,13 +569,12 @@ It also explicitly includes the case where the EST server has a self-signed EE C
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC9525}} DNS-ID verification on the certificate against the domain provided in the est-domain attribute.
 If the est-domain was provided with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
-The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
-
 In steps 5.a and 5.b, the Pledge may optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
 This is described in {{BRSKI, Section 5.7}}
 This telemetry returns allow for the Registrar to better provide diagnostics in the event of failure to onboard.
 
 In step 6, the Pledge sends an EST Enroll request with the CSR.
+The Pledge can now proceed with the EST enrollment step, including retrieval of any CSR attributes that it might need.
 
 In step 7, the EST server returns the requested certificate. The Pledge must verify that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
 
