@@ -413,9 +413,10 @@ If validation of this identity succeeds using the Implicit Trust Anchor Database
 The Pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
 
 However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the Pledge MUST NOT accept the 307 responses from the Registrar.
+
 At this point, the TLS connection that has been established is considered a Provisional TLS, as per {{BRSKI, Section 5.1}}.
 The Pledge then (re)sends a voucher-request on this connection.
-This connection is validated using the pinned data from the voucher, which is the standard BRSKI mechanism.
+As explained by {{BRSKI}}, the connection is validated using the pinned credential from the voucher.
 
 The Pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
