@@ -277,7 +277,9 @@ For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registra
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the Pledge sends the CSR Attributes request to the EST server.
 Note that the Pledge only sends the CSR Attributes request to the entity acting
 as the EST server as per {{Section 2.6 of !RFC7030}}, and MUST NOT send the CSR
-Attributes request to the Cloud Registrar.
+Attributes request to the Cloud Registrar, because the Cloud Registrar does not have authority to issue a certificate for the customer domain.  (The Cloud Registrar is not a full EST server)
+If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 response code.
+
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server may use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject or Subject Alternative Name identity must have a specific value in order to complete enrollment with the CA.
@@ -329,7 +331,7 @@ Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security conside
 The Cloud Registrar MUST verify the identity of the Pledge by sending a TLS CertificateRequest message to the Pledge during TLS session establishment.
 The Cloud Registrar MAY include a certificate_authorities field in the message to specify the set of allowed IDevID issuing CAs that Pledges may use when establishing connections with the Cloud Registrar.
 
-To protect itself against DoS attacks, the Cloud Registrar SHOULD reject TLS connections when it can determine during TLS authentication that it cannot support the Pledge, for example because the Pledge cannot provide an IDevID signed by a CA recognized/supported by the Cloud Registrar.
+In addition to other protections against DoS attacks, the Cloud Registrar is able to reject TLS connections when it can determine during TLS authentication that it cannot support the Pledge.  For example, the Pledge cannot provide an IDevID signed by a CA recognized/supported by the Cloud Registrar.
 
 ### Pledge Sends Voucher Request Message
 
