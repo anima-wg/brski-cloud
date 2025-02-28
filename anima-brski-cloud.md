@@ -402,12 +402,12 @@ The Cloud Registrar may be redirecting the Pledge to the Owner Registrar, or to 
 The Pledge MUST restart its bootstrapping process by sending a new voucher
 request message (with a fresh nonce) using the location provided in the HTTP redirect.
 
-The Pledge SHOULD attempt to validate the identity of the Cloud VAR Registrar specified in the 307 response using its Implicit Trust Anchor Database.
+The Pledge MUST attempt to validate the identity of the Cloud VAR Registrar specified in the 307 response using its Implicit Trust Anchor Database.
 If validation of this identity succeeds using the Implicit Trust Anchor Database, then the Pledge MAY accept a subsequent 307 response from this Cloud VAR Registrar.
 
 The Pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
 
-However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the Pledge MUST NOT accept any further 307 responses from the Registrar.
+However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the Pledge MUST NOT accept the 307 responses from the Registrar.
 At this point, the TLS connection that has been established is considered a Provisional TLS, as per {{BRSKI, Section 5.1}}.
 The Pledge then (re)sends a voucher-request on this connection.
 This connection is validated using the pinned data from the voucher, which is the standard BRSKI mechanism.
@@ -620,10 +620,6 @@ Instead, the VAR MUST return a 404 error if it cannot process the device.
 This will force the device to stop, timeout, and then try all mechanisms again.
 
 There are additional considerations regarding TLS certificate validation that must be accounted for as outlined in {{redirect-response}}.
-When the Pledge follows a 307 redirect from the default Cloud Registrar, it will attempt to establish a TLS connection with the redirected target Registrar.
-The Pledge implementation will typically register a callback with the TLS stack, where the TLS stack allows the implementation to validate the identity of the Registrar.
-The Pledge should check whether the identity of the Registrar can be validated with its Implicit Trust Anchor Database and track the result, but should always return a successful validation result to the TLS stack, thus allowing the {{BRSKI}} Provisional TLS connection to be established.
-The Pledge will then send a Voucher Request to the Registrar.
 If the Registrar returns a 307 response, the Pledge MUST NOT follow this redirect if the Registrar identity was not validated using its Implicit Trust Anchor Database.
 If the Registrar identity was validated using the Implicit Trust Anchor Database, then the Pledge MAY follow the redirect.
 
