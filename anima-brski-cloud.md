@@ -329,7 +329,7 @@ Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security conside
 The Cloud Registrar MUST verify the identity of the Pledge by sending a TLS CertificateRequest message to the Pledge during TLS session establishment.
 The Cloud Registrar MAY include a certificate_authorities field in the message to specify the set of allowed IDevID issuing CAs that Pledges may use when establishing connections with the Cloud Registrar.
 
-To protect itself against DoS attacks, the Cloud Registrar SHOULD reject TLS connections when it can determine during TLS authentication that it cannot support the Pledge, for example because the Pledge cannot provide an IDevID signed by a CA recognized/supported by the Cloud Registrar.
+In addition to other protections against DoS attacks, the Cloud Registrar is able to reject TLS connections when it can determine during TLS authentication that it cannot support the Pledge.  For example, the Pledge cannot provide an IDevID signed by a CA recognized/supported by the Cloud Registrar.
 
 ### Pledge Sends Voucher Request Message
 
