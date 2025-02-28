@@ -106,7 +106,7 @@ Owner Registrar:
 There may not be an Owner Registrar in all deployment scenarios.
 
 OEM:
-: Original Equipment Manufacturer
+: Original Equipment Manufacturer.  The company that created the device.
 
 Provisional TLS:
 : A mechanism defined in {{BRSKI, Section 5.1}} whereby a Pledge establishes a provisional TLS connection with a Registrar before the Pledge is provisioned with a trust anchor that can be used for verifying the Registrar identity.
@@ -115,7 +115,7 @@ SIP:
 : Session Initiation Protocol defined in {{?RFC3261}}
 
 VAR:
-: Value Added Reseller
+: Value Added Reseller.  A VAR will often collect products from many OEMs, creating a complete solution, and then sells that composite solution to end customers.  A VAR will often need to provision products to be operate in a specific manner.  For instance, a VoIP phone might have SIP functionality as well as MGCP functionality, but in a particular deployment, only one will be used.
 
 Cloud VAR Registrar:
 : The non-default Registrar that is operated by a value added reseller (VAR).
