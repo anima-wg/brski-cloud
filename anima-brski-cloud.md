@@ -129,7 +129,7 @@ This document specifies procedures for two high-level use cases.
 - Bootstrap via Cloud Registrar and Owner Registrar: The operator-maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator-maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
-In both uses cases the procedures speficied here aid with the use of BRSKI in many small sites, such as teleworkers working from home, with minimum expectations against their network infrastructure.
+In both uses cases the procedures specifed here aid with the use of BRSKI in many small sites, such as teleworkers working from home, with minimum expectations against their network infrastructure.
 
 The procedures defined in this document also support situations where a manufacturer sells a number of devices (in bulk) to a Value Added Reseller (VAR).
 The manufacturer knows which devices have been sold to which VAR, but not who the ultimate owner will be.
