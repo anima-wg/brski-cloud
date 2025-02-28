@@ -592,6 +592,9 @@ The well-known URL that is used is specified by the manufacturer when designing 
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
 In the event of a merger between two companies, then the mechanism that is described in section 7.2 MAY be applicable.
 
+In the hosted Registrar, with an Owner EST Server {{voucher2EST}} use case, the Cloud Registrar MUST know the certificate for the EST Server in order to pin it properly.
+In that case, when the owner of the EST Server wishes to change their certificate, then they MUST coordinate this with the upstream Cloud Registrar operator.
+
 # IANA Considerations
 
 This document makes no IANA requests.
