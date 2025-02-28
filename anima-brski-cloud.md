@@ -277,7 +277,9 @@ For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registra
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the Pledge sends the CSR Attributes request to the EST server.
 Note that the Pledge only sends the CSR Attributes request to the entity acting
 as the EST server as per {{Section 2.6 of !RFC7030}}, and MUST NOT send the CSR
-Attributes request to the Cloud Registrar.
+Attributes request to the Cloud Registrar, because the Cloud Registrar does not have authority to issue a certificate for the customer domain.  (The Cloud Registrar is not a full EST server)
+If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 response code.
+
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server may use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
 This can be useful if the Subject or Subject Alternative Name identity must have a specific value in order to complete enrollment with the CA.
