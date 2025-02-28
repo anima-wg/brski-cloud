@@ -580,6 +580,7 @@ BRSKI and the Cloud Registrar support provided in this document are dependent up
 
 The well-known URL that is used is specified by the manufacturer when designing its firmware, and is therefore completely under the manufacturer's control.
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
+In the event of a merger between two companies, then the mechanism that is described in section 7.2 may be applicable.
 
 # IANA Considerations
 
