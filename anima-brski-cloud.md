@@ -486,9 +486,9 @@ This may require that the owner network firewall exposes the Owner Registrar on 
     | 9. Verify TLS        |                          |
     |<-------------------->|                          |
     |                      |                          |
-    | 10. etc.             |
+    | 10. EST enroll       |
     |--------------------->|
-    |                      |
+    |<---------------------|
 ~~~
 
 The process starts, in step 1, when the Pledge establishes a Mutual TLS channel with the Cloud Registrar using the IDevID certificate and the trust anchors created during the manufacturing process of the Pledge.
@@ -498,7 +498,7 @@ In step 2, the Pledge sends a voucher request to the Cloud Registrar.
 The Cloud Registrar determines Pledge ownership look up as outlined in {{PledgeOwnershipLookup}}, and determines the Owner Registrar domain.
 In step 3, the Cloud Registrar redirects the Pledge to the Owner Registrar domain.
 
-Steps 4 and onwards follow the standard BRSKI flow.
+Steps 4 and onwards follow the standard BRSKI flow, which includes doing EST enroll operations.
 The Pledge establishes a Provisional TLS connection with the Owner Registrar, and sends a voucher request to the Owner Registrar.
 The Registrar forwards the voucher request to the MASA.
 Assuming the MASA issues a voucher, then the Pledge verifies the TLS connection with the Registrar using the pinned-domain-cert from the voucher and completes the BRSKI flow.
