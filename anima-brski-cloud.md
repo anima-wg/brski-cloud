@@ -679,7 +679,7 @@ If the pledge can not validate, then the connection is considered a provisional 
 
 A Cloud Registrar supporting the same set of Pledges as a MASA MAY be integrated with the MASA to avoid the need for a network based API between them, and without changing their external behavior as specified here.
 
-When a Cloud Registrar handles the scenario described in {bootstrap-via-cloud-registrar-and-owner-est-service} by the returning "est-domain" attribute in the voucher, the Cloud Registrar actually does all the voucher processing as specified in {{BRSKI}}.
+When a Cloud Registrar handles the scenario described in {bootstrap-via-cloud-registrar-and-owner-est-service} by the returning "est-domain" attribute in the voucher, the Cloud Registrar MUST do all the voucher processing as specified in {{BRSKI}}.
 This is an example deployment scenario where the Cloud Registrar MAY be operated by the same entity as the MASA, and it MAY even be integrated with the MASA.
 
 When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain" attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
