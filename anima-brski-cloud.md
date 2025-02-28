@@ -73,7 +73,7 @@ Internet.
 This work is in support of {{BRSKI, Section 2.7}}, which describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge's target use cases do not include a local Registrar.
 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
-For instance, a SIP {{!RFC3261}} phone might have a client certificate to be used with a SIP proxy.
+For instance, a SIP {{?RFC3261}} phone might have a client certificate to be used with a SIP proxy.
 
 This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are left out of scope in {{BRSKI}}.
 Two modes of operation are specified in this document.
@@ -110,6 +110,9 @@ OEM:
 
 Provisional TLS:
 : A mechanism defined in {{BRSKI, Section 5.1}} whereby a Pledge establishes a provisional TLS connection with a Registrar before the Pledge is provisioned with a trust anchor that can be used for verifying the Registrar identity.
+
+SIP:
+: Session Initiation Protocol defined in {{?RFC3261}}
 
 VAR:
 : Value Added Reseller
