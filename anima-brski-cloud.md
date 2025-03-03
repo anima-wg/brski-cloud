@@ -684,10 +684,17 @@ In most cases, the end customer's Registrar will have a private PKI that will be
 
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
-When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST establish a Provisional TLS connection with the Registrar as specified in {{BRSKI}}.
-The Pledge will be unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or if it has been redirected to an Owner Registrar at this stage.
-The determination needs to be made based upon whether or not the Pledge is able to validate the certificate for the new server.
-If the pledge can not validate, then the connection is considered a provisional connection.
+When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST have validated the TLS connection using an Implicit Trust Anchor.
+
+However, when connecting to the target Owner Registrar, a provisional TLS connection is required as explained in {{BRSKI, Section 5.1}}.
+
+There is a conflict between these requirements: one says to validate, and the other one says not to.
+This is resolved by having the Pledge attempt validation, and if it succeeds, then an HTTP 307 redirect will be accepted.
+If validation fails, then an HTTP 307 redirect MUST be rejected as an error.
+If that occurs, then the onboarding process SHOULD restart after a delay.
+This failure should be reported to the initial Cloud Registrar via the mechanism described in {{BRSKI, Section 5.7}}.
+
+Note that for use case two, in which redirection to an EST Server occurs, then there is no provisional TLS connection at all.  The connection to the last Cloud Registrar is validated using the Implicit Trust Database, while the EST Server connection is validated by the certificate pinned by the Voucher artifact.
 
 ## Considerations for Voucher est-domain
 
