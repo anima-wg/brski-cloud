@@ -1,7 +1,7 @@
 ---
 title: "BRSKI Cloud Registrar"
 abbrev: BRSKI-CLOUD
-docname: draft-ietf-anima-brski-cloud-13
+docname: draft-ietf-anima-brski-cloud-14
 category: std
 ipr: trust200902
 updates: 8995
@@ -661,24 +661,40 @@ In this way, a Pledge that may have been in a dusty box in a warehouse for a lon
 
 ## Trust Anchors for Cloud Registrar
 
-The Implicit Trust Anchor database is used to authenticate the Cloud Registrar.
-This list is built-in by the manufacturer along with a DNS name to which to connect.
-(The manufacturer could even build in IP addresses as a last resort)
+In order to validate the HTTPS connections to the (series of) Cloud Registrars, the Pledge will need to have an Implicit Trust Anchor database, as described in {{RFC7030, Section 3.6.1}}, to verify the Cloud Registrar's certificate.
 
-The Cloud Registrar MAY have a certificate that can be verified using a public (WebPKI) anchor.
-If one or more public WebPKI anchors are used, it is recommended to limit the number of WebPKI anchors to only those necessary for establishing trust with the Cloud Registrar.
-As another option, the Cloud Registrar MAY have a certificate that can be verified using a Private/Cloud PKI anchor as described in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
-The trust anchor, or trust anchors, to use is an implementation decision and out of scope of this document.
+There is no requirement that Cloud Registrar's certificates are part of the public (WebPKI) database, but it is likely simpler and cheaper for most such systems to use easily obtained certificates.
 
-The Pledge MAY have any kind of Trust Anchor built in: from full multi-level WebPKI to the single self-signed certificate used by the Cloud Registrar.
-There are many tradeoffs to having more or less of the PKI present in the Pledge, which is addressed in part in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} in sections 3 and 5.
+Device manufacturers therefore need to include enough trust anchor in their devices (the Pledges) so that all expected Cloud Registrar's can be validated.
+This argues for including more trust anchors.
+
+On the other hand, minimizing the number of trust anchors reduces the security exposure should fraudulent certificates ever be issued.
+More trust anchors also implies more maintenance to maintain and update this Implicit Trust Anchor database as different certification authorities renew their trust anchors.
+
+A device manufacturer could instead ship only their own internal, private trust anchors for a PKI that the manufacturer operates.
+This is described in in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
+This would imply that all Cloud Registrars (likely operated by VARs) would have to obtain a certificate from the manufacturer.
+This has advantages in reliability and predictability, but likely makes the Cloud Registrars much more costly to operate.
+In particular, tying the VARs' Cloud Registrar to a single manufacturer means that the VARs might have to operate a Cloud Registrar for each brand of equipment that they represent.
+
+The recommendation is therefore for manufacturers to work with their VARs to determine if there is a subset of public PKIs that would satisfy all their VARs, and to ship only that subset.
+
+The final onboarding step, wherein an RFC8366 voucher artifact is returned to authenticate the provisional TLS connection, can use any kind of trust anchor: private or public.
+In most cases, the end customer's Registrar will have a private PKI that will be pinned by the voucher.
 
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
-When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST establish a Provisional TLS connection with the Registrar as specified in {{BRSKI}}.
-The Pledge will be unable to determine whether it has been redirected to another Cloud Registrar that is operated by a VAR, or if it has been redirected to an Owner Registrar at this stage.
-The determination needs to be made based upon whether or not the Pledge is able to validate the certificate for the new server.
-If the pledge can not validate, then the connection is considered a provisional connection.
+When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner Registrar, or another Cloud Registrar operated by a VAR, the Pledge MUST have validated the TLS connection using an Implicit Trust Anchor.
+
+However, when connecting to the target Owner Registrar, a provisional TLS connection is required as explained in {{BRSKI, Section 5.1}}.
+
+There is a conflict between these requirements: one says to validate, and the other one says not to.
+This is resolved by having the Pledge attempt validation, and if it succeeds, then an HTTP 307 redirect will be accepted.
+If validation fails, then an HTTP 307 redirect MUST be rejected as an error.
+If that occurs, then the onboarding process SHOULD restart after a delay.
+This failure should be reported to the initial Cloud Registrar via the mechanism described in {{BRSKI, Section 5.7}}.
+
+Note that for use case two, in which redirection to an EST Server occurs, then there is no provisional TLS connection at all.  The connection to the last Cloud Registrar is validated using the Implicit Trust Database, while the EST Server connection is validated by the certificate pinned by the Voucher artifact.
 
 ## Considerations for Voucher est-domain
 
