@@ -535,20 +535,27 @@ The assumption is that the EST domain is accessible, and the Pledge can establis
     |                 | Server   |                    |
     |                 +----------+                    |
     |                      |                          |
-    | 4. Authenticated TLS |                          |
+    | 4. Authenticate TLS  |                          |
     |<-------------------->|                          |
     |                                                 |
-    |     5a. /voucher_status POST  success           |
+    | 5a. On success: POST /voucher_status success    |
+    | 5b. On failure: POST /voucher_status failure    |
     |------------------------------------------------>|
-    |     ON FAILURE 5b. /voucher_status POST         |
     |                                                 |
-    | 6. EST Enroll        |                          |
+    | 6. CSR Attributes    |                          |
+    |    Request           |                          |
+    |--------------------->|                          |
+    | 7. CSR Attributes    |                          |
+    |    Response          |                          |
     |--------------------->|                          |
     |                      |                          |
-    | 7. Certificate       |                          |
+    | 8. EST Enroll        |                          |
+    |--------------------->|                          |
+    |                      |                          |
+    | 9. Certificate       |                          |
     |<---------------------|                          |
     |                      |                          |
-    | 8. /enrollstatus     |                          |
+    | 10. /enrollstatus    |                          |
     |--------------------->|                          |
 ~~~
 
@@ -558,9 +565,10 @@ In step 2, the Pledge sends a voucher request to the Cloud Registrar/MASA.
 
 In step 3, the the Cloud Registrar/MASA replies to the Pledge with an {{RFC8366bis}} format voucher that includes its assigned EST domain in the est-domain attribute.
 
-In step 4, the Pledge establishes a TLS connection with the EST RA specified in the voucher est-domain attribute.
+In step 4, the Pledge establishes a TLS connection with the EST RA that was specified in the voucher est-domain attribute.
 The connection may involve crossing the Internet requiring a DNS look up on the provided name.
 It MAY also be a local address that includes an IP address literal including both IPv4 {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
+The Pledge attempts to authentiate the TLS connection and verify the EST server identity.
 The artifact provided in the pinned-domain-cert is trusted as a trust anchor, and is used to verify the EST server identity.
 The EST server identity MUST be verified using the pinned-domain-cert value provided in the voucher as described in {{!RFC7030}} section 3.3.1.
 
@@ -569,24 +577,27 @@ It also explicitly includes the case where the EST server has a self-signed EE C
 If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC9525}} DNS-ID verification on the certificate against the domain provided in the est-domain attribute.
 If the est-domain was provided with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
-The Pledge also has the details it needs to be able to create the CSR request to send to the RA based on the details provided in the voucher.
-
 In steps 5.a and 5.b, the Pledge MAY optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
-This is described in {{BRSKI, Section 5.7}}
+This is described in Section 5.7 of {{BRSKI}}
 This telemetry returns allow for the Registrar to better provide diagnostics in the event of failure to onboard.
+if the Pledge fails to verify the identity of the EST server, it MUST drop the connection and MUST NOT continue with a CSR Attributes request or an EST Enroll request.
 
-In step 6, the Pledge sends an EST Enroll request with the CSR.
+In step 6, the Pledge follows the procedures outlined in {pledge-certificate-identity-considerations} and sends a CSR Attributes request to the EST server before sending the EST Enroll request.
 
-In step 7, the EST server returns the requested certificate. The Pledge must verify that the issued certificate has the expected identifier obtained from the Cloud Registrar/MASA in step 3.
+In step 7, the EST server returns the CSR Attributes response.
 
-Step 8 is described in {{BRSKI, Section 5.9.4}}, as the Enrollment Status Telemetry.
-This telemetry return also allows for better diagnostics in th event of a failure.
+In step 8, the Pledge sends an EST Enroll request with the CSR.
+
+In step 9, the EST server returns the requested certificate.
+
+Step 10 is described in Section 5.9.4 of {{BRSKI}} as the Enrollment Status Telemetry.
+This telemetry return also allows for better diagnostics in the event of a failure.
 
 # Lifecycle Considerations
 
-BRSKI and the Cloud Registrar support provided in this document are dependent upon the manufacturer maintaining the required infrastructure.
+BRSKI and the Cloud Registrar support provided in this document are dependent upon the manufacturer maintaining the required infrastructure. Section 10.7 of {{BRSKI}} outlines additional considerations about manufacturer life span.
 
-{{BRSKI, Section 10.7}} and Section 11.5 and 11.6 detail some additional considerations about device vs manufacturer life span.
+Sections 11.5 and 11.6 of {{BRSKI}} outline additional considerations about device trust anchors and how devices establish trust.
 
 The well-known URL that is used is specified by the manufacturer when designing its firmware, and is therefore completely under the manufacturer's control.
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
@@ -604,10 +615,10 @@ This document makes no IANA requests.
 ## Captive Portals
 
 A Pledge might find itself deployed in a network where a captive portal or an intelligent home gateway that provides access control on all connections is also deployed.
-Captive portals that do not follow the requirements of {{?RFC8952}} section 1 MAY forcibly redirect HTTPS connections.
+Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} MAY forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-When the Pledge attempts to connect to the Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check {{?RFC9525, Section 6.3}}.
+When the Pledge attempts to connect to the Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{?RFC9525}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), MAY then permit that connection.
@@ -633,7 +644,7 @@ A "helpful" programmer might instead decide to redirect back to the manufacturer
 Instead, the VAR MUST return a 404 error if it cannot process the device.
 This will force the device to stop, timeout, and then try all mechanisms again.
 
-There are additional considerations regarding TLS certificate validation that must be accounted for as outlined in {{redirect-response}}.
+There are additional considerations regarding TLS certificate validation as outlined in {{redirect-response}}.
 If the Registrar returns a 307 response, the Pledge MUST NOT follow this redirect if the Registrar identity was not validated using its Implicit Trust Anchor Database.
 If the Registrar identity was validated using the Implicit Trust Anchor Database, then the Pledge MAY follow the redirect.
 
@@ -652,7 +663,7 @@ All the considerations for operation of the MASA also apply to operation of the 
 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
 (Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be connectivity possible.
-For instance, the device could be without a default route or NAT44, but able to make HTTP requests via an HTTP proxy configured via DHCP)
+For instance, the device could be without a default route or NAT44, but able to make HTTP requests via an HTTP proxy configured via DHCP.)
 
 There is another advantage to being online: the Pledge SHOULD contact the manufacturer before bootstrapping in order to apply any available firmware patches.
 Manufacturers are encouraged to make MUD {{?RFC8520}} files available, and in those definitions to allow for retrieval of firmware updates.
@@ -663,10 +674,10 @@ In this way, a Pledge that may have been in a dusty box in a warehouse for a lon
 
 The Implicit Trust Anchor database is used to authenticate the Cloud Registrar.
 This list is built-in by the manufacturer along with a DNS name to which to connect.
-(The manufacturer could even build in IP addresses as a last resort)
+(The manufacturer could even build in IP addresses as a last resort.)
 
-The Cloud Registrar MAY have a certificate that can be verified using a public (WebPKI) anchor.
-If one or more public WebPKI anchors are used, it is recommended to limit the number of WebPKI anchors to only those necessary for establishing trust with the Cloud Registrar.
+The Cloud Registrar MAY have a certificate that can be verified using a public (WebPKI) trust anchor.
+If one or more public WebPKI trust anchors are used, it is recommended to limit the number of WebPKI anchors to only those necessary for establishing trust with the Cloud Registrar.
 As another option, the Cloud Registrar MAY have a certificate that can be verified using a Private/Cloud PKI anchor as described in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
 The trust anchor, or trust anchors, to use is an implementation decision and out of scope of this document.
 
@@ -689,7 +700,7 @@ This is an example deployment scenario where the Cloud Registrar MAY be operated
 
 When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain" attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
 
-The reduced operational security mechanisms outlined in {{BRSKI}} sections 7.3 and 11 MAY be supported when the Pledge connects with the EST server.
+The reduced operational security mechanisms outlined in Sections 7.3 and 11 of {{BRSKI}} MAY be supported when the Pledge connects with the EST server.
 These mechanisms reduce the security checks that take place when the Pledge enrolls with the EST server.
 Refer to {{BRSKI}} sections 7.3 and 11 for further details.
 
