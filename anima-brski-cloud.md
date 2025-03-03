@@ -547,7 +547,7 @@ The assumption is that the EST domain is accessible, and the Pledge can establis
     |--------------------->|                          |
     | 7. CSR Attributes    |                          |
     |    Response          |                          |
-    |--------------------->|                          |
+    |<---------------------|                          |
     |                      |                          |
     | 8. EST Enroll        |                          |
     |--------------------->|                          |
