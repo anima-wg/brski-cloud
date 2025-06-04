@@ -28,7 +28,6 @@ author:
 
 normative:
   RFC6066: SNI
-  RFC8366: VOUCHER
   RFC8994: ACP
   BRSKI: RFC8995
   RFC8366bis: I-D.ietf-anima-rfc8366bis
@@ -84,7 +83,7 @@ The Cloud Registrar MAY redirect the Pledge to the owner's Registrar, or the Clo
 
 {::boilerplate bcp14}
 
-This document uses the terms Pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366}}.
+This document uses the terms Pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366bis}}.
 
 Cloud Registrar:
 : The default Registrar that is deployed at a URI that is well known to the Pledge.
@@ -690,7 +689,7 @@ In particular, tying the VARs' Cloud Registrar to a single manufacturer means th
 
 The recommendation is therefore for manufacturers to work with their VARs to determine if there is a subset of public PKIs that would satisfy all their VARs, and to ship only that subset.
 
-The final onboarding step, wherein an RFC8366 voucher artifact is returned to authenticate the provisional TLS connection, can use any kind of trust anchor: private or public.
+The final onboarding step, wherein an {{RFC8366bis}} voucher artifact is returned to authenticate the provisional TLS connection, can use any kind of trust anchor: private or public.
 In most cases, the end customer's Registrar will have a private PKI that will be pinned by the voucher.
 
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
