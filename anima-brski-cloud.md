@@ -129,8 +129,8 @@ This document specifies procedures for two high-level use cases.
 - Bootstrap via Cloud Registrar and Owner Registrar: The operator-maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator-maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
-While there are DHCP options that a network operator can configure to complete onboarding of devices such as a VoIP phone.
-On a well managed campus or enterprise network, the network operator can use DHCP options 66, 150 (TFTP/HTTP server names), option 120 (SIP Server), or even option 157 (Certificate Provisioning) to inform a VoIP phone about how to do application onboarding.
+There are DHCP options that a network operator can use to configure devices such as a VoIP phone.
+DHCP options 66, 150 (TFTP/HTTP server names), option 120 (SIP Server), or even option 157 (Certificate Provisioning) to inform a VoIP phone about how to do application onboarding.
 (Such a network can probably also use BRSKI without this mechanism)
 Such a network has no need for the mechanisms described in this document.
 
