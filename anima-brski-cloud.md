@@ -635,7 +635,8 @@ If it is a 307 redirect, then a Provisional TLS connection will be initiated, an
 The Provisional TLS connection does not do {{RFC9525, Section 6.3}} DNS-ID verification at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
 The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 HTTP code.
 
-It is RECOMMENDED therefore that the Pledge look for {{?RFC8910}} attributes in DHCP, and if present, use the {{?RFC8908}} API to learn if it is captive.
+It is RECOMMENDED therefore that the Pledge look for Captive-Portal
+Identification attributes {{?RFC8910}} in DHCP, and if present, use the Captive-Portal API {{?RFC8908}} to learn if it is captive.
 
 The scenarios outlined here when a Pledge is deployed behind a captive portal may result in failure scenarios,
 but do not constitute a security risk, so long as the Pledge is correctly verifying all TLS connections as per {{BRSKI}}.
