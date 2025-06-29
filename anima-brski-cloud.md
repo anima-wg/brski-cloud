@@ -293,7 +293,7 @@ The EST server MAY use this mechanism to tell the Pledge what Subject or Subject
 This can be useful if the Subject or Subject Alternative Name identity must have a specific value in order to complete enrollment with the CA.
 
 EST {{!RFC7030}} is not clear on how the CSR Attributes response should be structured, and in particular is not clear on how a server can instruct a client to include specific attribute values in its CSR.
-{{!I-D.ietf-lamps-rfc7030-csrattrs}} clarifies how a server can use CSR Attributes response to specify specific values for attributes that the client should include in its CSR.
+{{I-D.ietf-lamps-rfc7030-csrattrs}} clarifies how a server can use CSR Attributes response to specify specific values for attributes that the client should include in its CSR.
 
 For example, the Pledge may only be aware of its IDevID Subject which includes a manufacturer serial number, but must include a specific fully qualified domain name in the CSR in order to complete domain ownership proofs required by the CA.
 
@@ -332,7 +332,7 @@ A Pledge creating a Provisional TLS connection according to {{BRSKI}} will often
 Registrars are accordingly expected to ignore SNI information, as in most cases, the Pledge will not know how to set the SNI correctly.
 
 The Pledge MUST be manufactured with preloaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
-The TLS connection can be verified using a public Web PKI trust anchor using {{RFC9525}} DNS-ID mechanisms or a pinned certification authority.
+The TLS connection can be verified using a public Web PKI trust anchor using {{!RFC9525}} DNS-ID mechanisms or a pinned certification authority.
 This is a local implementation decision.
 Refer to {{trust-anchors-for-cloud-registrar}} for trust anchor security considerations.
 
@@ -580,7 +580,7 @@ The EST server identity MUST be verified using the pinned-domain-cert value prov
 
 There is a case where the pinned-domain-cert is the identical End-Entity (EE) Certificate as the EST server.
 It also explicitly includes the case where the EST server has a self-signed EE Certificate, but it MAY also be an EE certificate that is part of a larger PKI.
-If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{RFC9525}} DNS-ID verification on the certificate against the domain provided in the "est-domain" attribute.
+If the certificate is not a self-signed or EE certificate, then the Pledge SHOULD apply {{!RFC9525}} DNS-ID verification on the certificate against the domain provided in the "est-domain" attribute.
 If the "est-domain" was provided with an IP address literal, then it is unlikely that it can be verified, and in that case, it is expected that either a self-signed certificate or an EE certificate will be pinned by the voucher.
 
 In steps 5.a and 5.b, the Pledge MAY optionally notify the Cloud Registrar/MASA of the success or failure of its attempt to establish a secure TLS channel with the EST server.
@@ -624,7 +624,7 @@ A Pledge might find itself deployed in a network where a captive portal or an in
 Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} MAY forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-When the Pledge attempts to connect to the Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{?RFC9525}}.
+When the Pledge attempts to connect to the Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{!RFC9525}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), MAY then permit that connection.
@@ -689,7 +689,7 @@ On the other hand, minimizing the number of trust anchors reduces the security e
 More trust anchors also implies more maintenance to maintain and update this Implicit Trust Anchor database as different certification authorities renew their trust anchors.
 
 A device manufacturer could instead ship only their own internal, private trust anchors for a PKI that the manufacturer operates.
-This is described in in {{?I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
+This is described in in {{I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
 This would imply that all Cloud Registrars (likely operated by VARs) would have to obtain a certificate from the manufacturer.
 This has advantages in reliability and predictability, but likely makes the Cloud Registrars much more costly to operate.
 In particular, tying the VARs' Cloud Registrar to a single manufacturer means that the VARs might have to operate a Cloud Registrar for each brand of equipment that they represent.
