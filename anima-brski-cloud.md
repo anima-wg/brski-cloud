@@ -128,13 +128,13 @@ This document specifies procedures for two high-level use cases.
 - Bootstrap via Cloud Registrar and Owner Registrar: The operator-maintained infrastructure supports BRSKI and has a BRSKI Registrar deployed. More details are provided in {{bootstrap-via-cloud-registrar-and-owner-registrar}}.
 - Bootstrap via Cloud Registrar and Owner EST Service: The operator-maintained infrastructure does not support BRSKI, does not have a BRSKI Registrar deployed, but does have an Enrollment over Secure Transport (EST) {{!RFC7030}} service deployed. More detailed are provided in {{bootstrap-via-cloud-registrar-and-owner-est-service}}.
 
-There are DHCP options that a network operator can use to configure devices such as a VoIP phone.
-DHCP options 66, 150 (TFTP/HTTP server names), option 120 (SIP Server), or even option 157 (Certificate Provisioning) to inform a VoIP phone about how to do application onboarding.
-(Such a network can probably also use BRSKI without this mechanism)
-Such a network has no need for the mechanisms described in this document.
+There are existing DHCP options that network operators use to configure devices such as a VoIP phone.
+This includes DHCP options 66 {{?RFC2132}}, 150 (TFTP/HTTP server names) {{?RFC5859}}, option 120 (SIP Server) {{?RFC3361}} inform a VoIP phone about how to do application onboarding.
+A network with an operator that is able to provision these options would also be able to use BRSKI without changes.
+Such a network has no need for the mechanisms described in this document!
 
 Where the need for the mechanism is needed is to allow the use of BRSKI in many small sites, such as teleworkers working from home, with minimum expectations against their network infrastructure.
-In particular, the home office user is not qualified or authorized to change DHCP options on the local network.
+In particular, the home office user is not qualified or authorized to change DHCP options for the local network.
 
 The procedures defined in this document support situations where a manufacturer sells a number of devices (in bulk) to a Value Added Reseller (VAR).
 The manufacturer knows which devices have been sold to which VAR, but not who the ultimate owner will be.
