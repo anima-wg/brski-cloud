@@ -607,9 +607,19 @@ Sections 11.5 and 11.6 of {{BRSKI}} outline additional considerations about devi
 
 The well-known URL that is used is specified by the manufacturer when designing its firmware, and is therefore completely under the manufacturer's control.
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
-In the event of a merger between two companies, then the mechanism that is described in section 7.2 MAY be applicable.
 
-In the hosted Registrar, with an Owner EST Server {{voucher2EST}} use case, the Cloud Registrar MUST know the certificate for the EST Server in order to pin it properly.
+Often the firmware can not be updated because there is significant inventory in a warehouse.
+If it were powered on and connected, then it would get firmware updates.
+Since it is not, any URLs built-in to the old firmware need to be maintained until all copies of that firmware have been replaced.
+This could be a challenge if a company is going out of business, and in which case the considerations from {{BRSKI, Section 10.7}} apply.
+
+If the event in in fact a merger between two companies, then it is possible to consolidate the MASA of each company into a single system.
+It will need access to a MASA signing key for both companies to operate correctly.
+One way is for both MASA names (such as masa.company1.example, and masa.company2.example) can be added as SubjectAltNames for the HTTPS certificates used by the MASA.
+The Cloud Registrar will need a similar treatment.
+As an alternative to operating a Registrar under two names, all access to one Cloud Registrar could be replaced with a 307 redirect as described in {{multiplehttpredirects}}.
+
+Additionally, in the hosted Registrar use case, with an Owner EST Server {{voucher2EST}} use case, the Cloud Registrar MUST know the certificate for the EST Server in order to pin it properly.
 In that case, when the owner of the EST Server wishes to change their certificate, then they MUST coordinate this with the upstream Cloud Registrar operator.
 
 # IANA Considerations
