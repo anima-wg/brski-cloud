@@ -255,6 +255,10 @@ As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties invo
 The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
 The interaction between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
 
+In {{arch-one}} the two signatures that the Pledge and the Owner Registrar place on the Voucher Request (VR) are shown as `VR-sign(N)` and `sign(VR-sign(N))`
+This is as described in {{BRSKI, Section 3}}.
+There are also signatures from Pledge to Cloud Registrar and to MASA in {{arch-two}}, but they are omitted as they would make the diagram too busy.
+
 The network operator or enterprise is the intended owner of the new device: the Pledge.
 This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
 They are the operator of the Registrar or EST Server.
