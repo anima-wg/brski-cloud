@@ -624,7 +624,7 @@ A Pledge might find itself deployed in a network where a captive portal or an in
 Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} MAY forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-When the Pledge attempts to connect to the Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{RFC9525}}.
+When the Pledge attempts to connect to any Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{RFC9525}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), MAY then permit that connection.
@@ -632,8 +632,9 @@ This enables the first connection to go through.
 
 The connection is then redirected to the Registrar via 307, or to an EST server via "est-domain" in a voucher.
 If it is a 307 redirect, then a Provisional TLS connection will be initiated, and it will succeed.
-The Provisional TLS connection does not do {{RFC9525, Section 6.3}} DNS-ID verification at the beginning of the connection, so a forced redirection to a captive portal system will not be detected.
-The subsequent BRSKI POST of a voucher will most likely be met by a 404 or 500 HTTP code.
+The Provisional TLS connection does not do DNS-ID verification ({{RFC9525, Section 6.3}}), so the forced redirection to a captive portal system will not be detected.
+However, the subsequent BRSKI POST of a voucher request will most likely be met by a 404 or 500 HTTP code.
+Even if somehow it did work (because the captive portal was in fact an attacker), any returned voucher would not be signed by a trusted MASA.
 
 It is RECOMMENDED therefore that the Pledge look for Captive-Portal
 Identification attributes {{?RFC8910}} in DHCP, and if present, use the Captive-Portal API {{?RFC8908}} to learn if it is captive.
