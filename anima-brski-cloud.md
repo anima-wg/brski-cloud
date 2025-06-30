@@ -216,10 +216,10 @@ Both mechanisms are described in detail later in this document.
  On-site                Cloud
 +--------+                                          +-----------+
 | Pledge |------------------------------------------| Cloud     |
-+--------+                                          | Registrar |
-    |                                               +-+---------+
-    |                                                 | BRSKI-MASA
-    |                 +-----------+                 +-+---------+
++--------+          307 redirect                    | Registrar |
+    |                                               +-----------+
+    |
+    |                 +-----------+                 +-----------+
     +---------------->|  Owner    |-----------------|   MASA    |
         VR-sign(N)    | Registrar |sign(VR-sign(N)) +-----------+
                       +-----------+
@@ -235,7 +235,7 @@ Both mechanisms are described in detail later in this document.
  On-site                Cloud
 +--------+                                          +-----------+
 | Pledge |------------------------------------------| Cloud     |
-+--------+                                          | Registrar |
++--------+        referral via est-domain           | Registrar |
     |                                               +--+--------+
     |                                                  | BRSKI-MASA
     |                                               +--+--------+
