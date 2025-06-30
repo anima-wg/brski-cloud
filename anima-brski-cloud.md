@@ -635,7 +635,7 @@ This document makes no IANA requests.
 ## Captive Portals
 
 A Pledge might find itself deployed in a network where a captive portal or an intelligent home gateway that provides access control on all connections is also deployed.
-Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} MAY forcibly redirect HTTPS connections.
+Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} might forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
 When the Pledge attempts to connect to any Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{RFC9525}}.
