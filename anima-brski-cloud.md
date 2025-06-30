@@ -609,13 +609,13 @@ The well-known URL that is used is specified by the manufacturer when designing 
 If the manufacturer wishes to change the URL, or discontinue the service, then the manufacturer will need to arrange for a firmware update where appropriate changes are made.
 
 Often the firmware can not be updated because there is significant inventory in a warehouse.
-If it were powered on and connected, then it would get firmware updates.
+If the Pledge were powered on and connected, then it would get firmware updates.
 Since it is not, any URLs built-in to the old firmware need to be maintained until all copies of that firmware have been replaced.
 This could be a challenge if a company is going out of business, and in which case the considerations from {{BRSKI, Section 10.7}} apply.
 
-If the event in in fact a merger between two companies, then it is possible to consolidate the MASA of each company into a single system.
-It will need access to a MASA signing key for both companies to operate correctly.
-One way is for both MASA names (such as masa.company1.example, and masa.company2.example) can be added as SubjectAltNames for the HTTPS certificates used by the MASA.
+If a merger between two companies happens, then it is possible to consolidate the MASA of each company into a single system.
+The consolidated MASA will need access to a MASA signing key for both companies to operate correctly.
+One way is for both MASA names (such as masa.company1.example, and masa.company2.example) to be added as SubjectAltNames for the HTTPS certificates used by the MASA.
 The Cloud Registrar will need a similar treatment.
 As an alternative to operating a Registrar under two names, all access to one Cloud Registrar could be replaced with a 307 redirect as described in {{multiplehttpredirects}}.
 
