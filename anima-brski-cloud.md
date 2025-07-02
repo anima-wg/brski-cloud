@@ -74,7 +74,7 @@ This work is in support of {{BRSKI, Section 2.7}}, which describes how a Pledge 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
 For instance, a SIP {{?RFC3261}} phone might have a client certificate to be used with a SIP proxy.
 
-This document further specifies use of a BRSKI Cloud Registrar and clarifies operations that are left out of scope in {{BRSKI}}.
+This document updates [BRSKI] by clarifying operations that are left out of scope in {{BRSKI}}.
 Two modes of operation are specified in this document.
 The Cloud Registrar MAY redirect the Pledge to the owner's Registrar, or the Cloud Registrar MAY issue a voucher to the Pledge that includes the domain of the owner's Enrollment over Secure Transport {{!RFC7030}} (EST) server.
 
