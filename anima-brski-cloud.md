@@ -196,22 +196,6 @@ In both use cases, the Pledge connects to the Cloud Registrar during bootstrap.
 
 For the first use case, as described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Cloud Registrar redirects the Pledge to an Owner Registrar in order to complete bootstrap with the Owner Registrar. When bootstrapping against an Owner Registrar, the Owner Registrar will interact with a CA to assist in issuing certificates to the Pledge. This is illustrated in {{arch-one}}.
 
-For the second use case, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the Pledge to an Owner Registrar. The Cloud Registrar will inform the Pledge what domain to use for accessing EST services in the voucher response. In this model, the Pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing a certificate to the Pledge. This is illustrated in {{arch-two}}.
-
-It is also possible that the Cloud Registrar MAY redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
-This scenario is discussed further in {{multiplehttpredirects}} and {{<considerationsfor-http-redirect}}.
-
-The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
-
-The architectures show the Cloud Registrar and MASA as being logically separate entities.
-The two functions could of course be integrated into a single entity.
-
-There are two different mechanisms for a Cloud Registrar to handle voucher requests.
-It can redirect the request to the Owner Registrar for handling, or it can return a voucher
-that includes an "est-domain" attribute that points to the Owner EST Service.
-When returning a voucher, additional bootstrapping information is embedded in the voucher.
-Both mechanisms are described in detail later in this document.
-
 ~~~ aasvg
 |<--------------OWNER--------------------------->|   MANUFACTURER
 
@@ -230,6 +214,16 @@ Both mechanisms are described in detail later in this document.
                                  +-----------+
 ~~~
 {: #arch-one title="Architecture: Bootstrap via Cloud Registrar and Owner Registrar"}
+
+As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involved in the process.
+The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
+The interaction between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
+
+In {{arch-one}} the two signatures that the Pledge and the Owner Registrar place on the Voucher Request (VR) are shown as `VR-sign(N)` and `sign(VR-sign(N))`
+This is as described in {{BRSKI, Section 3}}.
+There are also signatures from Pledge to Cloud Registrar and to MASA in {{arch-two}}, but they are omitted as they would make the diagram too busy.
+
+For the second use case, as described {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the Cloud Registrar issues a voucher itself without redirecting the Pledge to an Owner Registrar. The Cloud Registrar will inform the Pledge what domain to use for accessing EST services in the voucher response. In this model, the Pledge interacts directly with the EST service to enroll. The EST service will interact with a CA to assist in issuing a certificate to the Pledge. This is illustrated in {{arch-two}}.
 
 ~~~ aasvg
 |<--------------OWNER--------------------------->|   MANUFACTURER
@@ -253,13 +247,20 @@ Both mechanisms are described in detail later in this document.
 ~~~
 {: #arch-two title="Architecture: Bootstrap via Cloud Registrar and Owner EST Service"}
 
-As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involved in the process.
-The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
-The interaction between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
+It is also possible that the Cloud Registrar MAY redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
+This scenario is discussed further in {{multiplehttpredirects}} and {{<considerationsfor-http-redirect}}.
 
-In {{arch-one}} the two signatures that the Pledge and the Owner Registrar place on the Voucher Request (VR) are shown as `VR-sign(N)` and `sign(VR-sign(N))`
-This is as described in {{BRSKI, Section 3}}.
-There are also signatures from Pledge to Cloud Registrar and to MASA in {{arch-two}}, but they are omitted as they would make the diagram too busy.
+The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
+
+The architectures show the Cloud Registrar and MASA as being logically separate entities.
+The two functions could of course be integrated into a single entity.
+
+In the two use cases, there are different mechanisms for a Cloud Registrar to handle voucher requests.
+
+It can redirect the request to the Owner Registrar for handling, or it can return a voucher
+that includes an "est-domain" attribute that points to the Owner EST Service.
+When returning a voucher, additional bootstrapping information is embedded in the voucher.
+Both mechanisms are described in detail later in this document.
 
 The network operator or enterprise is the intended owner of the new device: the Pledge.
 This could be the enterprise itself, or in many cases there is some outsourced IT department that might be involved.
