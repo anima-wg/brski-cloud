@@ -88,6 +88,9 @@ This document uses the terms Pledge, Registrar, MASA, and Voucher from {{BRSKI}}
 Cloud Registrar:
 : The default Registrar that is deployed at a URI that is well known to the Pledge.
 
+Cloud VAR Registrar:
+: The non-default Registrar that is operated by a value added reseller (VAR).
+
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}.
 
@@ -97,15 +100,15 @@ Local Domain:
 Manufacturer:
 : The term manufacturer is used throughout this document as the entity that created the Pledge. This is typically the original equipment manufacturer (OEM), but in more complex situations, it could be a value added retailer (VAR), or possibly even a systems integrator. Refer to {{BRSKI}} for more detailed descriptions of manufacturer, VAR and OEM.
 
+OEM:
+: Original Equipment Manufacturer.  The company that created the device.
+
 Owner Domain:
 : The domain that the Pledge needs to discover and bootstrap with.
 
 Owner Registrar:
 : The Registrar that is operated by the Owner, or the Owner's delegate.
 There may not be an Owner Registrar in all deployment scenarios.
-
-OEM:
-: Original Equipment Manufacturer.  The company that created the device.
 
 
 Provisional TLS:
@@ -116,10 +119,6 @@ SIP:
 
 VAR:
 : Value Added Reseller.  A VAR will often collect products from many OEMs, creating a complete solution, and then sells that composite solution to end customers.  A VAR will often need to provision products to be operate in a specific manner.  For instance, a VoIP phone might have SIP functionality as well as MGCP functionality, but in a particular deployment, only one will be used.
-
-Cloud VAR Registrar:
-: The non-default Registrar that is operated by a value added reseller (VAR).
-
 
 ## Target Use Cases
 
