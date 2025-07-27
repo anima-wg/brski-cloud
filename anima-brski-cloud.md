@@ -748,4 +748,18 @@ Refer to {{BRSKI}} sections 7.3 and 11 for further details.
 The authors would like to thank for following for their detailed reviews: (ordered
 by last name): Esko Dijk, Toerless Eckert, Sheng Jiang.
 
+<!--  LocalWords:  cryptographic URI onboarding Onboarding bcp MASA OEM TLS
+<!--  LocalWords:  OEMs MGCP DHCP TFTP VARs LDevID AcpNodeName VAR's http VR
+<!--  LocalWords:  multiplehttpredirects considerationsfor aasvg DNS
+<!--  LocalWords:  integrations routable
+ -->
+ -->
+ -->
+ -->
 
+<!--
+;; Local Variables:
+;; ispell-check-comments: exclusive
+;; ispell-local-dictionary: "american"
+;; End:
+-->
