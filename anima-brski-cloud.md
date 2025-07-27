@@ -54,6 +54,8 @@ Bootstrapping Remote Secure Key Infrastructures (BRSKI) defines how to onboard a
 
 This document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator-maintained infrastructure. The Cloud Registrar enables discovery of the operator-maintained infrastructure, and may enable establishment of trust with operator-maintained infrastructure that does not support BRSKI mechanisms.
 
+This document updates RFC8995.
+
 --- middle
 
 # Introduction
