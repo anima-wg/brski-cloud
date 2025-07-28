@@ -54,7 +54,7 @@ Bootstrapping Remote Secure Key Infrastructures (BRSKI) defines how to onboard a
 
 This document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator-maintained infrastructure. The Cloud Registrar enables discovery of the operator-maintained infrastructure, and may enable establishment of trust with operator-maintained infrastructure that does not support BRSKI mechanisms.
 
-This document updates RFC8995.
+This document updates RFC 8995 (BRSKI).
 
 --- middle
 
@@ -71,7 +71,9 @@ To support enrollment of Pledges without such an owner based access network, the
 of BRSKI Cloud are required, which assume that Pledge and Registrar simply connect to the
 Internet.
 
-This work is in support of {{BRSKI, Section 2.7}}, which describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge's target use cases do not include a local Registrar.
+This entire work is an update to {{BRSKI}}.
+
+Specifically, it extends {{BRSKI, Section 2.7}} to describe describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge's target use cases do not include a local Registrar.
 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
 For instance, a SIP {{?RFC3261}} phone might have a client certificate to be used with a SIP proxy.
