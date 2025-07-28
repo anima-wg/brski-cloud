@@ -107,6 +107,12 @@ Manufacturer:
 OEM:
 : Original Equipment Manufacturer.  The company that created the device.
 
+Owner:
+: The owner is the organization that has purchased the new device (the pledge).  The device might be deployed in a network that the owner does not control.
+
+Owner Delegate:
+: The owner delegate is an entity distinct from the Owner that has been contracted to operate/manage the devices in question.  For instance, an IT maintenance and support-desk company.
+
 Owner Domain:
 : The domain that the Pledge needs to discover and bootstrap with.
 
