@@ -346,9 +346,8 @@ This section outlines the high-level protocol requirements and operations that t
 BRSKI defines how a Pledge MAY contact a well-known URI of a Cloud Registrar if a Local Domain Registrar cannot be discovered.
 Additionally, certain Pledge types might never attempt to discover a Local Domain Registrar and might automatically bootstrap against a Cloud Registrar.
 
-The details of the URI are Manufacturer specific, with BRSKI giving the example "brski-registrar.manufacturer.example.com".
-
-The Pledge SHOULD be provided with the entire URI of the Cloud Registrar, including the protocol and path components, which are typically "https://" and "/.well-known/brski", respectively.
+The details of the URI are Manufacturer specific.
+For example, https://brski-registrar.manufacturer.example.com/.well-known/brski.
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
