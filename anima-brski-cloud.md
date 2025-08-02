@@ -32,6 +32,7 @@ normative:
   BRSKI: RFC8995
   RFC8366bis: I-D.ietf-anima-rfc8366bis
   I-D.ietf-lamps-rfc7030-csrattrs:
+  RFC9110:
 
 informative:
   RFC9525:
@@ -317,7 +318,7 @@ For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-serv
 Note that the Pledge only sends the CSR Attributes request to the entity acting
 as the EST server as per {{!RFC7030, Section 2.6}}, and MUST NOT send the CSR
 Attributes request to the Cloud Registrar, because the Cloud Registrar does not have authority to issue a certificate for the customer domain.  (The Cloud Registrar is not a full EST server)
-If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 response code.
+If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 {{RFC9110, Section 15.5.5}} response code.
 
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server MAY use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
@@ -397,8 +398,8 @@ A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider a
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
 * error: return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the Pledge if the request processing failed for any reason.
-* redirect to Owner Registrar: redirect the Pledge to an Owner Registrar via 307 response code.
-* redirect to Owner EST server: issue a voucher (containing an "est-domain" attribute) and return a 200 response code.
+* redirect to Owner Registrar: redirect the Pledge to an Owner Registrar via 307 {{RFC9110, Section 15.4.7}} response code.
+* redirect to Owner EST server: issue a voucher (containing an "est-domain" attribute) and return a 200 {{RFC9110, Section 15.3.1}} response code.
 
 ### Pledge Ownership Look Up {#PledgeOwnershipLookup}
 
@@ -420,7 +421,7 @@ In case of redirection, the Cloud Registrar replies to the voucher request with 
 
 If the Cloud Registrar issues a voucher, it returns the voucher in an HTTP response with a 200 response code.
 
-The Cloud Registrar MAY issue a 202 response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
+The Cloud Registrar MAY issue a 202 {{RFC9110, Section 15.3.3}} response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
 
 The voucher MUST include the new "est-domain" field as defined in {{RFC8366bis}}.
 This tells the Pledge where the domain of the EST service to use for completing certificate enrollment.
