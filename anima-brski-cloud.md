@@ -32,6 +32,7 @@ normative:
   BRSKI: RFC8995
   RFC8366bis: I-D.ietf-anima-rfc8366bis
   I-D.ietf-lamps-rfc7030-csrattrs:
+  RFC9110:
 
 informative:
   RFC9525:
@@ -42,6 +43,12 @@ informative:
     target: https://www.wi-fi.org/discover-wi-fi/wi-fi-protected-setup
     author:
       org: "Wi-Fi Alliance"
+  IDEVID:
+    target: https://1.ieee802.org/security/802-1ar/
+    title: IEEE 802.1AR Secure Device Identifier
+    author:
+    - org: IEEE Standard
+    date: 2018
 
 venue:
   group: anima
@@ -73,7 +80,7 @@ Internet.
 
 This entire work is an update to {{BRSKI}}.
 
-Specifically, it extends {{BRSKI, Section 2.7}} to describe describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge's target use cases do not include a local Registrar.
+Specifically, it extends {{BRSKI, Section 2.7}} to describe describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge is deployed in a network that does not include a local Registrar.
 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
 For instance, a SIP {{?RFC3261}} phone might have a client certificate to be used with a SIP proxy.
@@ -87,7 +94,7 @@ The Cloud Registrar MAY redirect the Pledge to the owner's Registrar, or the Clo
 
 {::boilerplate bcp14}
 
-This document uses the terms Pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366bis}}.
+This document uses the terms Domain, Pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366bis}}.
 
 Cloud Registrar:
 : The default Registrar that is deployed at a URI that is well known to the Pledge.
@@ -98,6 +105,12 @@ Cloud VAR Registrar:
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}.
 
+IDevID:
+: An initial device identity certificate as described in {{IDEVID}}
+
+LDevID:
+: A local device identity certificate as described in {{IDEVID}}
+
 Local Domain:
 : The domain where the Pledge is physically located and bootstrapping from. This may be different from the Pledge owner's domain.
 
@@ -107,6 +120,12 @@ Manufacturer:
 OEM:
 : Original Equipment Manufacturer.  The company that created the device.
 
+Owner:
+: The owner is the organization that has purchased the new device (the pledge).  The device might be deployed in a network that the owner does not control.
+
+Owner Delegate:
+: The owner delegate is an entity distinct from the Owner that has been contracted to operate/manage the devices in question.  For instance, an IT maintenance and support-desk company.
+
 Owner Domain:
 : The domain that the Pledge needs to discover and bootstrap with.
 
@@ -114,6 +133,8 @@ Owner Registrar:
 : The Registrar that is operated by the Owner, or the Owner's delegate.
 There may not be an Owner Registrar in all deployment scenarios.
 
+Pledge operator:
+: The person or organization that removes the device from the shipping box and connects power and network to it.
 
 Provisional TLS:
 : A mechanism defined in {{BRSKI, Section 5.1}} whereby a Pledge establishes a provisional TLS connection with a Registrar before the Pledge is provisioned with a trust anchor that can be used for verifying the Registrar identity.
@@ -218,7 +239,7 @@ For the first use case, as described in {{bootstrap-via-cloud-registrar-and-owne
 {: #arch-one title="Architecture: Bootstrap via Cloud Registrar and Owner Registrar"}
 
 As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involved in the process.
-The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
+The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the Manufacturer Authorized Signing Authority (MASA), or arrange for it to exist.
 The interaction between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
 
 In {{arch-one}} the two signatures that the Pledge and the Owner Registrar place on the Voucher Request (VR) are shown as `VR-sign(N)` and `sign(VR-sign(N))`
@@ -277,7 +298,8 @@ The VAR and manufacturer are aware of which devices have been shipped to the VAR
 ## Network Connectivity
 
 The assumption is that the Pledge already has network connectivity prior to connecting to the Cloud Registrar.
-The Pledge must have an IP address so that it is able to make DNS queries, and be able to send requests to the Cloud Registrar.
+The Pledge must have an IP address and be capable to reach a recursive DNS server,
+and also be able to send requests to the Cloud Registrar.
 There are many ways to accomplish this, from using routable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
 
 The Pledge operator has already connected the Pledge to the network, and the mechanism by which this has happened is out of scope of this document.
@@ -289,13 +311,14 @@ Similarly, what address space the IP address belongs to, whether it is an IPv4 o
 
 ## Pledge Certificate Identity Considerations
 
-{{BRSKI, Section 5.9.2}} specifies that the Pledge MUST send an EST {{!RFC7030}} CSR Attributes request to the EST server before it requests a client certificate.
+{{BRSKI, Section 5.9.2}} specifies that the Pledge MUST send an EST {{!RFC7030}}
+Certificate Signing Request (CSR) Attributes request to the EST server before it requests a client certificate.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-registrar}}, the Owner Registrar operates as the EST server as described in {{BRSKI, Section 2.5.3}}, and the Pledge sends the CSR Attributes request to the Owner Registrar.
 For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-service}}, the EST server operates as described in {{!RFC7030}}, and the Pledge sends the CSR Attributes request to the EST server.
 Note that the Pledge only sends the CSR Attributes request to the entity acting
 as the EST server as per {{!RFC7030, Section 2.6}}, and MUST NOT send the CSR
 Attributes request to the Cloud Registrar, because the Cloud Registrar does not have authority to issue a certificate for the customer domain.  (The Cloud Registrar is not a full EST server)
-If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 response code.
+If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 {{RFC9110, Section 15.5.5}} response code.
 
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server MAY use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
@@ -337,7 +360,7 @@ Pledges MUST and Cloud/Owner Registrars SHOULD support the use of the "server\_n
 Support for SNI is mandatory with TLS 1.3.
 
 Pledges SHOULD send a valid "server\_name" extension (SNI) whenever they know the domain name of the registrar they connect to.
-A Pledge creating a Provisional TLS connection according to {{BRSKI}} will often only know the link local IPv6 address of a Join Proxy that connects it to the Registrar.
+A Pledge creating a Provisional TLS connection according to {{BRSKI}} will often only know the link-local IPv6 address of a Join Proxy that connects it to the Registrar.
 Registrars are accordingly expected to ignore SNI information, as in most cases, the Pledge will not know how to set the SNI correctly.
 
 The Pledge MUST be manufactured with preloaded trust anchors that are used to verify the identity of the Cloud Registrar when establishing the TLS connection.
@@ -366,7 +389,7 @@ The Registrar returns the following errors:
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership at that time, then it MUST return a 401 Unauthorized response to the Pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
-In this scenario, the Registrar SHOULD include a Retry-After header that includes a time to defer.
+In this scenario, the Registrar SHOULD include a Retry-After {{?RFC7231}} header that includes a time to defer.
 The absence of a Retry-After header indicates to the Pledge not to attempt again.
 The Pledge MUST restart the bootstrapping process from the beginning.
 
@@ -375,8 +398,8 @@ A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider a
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
 * error: return a suitable 4xx or 5xx error response (as defined by [BRSKI] and HTTP) to the Pledge if the request processing failed for any reason.
-* redirect to Owner Registrar: redirect the Pledge to an Owner Registrar via 307 response code.
-* redirect to Owner EST server: issue a voucher (containing an "est-domain" attribute) and return a 200 response code.
+* redirect to Owner Registrar: redirect the Pledge to an Owner Registrar via 307 {{RFC9110, Section 15.4.7}} response code.
+* redirect to Owner EST server: issue a voucher (containing an "est-domain" attribute) and return a 200 {{RFC9110, Section 15.3.1}} response code.
 
 ### Pledge Ownership Look Up {#PledgeOwnershipLookup}
 
@@ -398,7 +421,7 @@ In case of redirection, the Cloud Registrar replies to the voucher request with 
 
 If the Cloud Registrar issues a voucher, it returns the voucher in an HTTP response with a 200 response code.
 
-The Cloud Registrar MAY issue a 202 response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
+The Cloud Registrar MAY issue a 202 {{RFC9110, Section 15.3.3}} response code if it is willing to issue a voucher, but will take some time to prepare the voucher.
 
 The voucher MUST include the new "est-domain" field as defined in {{RFC8366bis}}.
 This tells the Pledge where the domain of the EST service to use for completing certificate enrollment.
@@ -582,7 +605,9 @@ In step 3, the Cloud Registrar/MASA replies to the Pledge with an {{RFC8366bis}}
 
 In step 4, the Pledge establishes a TLS connection with the EST RA that was specified in the voucher "est-domain" attribute.
 The connection may involve crossing the Internet requiring a DNS look up on the provided name.
-It MAY also be a local address that includes an IP address literal including both IPv4 {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
+The resulting IP address can be of any scope: a globally unique IP address, or a local IP address.
+An IP address literal MAY be used in the est-domain attributes, including a local address that includes an IP address literal including both IPv4 {{?RFC1918}} and IPv6 Unique Local Addresses {{?RFC4193}}.
+
 The Pledge attempts to authenticate the TLS connection and verify the EST server identity.
 The artifact provided in the pinned-domain-cert is trusted as a trust anchor, and is used to verify the EST server identity.
 The EST server identity MUST be verified using the pinned-domain-cert value provided in the voucher as described in {{!RFC7030}} section 3.3.1.
@@ -689,8 +714,7 @@ All the considerations for operation of the MASA also apply to the operation of 
 ## Security Updates for the Pledge
 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
-(Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be connectivity possible.
-For instance, the device could be without a default route or NAT44, but able to make HTTP requests via an HTTP proxy configured via DHCP.)
+(Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be connectivity possible)
 
 There is another advantage to being online: the Pledge SHOULD contact the Manufacturer before bootstrapping in order to apply any available firmware patches.
 Manufacturers are encouraged to make MUD {{?RFC8520}} files available, and in those definitions to allow for retrieval of firmware updates.
