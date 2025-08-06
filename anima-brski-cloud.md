@@ -732,26 +732,23 @@ In this way, a Pledge that may have been in a dusty box in a warehouse for a lon
 
 ## Trust Anchors for Cloud Registrar
 
-In order to validate the HTTPS connections to the (series of) Cloud Registrars, the Pledge will need to have an Implicit Trust Anchor database, as described in {{RFC7030, Section 3.6.1}}, to verify the Cloud Registrar's certificate.
+In the final onboarding step, wherein an {{RFC8366bis}} voucher artifact is returned to authenticate the provisional TLS connection, any kind of trust anchor can be used: private or public.
+The end customer's Registrar will have a private PKI that will be pinned by the voucher.
 
-There is no requirement that Cloud Registrar's certificates are part of the public (WebPKI) database, but it is likely simpler and cheaper for most such systems to use easily obtained certificates.
+However, in the steps leading up to the above step, the HTTPS connections to the (series of) Cloud Registrars, the Pledge will need to be validated using the Implicit Trust Anchor database, as described in {{RFC7030, Section 3.6.1}}.
+
+If a manufacturer chooses, they could act as a private PKI for all of the steps, including the related trust
+anchor in the Pledge's Trust Anchor database.
+Minimizing the number of trust anchors reduces the security exposure should fraudulent certificates ever be issued.
+
+On the other hand, automation of certificate updates is now routine, and forcing the Cloud Registrar's operated by the chain of Value-Added Resellers (VARs) to only use one manufacturer's private PKI will significantly increase operational costs.
+VARs could operate one Cloud Registrar for a large variety of devices that they resell, and forcing them to use the manufacturer's private PKI means that they have to maintain a certificate for each product line.
+
+So, while there is no requirement that Cloud Registrar's certificates are part of the public (WebPKI)  database, but it is likely simpler and cheaper for most such systems to use easily obtained certificates.
 
 Device Manufacturers therefore need to include enough trust anchors in their devices (the Pledges) so that all expected Cloud Registrar's can be validated.
-This argues for including more trust anchors.
 
-On the other hand, minimizing the number of trust anchors reduces the security exposure should fraudulent certificates ever be issued.
-More trust anchors also implies more maintenance to maintain and update this Implicit Trust Anchor database as different certification authorities renew their trust anchors.
-
-A device Manufacturer could instead ship only their own internal, private trust anchors for a PKI that the Manufacturer operates.
-This is described in {{I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
-This would imply that all Cloud Registrars (likely operated by VARs) would have to obtain a certificate from the Manufacturer.
-This has advantages in reliability and predictability, but likely makes the Cloud Registrars much more costly to operate.
-In particular, tying the VARs' Cloud Registrar to a single Manufacturer means that the VARs might have to operate a Cloud Registrar for each brand of equipment that they represent.
-
-The recommendation is therefore for Manufacturers to work with their VARs to determine if there is a subset of public PKIs that would satisfy all their VARs, and to ship only that subset.
-
-The final onboarding step, wherein an {{RFC8366bis}} voucher artifact is returned to authenticate the provisional TLS connection, can use any kind of trust anchor: private or public.
-In most cases, the end customer's Registrar will have a private PKI that will be pinned by the voucher.
+It is recommended for Manufacturers to work with their VARs to determine if there is a subset of public PKIs that would satisfy all their VARs, and to ship only that subset.
 
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
