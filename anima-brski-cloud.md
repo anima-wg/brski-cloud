@@ -739,6 +739,8 @@ However, in the steps leading up to the above step, the HTTPS connections to the
 
 If a manufacturer chooses, they could act as a private PKI for all of the steps, including the related trust
 anchor in the Pledge's Trust Anchor database.
+The manufacturer already has to operate enough of a private PKI to sustain signing of Vouchers, and also firmware updates.
+Such a PKI is described in {{I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
 Minimizing the number of trust anchors reduces the security exposure should fraudulent certificates ever be issued.
 
 On the other hand, automation of certificate updates is now routine, and forcing the Cloud Registrar's operated by the chain of Value-Added Resellers (VARs) to only use one manufacturer's private PKI will significantly increase operational costs.
