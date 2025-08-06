@@ -756,11 +756,20 @@ When the default Cloud Registrar redirects a Pledge using HTTP 307 to an Owner R
 
 However, when connecting to the target Owner Registrar, a provisional TLS connection is required as explained in {{BRSKI, Section 5.1}}.
 
+Provisional TLS connections are not immediately validated.
+A provisional TLS connection can be intercepted by an attacker, as unlike in {{BRSKI}}, this connection crosses the Internet.
+There can be IP address hijacks, possibly DNS attacks that could send the Pledge to the wrong place.
+Such a diversion would be detected when the resulting Voucher can not be validated.
+
 There is a conflict between these requirements: one says to validate, and the other one says not to.
-This is resolved by having the Pledge attempt validation, and if it succeeds, then an HTTP 307 redirect will be accepted.
+This is resolved by having the Pledge attempt validation, and if it succeeds, then and only then, an HTTP 307 redirect will be accepted.
 If validation fails, then an HTTP 307 redirect MUST be rejected as an error.
 If that occurs, then the onboarding process SHOULD restart after a delay.
 This failure should be reported to the initial Cloud Registrar via the mechanism described in {{BRSKI, Section 5.7}}.
+
+If the Pledge were to accept a 307 Redirect from a malicious entity, then it could be directed to connect to some other Registrar-like entity.
+This could be used to turn the Pledge into part of a distributed denial of service (DDoS) attack.
+As the Pledge will send it's details in the Voucher Request that it does send, there is also a possible disclosure of the Pledge's identifiable private information.
 
 Note that for use case two, in which redirection to an EST Server occurs, then there is no provisional TLS connection at all.  The connection to the last Cloud Registrar is validated using the Implicit Trust Database, while the EST Server connection is validated by the certificate pinned by the Voucher artifact.
 
