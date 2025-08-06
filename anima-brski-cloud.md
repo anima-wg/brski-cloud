@@ -713,10 +713,13 @@ All the considerations for operation of the MASA also apply to the operation of 
 ## Security Updates for the Pledge
 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
-(Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be connectivity possible)
+(Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be some connectivity possible)
 
-There is another advantage to being online: the Pledge SHOULD contact the Manufacturer before bootstrapping in order to apply any available firmware patches.
-Manufacturers are encouraged to make MUD {{?RFC8520}} files available, and in those definitions to allow for retrieval of firmware updates.
+The Pledge SHOULD NOT assume that the connectivity that it has is sheltered.
+In a majority of cases, the Pledge will be connected to a network behind an enterprise firewall, or a home router, with typical restrictions on incoming TCP connections due to NAT44 {{?RFC6144}} and {{?RFC7084, Sections 3.1}}, and {{RFC6092, Section 4}}.
+In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case.
+Pledges could be deployed on networks with unfiltered connectivity, there could be incoming connections enabled, and there could also be malicious devices within this network.
+
 This may also include updates to the Implicit list of Trust Anchors.
 In this way, a Pledge that may have been in a dusty box in a warehouse for a long time can be updated to the latest (exploit-free) firmware before attempting bootstrapping.
 
