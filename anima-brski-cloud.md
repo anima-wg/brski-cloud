@@ -621,7 +621,7 @@ This is described in {{BRSKI, Section 5.7}}
 This telemetry returns allow for the Registrar to better provide diagnostics in the event of failure to onboard.
 if the Pledge fails to verify the identity of the EST server, it MUST drop the connection and MUST NOT continue with a CSR Attributes request or an EST Enroll request.
 
-In step 6, the Pledge follows the procedures outlined in {pledge-certificate-identity-considerations} and sends a CSR Attributes request to the EST server before sending the EST Enroll request.
+In step 6, the Pledge follows the procedures outlined in {{pledge-certificate-identity-considerations}} and sends a CSR Attributes request to the EST server before sending the EST Enroll request.
 
 In step 7, the EST server returns the CSR Attributes response.
 
@@ -716,7 +716,7 @@ Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that 
 (Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be some connectivity possible)
 
 The Pledge SHOULD NOT assume that the connectivity that it has is sheltered.
-In a majority of cases, the Pledge will be connected to a network behind an enterprise firewall, or a home router, with typical restrictions on incoming TCP connections due to NAT44 {{?RFC6144}} and {{?RFC7084, Sections 3.1}}, and {{RFC6092, Section 4}}.
+In a majority of cases, the Pledge will be connected to a network behind an enterprise firewall, or a home router, with typical restrictions on incoming TCP connections due to NAT44 {{?RFC6144}} and {{?RFC7084, Section 3.1}}, and {{?RFC6092, Section 4}}.
 In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case.
 Pledges could be deployed on networks with unfiltered connectivity, there could be incoming connections enabled, and there could also be malicious devices within this network.
 
@@ -777,7 +777,7 @@ Note that for use case two, in which redirection to an EST Server occurs, then t
 
 A Cloud Registrar supporting the same set of Pledges as a MASA MAY be integrated with the MASA to avoid the need for a network based API between them, and without changing their external behavior as specified here.
 
-When a Cloud Registrar handles the scenario described in {bootstrap-via-cloud-registrar-and-owner-est-service} by the returning "est-domain" attribute in the voucher, the Cloud Registrar MUST do all the voucher processing as specified in {{BRSKI}}.
+When a Cloud Registrar handles the scenario described in {{bootstrap-via-cloud-registrar-and-owner-est-service}} by the returning "est-domain" attribute in the voucher, the Cloud Registrar MUST do all the voucher processing as specified in {{BRSKI}}.
 This is an example deployment scenario where the Cloud Registrar MAY be operated by the same entity as the MASA, and it MAY even be integrated with the MASA.
 
 When a voucher is issued by the Cloud Registrar and that voucher contains an "est-domain" attribute, the Pledge MUST verify the TLS connection with this EST server using the "pinned-domain-cert" attribute in the voucher.
