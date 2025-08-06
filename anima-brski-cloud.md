@@ -720,6 +720,13 @@ In a majority of cases, the Pledge will be connected to a network behind an ente
 In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case.
 Pledges could be deployed on networks with unfiltered connectivity, there could be incoming connections enabled, and there could also be malicious devices within this network.
 
+The Pledge SHOULD contact the Manufacturer before bootstrapping in order to apply any available firmware patches.
+Firmware patches need to validated before being applied.
+This is best done via signatures on the firmware updates, such as described in {{?RFC9019}} or an equivalent mechanism.
+Origin authentication of updates is also sometimes enough.
+
+In order to best protect the Pledge from attacks of all kinds, Manufacturers are encouraged to make MUD {{?RFC8520}} files available.
+Care needs to be taken in those definitions to allow for retrieval of firmware updates.
 This may also include updates to the Implicit list of Trust Anchors.
 In this way, a Pledge that may have been in a dusty box in a warehouse for a long time can be updated to the latest (exploit-free) firmware before attempting bootstrapping.
 
