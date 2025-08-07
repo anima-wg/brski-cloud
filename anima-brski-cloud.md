@@ -715,10 +715,17 @@ All the considerations for operation of the MASA also apply to the operation of 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
 (Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be some connectivity possible)
 
-The Pledge SHOULD NOT assume that the connectivity that it has is sheltered.
+The Pledge SHOULD NOT assume that the network is protecting the device.is sheltered.
 In a majority of cases, the Pledge will be connected to a network behind an enterprise firewall, or a home router, with typical restrictions on incoming TCP connections due to NAT44 {{?RFC6144}} and {{?RFC7084, Section 3.1}}, and {{?RFC6092, Section 4}}.
-In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case.
-Pledges could be deployed on networks with unfiltered connectivity, there could be incoming connections enabled, and there could also be malicious devices within this network.
+In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case!
+
+Pledges could be deployed on networks
+
+* with unfiltered connectivity, including public IPv4 and IPv6
+* where incoming connections are enabled via explicit rules
+* where ther could be malicious devices within this network
+
+
 
 The Pledge SHOULD contact the Manufacturer before bootstrapping in order to apply any available firmware patches.
 Firmware patches need to validated before being applied.
