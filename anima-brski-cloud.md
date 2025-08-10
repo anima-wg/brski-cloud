@@ -1,5 +1,5 @@
 ---
-title: "BRSKI Cloud Registrar"
+title: "Bootstrapping Remote Secure Key Infrastructure (BRSKI) Cloud Registrar"
 abbrev: BRSKI-CLOUD
 docname: draft-ietf-anima-brski-cloud-16
 category: std
@@ -57,9 +57,13 @@ venue:
 
 --- abstract
 
-Bootstrapping Remote Secure Key Infrastructures (BRSKI) defines how to onboard a device securely into an operator-maintained infrastructure.  It assumes that there is local network infrastructure for the device to discover and help the device. This document extends BRSKI and defines new device behavior for deployments where no local infrastructure is available, such as in a home or remote office. This document defines how the device can use a well-defined "call-home" mechanism to find the operator-maintained infrastructure.
+Bootstrapping Remote Secure Key Infrastructures (BRSKI) defines how to onboard a device securely into an operator-maintained infrastructure.
+It assumes that there is local network infrastructure for the device to discover.
+On networks without that, there is nothing present to help onboard the device.
 
-This document defines how to contact a well-known Cloud Registrar, and two ways in which the new device may be redirected towards the operator-maintained infrastructure. The Cloud Registrar enables discovery of the operator-maintained infrastructure, and may enable establishment of trust with operator-maintained infrastructure that does not support BRSKI mechanisms.
+This document extends BRSKI and defines new device behavior for deployments where no local infrastructure is available, such as in a home or remote office. This document defines how the device can use a well-defined "call-home" mechanism to find the operator-maintained infrastructure.
+
+This document defines how to contact a well-known Cloud Registrar, and two ways in which the  device may be redirected towards the operator-maintained infrastructure. The Cloud Registrar enables discovery of the operator-maintained infrastructure, and may enable establishment of trust with operator-maintained infrastructure that does not support BRSKI mechanisms.
 
 This document updates RFC 8995 (BRSKI).
 
@@ -67,7 +71,7 @@ This document updates RFC 8995 (BRSKI).
 
 # Introduction
 
-Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} BRSKI specifies automated and secure provisioning  of nodes (which are called Pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarly enrolled nodes.
+Bootstrapping Remote Secure Key Infrastructures {{BRSKI}} (BRSKI) specifies automated and secure provisioning  of nodes (which are called Pledges) with cryptographic keying material (trust  anchors and certificates) to enable authenticated and confidential communication with other similarly enrolled nodes.
 This bootstrapping process is also called enrollment.
 
 In BRSKI, the Pledge performs enrollment by communicating with a BRSKI Registrar belonging to the owner of the Pledge.
@@ -80,14 +84,14 @@ Internet.
 
 This entire work is an update to {{BRSKI}}.
 
-Specifically, it extends {{BRSKI, Section 2.7}} to describe describes how a Pledge MAY contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge is deployed in a network that does not include a local Registrar.
+Specifically, it extends {{BRSKI, Section 2.7}} to describe describes how a Pledge may contact a well-known URI of a Cloud Registrar if a local Registrar cannot be discovered or if the Pledge is deployed in a network that does not include a local Registrar.
 
 This kind of non-network onboarding is sometimes called "Application Onboarding", as the purpose is typically to deploy a credential that will be used by the device in its intended use.
 For instance, a SIP {{?RFC3261}} phone might have a client certificate to be used with a SIP proxy.
 
 This document updates [BRSKI] by clarifying operations that are left out of scope in {{BRSKI}}.
 Two modes of operation are specified in this document.
-The Cloud Registrar MAY redirect the Pledge to the owner's Registrar, or the Cloud Registrar MAY issue a voucher to the Pledge that includes the domain of the owner's Enrollment over Secure Transport {{!RFC7030}} (EST) server.
+The Cloud Registrar can choose between redirecting the Pledge to the owner's Registrar, or it may issue a voucher to the Pledge that includes the domain of the owner's Enrollment over Secure Transport {{!RFC7030}} (EST) server.
 
 
 ## Terminology
@@ -270,7 +274,7 @@ For the second use case, as described {{bootstrap-via-cloud-registrar-and-owner-
 ~~~
 {: #arch-two title="Architecture: Bootstrap via Cloud Registrar and Owner EST Service"}
 
-It is also possible that the Cloud Registrar MAY redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
+It is also possible for the Cloud Registrar to redirect the Pledge to another Cloud Registrar operated by a VAR, with that VAR's Cloud Registrar then redirecting the Pledge to the Owner Registrar.
 This scenario is discussed further in {{multiplehttpredirects}} and {{<considerationsfor-http-redirect}}.
 
 The mechanisms and protocols by which the Registrar or EST service interacts with the CA are transparent to the Pledge and are outside the scope of this document.
@@ -318,7 +322,7 @@ For the use case described in {{bootstrap-via-cloud-registrar-and-owner-est-serv
 Note that the Pledge only sends the CSR Attributes request to the entity acting
 as the EST server as per {{!RFC7030, Section 2.6}}, and MUST NOT send the CSR
 Attributes request to the Cloud Registrar, because the Cloud Registrar does not have authority to issue a certificate for the customer domain.  (The Cloud Registrar is not a full EST server)
-If a Pledge sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 response code.
+If a Pledge erroneously sends a CSR Attributes request to the Cloud Registrar, then the Cloud Registrar MUST reply with 404 response code.
 
 The EST server MAY use this mechanism to instruct the Pledge about the identities it should include in the CSR request it sends as part of enrollment.
 The EST server MAY use this mechanism to tell the Pledge what Subject or Subject Alternative Name identity information to include in its CSR request.
@@ -333,7 +337,7 @@ As another example, the Registrar may deem the Manufacturer serial number in an 
 
 ## YANG extension for Voucher based redirect {#redirected}
 
-{{RFC8366bis}} contains the two needed voucher extensions: "est-domain" and "additional-configuration" which are needed when a client is redirected to a local EST server.
+{{RFC8366bis}} contains the two needed voucher attributes: `est-domain` and `additional-configuration-url` which are needed when a client is redirected to a local EST server.
 
 # Protocol Operation
 
@@ -343,7 +347,7 @@ This section outlines the high-level protocol requirements and operations that t
 
 ### Cloud Registrar Discovery
 
-BRSKI defines how a Pledge MAY contact a well-known URI of a Cloud Registrar if a Local Domain Registrar cannot be discovered.
+BRSKI defines how a Pledge contacts a well-known URI of a Cloud Registrar if a Local Domain Registrar cannot be discovered.
 Additionally, certain Pledge types might never attempt to discover a Local Domain Registrar and might automatically bootstrap against a Cloud Registrar.
 
 The details of the URI are Manufacturer specific.
@@ -425,12 +429,12 @@ The Cloud Registrar MAY issue a 202 response code if it is willing to issue a vo
 The voucher MUST include the new "est-domain" field as defined in {{RFC8366bis}}.
 This tells the Pledge where the domain of the EST service to use for completing certificate enrollment.
 
-The voucher MAY include the new "additional-configuration" field.
+The voucher MAY include the new `additional-configuration-url` field.
 This field points the Pledge to a URI where Pledge specific additional configuration information SHOULD be retrieved.
-For example, a SIP phone might retrieve a Manufacturer specific configuration file that contains information about how to do SIP Registration.
+For example, a SIP user agent (a UA, such as a desk phone) might retrieve a Manufacturer specific configuration file that contains information about how to do SIP Registration.
 One advantage of this mechanism over current mechanisms like DHCP options 120 defined in {{?RFC3361}} or option 125 defined in {{?RFC3925}} is that the voucher is returned in a confidential (TLS-protected) transport, and so can include device-specific credentials for retrieval of the configuration.
 
-The exact Pledge and Registrar behavior for handling and specifying the "additional-configuration" field is outside the scope of this document.
+The exact Pledge and Registrar behavior for handling and specifying the `additional-configuration-url` field is outside the scope of this document.
 
 
 ## Pledge Handles Cloud Registrar Response
@@ -457,7 +461,9 @@ As explained by {{BRSKI}}, the connection is validated using the pinned credenti
 The Pledge MUST process any error messages as defined in {{BRSKI}}, and in case of error MUST restart the process from its provisioned Cloud Registrar.
 The exception is that a 401 Unauthorized code SHOULD cause the Pledge to retry a number of times over a period of a few hours.
 
-In order to avoid permanent bootstrap cycles, the Pledge MUST NOT revisit a prior location.
+In order to avoid permanent bootstrap cycles, the Pledge MUST NOT revisit a prior location on the same attempt.
+If a loop is detected, then the Pledge MUST abort the current attempt, returning to the initial state where it looks for local Registrars (as per {{BRSKI}}), starting again with the initial Cloud Registrar if none are found.
+
 {{multiplehttpredirects}} further outlines risks associated with redirects.
 However, in some scenarios, Pledges MAY visit the current location multiple times, for example when handling a 401 Unauthorized response, or when handling a 503 Service Unavailable that includes a Retry-After HTTP header.
 If it happens that a location is repeated, then the Pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
