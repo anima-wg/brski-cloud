@@ -678,7 +678,7 @@ A Pledge might find itself deployed in a network where a captive portal or an in
 Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} might forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-When the Pledge attempts to connect to any Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check Section 6.3 of {{RFC9525}}.
+When the Pledge attempts to connect to any Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check. {{RFC9525, Section 6.3}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), MAY then permit that connection.
