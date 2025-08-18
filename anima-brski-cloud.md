@@ -307,8 +307,8 @@ The VAR and manufacturer are aware of which devices have been shipped to the VAR
 ## Network Connectivity
 
 The assumption is that the Pledge already has network connectivity prior to connecting to the Cloud Registrar.
-The Pledge must have an IP address and be capable to reach a recursive DNS server,
-and also be able to send requests to the Cloud Registrar.
+The Pledge must have an IP address that is able to reach a recursive DNS server,
+and be able to send requests to the Cloud Registrar.
 There are many ways to accomplish this, from using routable IPv4 or IPv6 addresses, to use of NAT44, to using HTTP or SOCKS proxies.
 
 The Pledge operator has already connected the Pledge to the network, and the mechanism by which this has happened is out of scope of this document.
@@ -356,7 +356,7 @@ BRSKI defines how a Pledge contacts a well-known URI of a Cloud Registrar if a L
 Additionally, certain Pledge types might never attempt to discover a Local Domain Registrar and might automatically bootstrap against a Cloud Registrar.
 
 The details of the URI are Manufacturer specific.
-For example, https://brski-registrar.manufacturer.example.com/.well-known/brski.
+
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
@@ -472,7 +472,7 @@ If a loop is detected, then the Pledge MUST abort the current attempt, returning
 {{multiplehttpredirects}} further outlines risks associated with redirects.
 However, in some scenarios, Pledges MAY visit the current location multiple times, for example when handling a 401 Unauthorized response, or when handling a 503 Service Unavailable that includes a Retry-After HTTP header.
 If it happens that a location is repeated, then the Pledge MUST fail the bootstrapping attempt and go back to the beginning, which includes listening to other sources of bootstrapping information as specified in {{BRSKI}} section 4.1 and 5.0.
-The Pledge MUST also have a limit on the total number of redirects it will a follow, as the cycle detection requires that it keep track of the places it has been.
+The Pledge MUST also have a limit on the total number of redirects it will follow, as the cycle detection requires that it keep track of the places it has been.
 That limit MUST be in the dozens or more redirects such that no reasonable delegation path would be affected.
 
 When the Pledge cannot validate the connection, then it MUST establish a Provisional TLS connection with the specified Local Domain Registrar at the location specified.
