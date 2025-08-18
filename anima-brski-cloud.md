@@ -170,7 +170,9 @@ The VAR then sells devices to other entities, such as enterprises, and records t
 Specifically, the VAR will record that a specific device has been sold to an enterprise, and will know that when this device bootstraps, it should be redirected to the enterprise's Owner Registrar or Owner EST Service.
 
 A typical example is a VoIP phone Manufacturer provides telephones to a local system integration company (a VAR).
-The VAR records this sale in its Cloud VAR Registrar system. The VAR has sold a VoIP system to an enterprise (e.g., a SIP PBX). When a new employee needs a phone at their home office, the VAR ships that unit across town to the employee.  When the employee plugs in the device and turns it on, the device will be provisioned with a LDevID and configuration that connections the phone with the Enterprises' VoIP PBX.
+The VAR records this sale in its Cloud VAR Registrar system. The VAR has sold a VoIP system to an enterprise (e.g., a SIP PBX). When a new employee needs a phone at their home office, the VAR ships that unit across town to the employee.
+When the employee plugs in the device and turns it on, the device will be provisioned with a LDevID {{IDEVID}}
+and configuration that connections the phone with the Enterprises' VoIP PBX.
 The home employee's network has no special provisions.
 
 The procedures defined in this document also support a chain of VARs through chained HTTP redirects.
