@@ -202,7 +202,9 @@ Protocol details for this use case are provided in {{redirect2Registrar}}.
 
 A Pledge is bootstrapping where the owner organization does not yet have an Owner Registrar deployed, but does have an EST service deployed.
 The Cloud Registrar issues a voucher, and the Pledge completes trust bootstrap using the Cloud Registrar.
-The voucher issued by the cloud includes domain information for the owner's EST service that the Pledge should use for certificate enrollment.
+The voucher issued by the
+Cloud Registrar includes domain information for the owner's EST
+service that the Pledge should use for certificate enrollment.
 
 For example, an organization has an EST service deployed, but does not yet have a BRSKI-capable Registrar service deployed.
 The Pledge is deployed in the organization's domain, but does not discover a Local Domain Registrar or Owner Registrar.
