@@ -1,7 +1,7 @@
 ---
 title: "Bootstrapping Remote Secure Key Infrastructure (BRSKI) Cloud Registrar"
 abbrev: BRSKI-CLOUD
-docname: draft-ietf-anima-brski-cloud-16
+docname: draft-ietf-anima-brski-cloud-17
 category: std
 ipr: trust200902
 updates: 8995
