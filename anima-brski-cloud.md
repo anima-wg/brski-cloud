@@ -356,7 +356,7 @@ BRSKI defines how a Pledge contacts a well-known URI of a Cloud Registrar if a L
 Additionally, certain Pledge types might never attempt to discover a Local Domain Registrar and might automatically bootstrap against a Cloud Registrar.
 
 The details of the URI are Manufacturer specific.
-
+If the Pledge fails to connect to the Cloud Registrar for any reason, it should consider that this is a bootstrapping failure, and indicate this.
 
 ### Pledge - Cloud Registrar TLS Establishment Details
 
@@ -401,7 +401,7 @@ In this scenario, the Registrar SHOULD include a Retry-After {{?RFC7231}} header
 The absence of a Retry-After header indicates to the Pledge not to attempt again.
 The Pledge MUST restart the bootstrapping process from the beginning.
 
-A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errors to be a bootstrapping failure, and indicate this to the operator.
+A Pledge with some kind of indicator (such as a screen or LED) SHOULD consider all 4xx and 5xx errors to be a bootstrapping failure, and indicate this.
 
 If the Cloud Registrar successfully determines ownership, then it MUST take one of the following actions:
 
