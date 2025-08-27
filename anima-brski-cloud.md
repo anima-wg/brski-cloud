@@ -675,7 +675,7 @@ This document makes no IANA requests.
 
 All privacy considerations outlined in {{RFC8995, Section 10}} are applicable.
 
-There are additional privacy considerations as the Pledge connects to a default Cloud Registrar during bootstrap. In particular, {{RFC8995, Section 10.3}} documents the information that is revealed to the MASA. When Pledges use the mechansisms described in this document, a subset of information is revealed to the Cloud Registrar, namely:
+There are additional privacy considerations as the Pledge connects to a default Cloud Registrar during bootstrap. In particular, {{RFC8995, Section 10.3}} documents the information that is revealed to the MASA. When Pledges use the mechansisms described in this document, a subset of this information is revealed to the Cloud Registrar, namely:
 
 - the identity of the device being enrolled
 - the time the device is activated
