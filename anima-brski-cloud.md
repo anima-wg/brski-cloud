@@ -107,6 +107,9 @@ Cloud Registrar:
 Cloud VAR Registrar:
 : The non-default Registrar that is operated by a value added reseller (VAR).
 
+CSR:
+: Certificate Signing Request
+
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}.
 
@@ -123,7 +126,7 @@ Manufacturer:
 : The term manufacturer is used throughout this document as the entity that created the Pledge. This is typically the original equipment manufacturer (OEM), but in more complex situations, it could be a value added retailer (VAR), or possibly even a systems integrator. Refer to {{BRSKI}} for more detailed descriptions of manufacturer, VAR and OEM.
 
 OEM:
-: Original Equipment Manufacturer.  The company that created the device.
+: Original Equipment Manufacturer.  The company that manufactured the device.
 
 Owner:
 : The owner is the organization that has purchased the new device (the pledge).  The device might be deployed in a network that the owner does not control.
@@ -150,7 +153,7 @@ SIP:
 VAR:
 : Value Added Reseller.  A VAR will often collect products from many OEMs, creating a complete solution, and then sells that composite solution to end customers.  A VAR will often need to provision products to operate in a specific manner.  For instance, a VoIP phone might have SIP functionality as well as MGCP functionality, but in a particular deployment, only one will be used.
 
-## Target Use Cases
+## Use Cases
 
 This document specifies procedures for two high-level use cases.
 
@@ -292,7 +295,7 @@ In the two use cases, there are different mechanisms for a Cloud Registrar to ha
 It can redirect the request to the Owner Registrar for handling, or it can return a voucher
 that includes an "est-domain" attribute that points to the Owner EST Service.
 When returning a voucher, additional bootstrapping information can be embedded in the voucher using the `additional-configuration-url` attribute.
-The contents of this additional configuration are device and vendor specific.
+The contents of this additional configuration are device and Manufacturer specific.
 Both mechanisms are described in detail later in this document.
 
 The network operator or enterprise is the intended owner of the new device: the Pledge.
@@ -457,6 +460,7 @@ The Pledge MUST attempt to validate the identity of the Cloud VAR Registrar spec
 If validation of this identity succeeds using the Implicit Trust Anchor Database, then the Pledge MAY accept a subsequent 307 response from this Cloud VAR Registrar.
 
 The Pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
+The Manufacturer MAY enforce a Manufacturer-specific limit on the number of redirects that the Pledge will follow.
 
 However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the Pledge MUST NOT accept the 307 responses from the Registrar.
 At this point, the TLS connection that has been established is considered a Provisional TLS, as per {{BRSKI, Section 5.1}}.
@@ -727,7 +731,7 @@ All the considerations for operation of the MASA also apply to the operation of 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
 (Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be some connectivity possible)
 
-The Pledge SHOULD NOT assume that the network is protecting the device.is sheltered.
+The Pledge SHOULD NOT assume that the network is protecting the device.
 In a majority of cases, the Pledge will be connected to a network behind an enterprise firewall, or a home router, with typical restrictions on incoming TCP connections due to NAT44 {{?RFC6144}} and {{?RFC7084, Section 3.1}}, and {{?RFC6092, Section 4}}.
 In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case!
 
@@ -735,7 +739,7 @@ Pledges could be deployed on networks
 
 * with unfiltered connectivity, including public IPv4 and IPv6
 * where incoming connections are enabled via explicit rules
-* where ther could be malicious devices within this network
+* where there could be malicious devices within this network
 
 
 
