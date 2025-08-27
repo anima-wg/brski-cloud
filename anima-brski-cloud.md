@@ -460,7 +460,7 @@ The Pledge MUST attempt to validate the identity of the Cloud VAR Registrar spec
 If validation of this identity succeeds using the Implicit Trust Anchor Database, then the Pledge MAY accept a subsequent 307 response from this Cloud VAR Registrar.
 
 The Pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
-The Manufacturer MAY enforce a Manufacturer-specific limit on the number of redirects that the Pledge will follow.
+The Manufacturer MAY enforce a Manufacturer-specific limit on the number of 307 redirects that the Pledge will follow.
 
 However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the Pledge MUST NOT accept the 307 responses from the Registrar.
 At this point, the TLS connection that has been established is considered a Provisional TLS, as per {{BRSKI, Section 5.1}}.
