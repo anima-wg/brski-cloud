@@ -111,7 +111,7 @@ CSR:
 : Certificate Signing Request
 
 DHCP
-: refers to DHCPv4 {{!RFC2131}} or DHCPv6 {{!RFC8914}}.
+: refers to DHCPv4 {{?RFC2131}} or DHCPv6 {{?RFC8914}}.
 
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}.
