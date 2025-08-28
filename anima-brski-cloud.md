@@ -107,6 +107,9 @@ Cloud Registrar:
 Cloud VAR Registrar:
 : The non-default Registrar that is operated by a value added reseller (VAR).
 
+CSR:
+: Certificate Signing Request
+
 EST:
 : Enrollment over Secure Transport {{!RFC7030}}.
 
@@ -123,7 +126,7 @@ Manufacturer:
 : The term manufacturer is used throughout this document as the entity that created the Pledge. This is typically the original equipment manufacturer (OEM), but in more complex situations, it could be a value added retailer (VAR), or possibly even a systems integrator. Refer to {{BRSKI}} for more detailed descriptions of manufacturer, VAR and OEM.
 
 OEM:
-: Original Equipment Manufacturer.  The company that created the device.
+: Original Equipment Manufacturer.  The company that manufactured the device.
 
 Owner:
 : The owner is the organization that has purchased the new device (the pledge).  The device might be deployed in a network that the owner does not control.
@@ -150,7 +153,7 @@ SIP:
 VAR:
 : Value Added Reseller.  A VAR will often collect products from many OEMs, creating a complete solution, and then sells that composite solution to end customers.  A VAR will often need to provision products to operate in a specific manner.  For instance, a VoIP phone might have SIP functionality as well as MGCP functionality, but in a particular deployment, only one will be used.
 
-## Target Use Cases
+## Use Cases
 
 This document specifies procedures for two high-level use cases.
 
@@ -292,7 +295,7 @@ In the two use cases, there are different mechanisms for a Cloud Registrar to ha
 It can redirect the request to the Owner Registrar for handling, or it can return a voucher
 that includes an "est-domain" attribute that points to the Owner EST Service.
 When returning a voucher, additional bootstrapping information can be embedded in the voucher using the `additional-configuration-url` attribute.
-The contents of this additional configuration are device and vendor specific.
+The contents of this additional configuration are device and Manufacturer specific.
 Both mechanisms are described in detail later in this document.
 
 The network operator or enterprise is the intended owner of the new device: the Pledge.
@@ -457,9 +460,9 @@ The Pledge MUST attempt to validate the identity of the Cloud VAR Registrar spec
 If validation of this identity succeeds using the Implicit Trust Anchor Database, then the Pledge MAY accept a subsequent 307 response from this Cloud VAR Registrar.
 
 The Pledge MAY continue to follow a number of 307 redirects provided that each 307 redirect target Registrar identity is validated using the Implicit Trust Anchor Database.
+The Manufacturer MAY enforce a Manufacturer-specific limit on the number of 307 redirects that the Pledge will follow.
 The Pledge MAY be redirected to an Owner Register that then redirects the Pledge via a 3xx response.
-The Pledge MUST follow the rules outlined in {{BRSKI, Section 5.6}} for any redirections other than 307.
-The pledge MUST NOT follow more than one non-307 redirection (3xx code other than 307) to another web origin.
+The Pledge MUST follow the rules outlined in {{BRSKI, Section 5.6}} for any redirections other than 307 and MUST NOT follow more than one non-307 redirection (3xx code other than 307) to another web origin.
 
 However, if validation of a 307 redirect target Registrar identity using the Implicit Trust Anchor Database fails, then the Pledge MUST NOT accept the 307 responses from the Registrar.
 At this point, the TLS connection that has been established is considered a Provisional TLS, as per {{BRSKI, Section 5.1}}.
@@ -674,6 +677,18 @@ In that case, when the owner of the EST Server wishes to change their certificat
 
 This document makes no IANA requests.
 
+# Privacy Considerations
+
+All privacy considerations outlined in {{RFC8995, Section 10}} are applicable.
+
+There are additional privacy considerations as the Pledge connects to a default Cloud Registrar during bootstrap. In particular, {{RFC8995, Section 10.3}} documents the information that is revealed to the MASA. When Pledges use the mechansisms described in this document, a subset of this information is revealed to the Cloud Registrar, namely:
+
+- the identity of the device being enrolled
+- the time the device is activated
+- the IP address of the device, or if the Pledge is behind a NAT, the public IP of the NAT
+
+Refer to {{RFC8995, Section 10}} for more comprehensive information.
+
 # Implementation Considerations
 
 ## Captive Portals
@@ -682,7 +697,7 @@ A Pledge might find itself deployed in a network where a captive portal or an in
 Captive portals that do not follow the requirements of Section 1 of {{?RFC8952}} might forcibly redirect HTTPS connections.
 While this is a deprecated practice as it breaks TLS in a way that most users can not deal with, it is still common in many networks.
 
-When the Pledge attempts to connect to any Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check. {{RFC9525, Section 6.3}}.
+When the Pledge attempts to connect to any Cloud Registrar, an incorrect connection will be detected because the Pledge will be unable to verify the TLS connection to its Cloud Registrar via DNS-ID check {{RFC9525, Section 6.3}}.
 That is, the certificate returned from the captive portal will not match.
 
 At this point a network operator who controls the captive portal, noticing the connection to what seems a legitimate destination (the Cloud Registrar), MAY then permit that connection.
@@ -730,7 +745,7 @@ All the considerations for operation of the MASA also apply to the operation of 
 Unlike many other uses of BRSKI, in the Cloud Registrar case it is assumed that the Pledge has connected to a network, such as the public Internet, on which some amount of connectivity is possible, but there is no other local configuration available.
 (Note: there are many possible configurations in which the device might not have unlimited connectivity to the public Internet, but for which there might be some connectivity possible)
 
-The Pledge SHOULD NOT assume that the network is protecting the device.is sheltered.
+The Pledge SHOULD NOT assume that the network is protecting the device.
 In a majority of cases, the Pledge will be connected to a network behind an enterprise firewall, or a home router, with typical restrictions on incoming TCP connections due to NAT44 {{?RFC6144}} and {{?RFC7084, Section 3.1}}, and {{?RFC6092, Section 4}}.
 In such situations, the Pledge might think it can be assured that it can not be attacked, but this is not the case!
 
@@ -738,7 +753,7 @@ Pledges could be deployed on networks
 
 * with unfiltered connectivity, including public IPv4 and IPv6
 * where incoming connections are enabled via explicit rules
-* where ther could be malicious devices within this network
+* where there could be malicious devices within this network
 
 
 
@@ -754,25 +769,9 @@ In this way, a Pledge that may have been in a dusty box in a warehouse for a lon
 
 ## Trust Anchors for Cloud Registrar
 
-In the final onboarding step, wherein an {{RFC8366bis}} voucher artifact is returned to authenticate the provisional TLS connection, any kind of trust anchor can be used: private or public.
-The end customer's Registrar will have a private PKI that will be pinned by the voucher.
+The HTTPS connections that the Pledge makes to the Cloud Registrar, and any subsequent Registrars that it may be redirected to, MUST be validated using the Implicit Trust Anchor database as described in {{RFC7030, Section 3.6.1}}. Manufacturers MUST include all necessary trust anchors in a Pledge's Implicit Trust Anchor database so that all expected Registrars can be validated.
 
-However, in the steps leading up to the above step, the HTTPS connections to the (series of) Cloud Registrars, the Pledge will need to be validated using the Implicit Trust Anchor database, as described in {{RFC7030, Section 3.6.1}}.
-
-If a manufacturer chooses, they could act as a private PKI for all of the steps, including the related trust
-anchor in the Pledge's Trust Anchor database.
-The manufacturer already has to operate enough of a private PKI to sustain signing of Vouchers, and also firmware updates.
-Such a PKI is described in {{I-D.irtf-t2trg-taxonomy-manufacturer-anchors}} section 3.
-Minimizing the number of trust anchors reduces the security exposure should fraudulent certificates ever be issued.
-
-On the other hand, automation of certificate updates is now routine, and forcing the Cloud Registrar's operated by the chain of Value-Added Resellers (VARs) to only use one manufacturer's private PKI will significantly increase operational costs.
-VARs could operate one Cloud Registrar for a large variety of devices that they resell, and forcing them to use the manufacturer's private PKI means that they have to maintain a certificate for each product line.
-
-So, while there is no requirement that Cloud Registrar's certificates are part of the public (WebPKI)  database, but it is likely simpler and cheaper for most such systems to use easily obtained certificates.
-
-Device Manufacturers therefore need to include enough trust anchors in their devices (the Pledges) so that all expected Cloud Registrar's can be validated.
-
-It is recommended for Manufacturers to work with their VARs to determine if there is a subset of public PKIs that would satisfy all their VARs, and to ship only that subset.
+Registars may use public (WebPKI) or private PKI Trust Anchors. While there is no requirement that Registrar's certificates are part of any public (WebPKI) Trust Anchor lists, it may be simpler and cheaper for Registrars to use these easily obtained certificates, rather than use a private PKI. It is recommended for Manufacturers to work with their VARs to determine the subset of publicly trusted (Web) PKI Trust Anchors and / or private PKI Trust Anchors that would satisfy all their VARs, and to ship only that minimal set in the Implicit Trust Anchor database.
 
 ## Considerations for HTTP Redirect {#considerationsfor-http-redirect}
 
