@@ -682,15 +682,15 @@ This document makes no IANA requests.
 
 # Privacy Considerations
 
-All privacy considerations outlined in {{RFC8995, Section 10}} are applicable.
+All privacy considerations outlined in {{BRSKI, Section 10}} are applicable.
 
-There are additional privacy considerations as the Pledge connects to a default Cloud Registrar during bootstrap. In particular, {{RFC8995, Section 10.3}} documents the information that is revealed to the MASA. When Pledges use the mechansisms described in this document, a subset of this information is revealed to the Cloud Registrar, namely:
+There are additional privacy considerations as the Pledge connects to a default Cloud Registrar during bootstrap. In particular, {{BRSKI, Section 10.3}} documents the information that is revealed to the MASA. When Pledges use the mechansisms described in this document, a subset of this information is revealed to the Cloud Registrar, namely:
 
 - the identity of the device being enrolled
 - the time the device is activated
 - the IP address of the device, or if the Pledge is behind a NAT, the public IP of the NAT
 
-Refer to {{RFC8995, Section 10}} for more comprehensive information.
+Refer to {{BRSKI, Section 10}} for more comprehensive information.
 
 # Implementation Considerations
 
