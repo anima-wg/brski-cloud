@@ -325,7 +325,7 @@ connection. For wireless use cases, existing Wi-Fi onboarding mechanisms such as
 
 Similarly, what address space the IP address belongs to, whether it is an IPv4 or IPv6 address, or if there are firewalls or proxies deployed between the Pledge and the cloud registrar are all out of scope of this document.
 
-## Pledge Certificate Identity Considerations
+## Pledge Certificate Identity Considerations {#pledge-certificate-identity-considerations}
 
 {{BRSKI, Section 5.9.2}} specifies that the Pledge MUST send an EST {{!RFC7030}}
 Certificate Signing Request (CSR) Attributes request to the EST server before it requests a client certificate.
