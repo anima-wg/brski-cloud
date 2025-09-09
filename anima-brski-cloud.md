@@ -404,7 +404,7 @@ The Registrar returns the following errors:
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership at that time, then it MUST return a 401 Unauthorized response to the Pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
-In this scenario, the Registrar SHOULD include a Retry-After {{?RFC9110}} header that includes a time to defer.
+In this scenario, the Registrar SHOULD include a Retry-After {{RFC9110}} header that includes a time to defer.
 The absence of a Retry-After header indicates to the Pledge not to attempt again.
 The Pledge MUST restart the bootstrapping process from the beginning.
 
