@@ -99,7 +99,7 @@ The Cloud Registrar can choose between redirecting the Pledge to the owner's Reg
 
 {::boilerplate bcp14}
 
-This document uses the terms Domain, Pledge, Registrar, MASA, and Voucher from {{BRSKI}} and {{RFC8366bis}}.
+This document uses the terms Domain, Pledge, Registrar, Manufacturer Authorized Signing Authority (MASA), and Voucher from {{BRSKI}} and {{RFC8366bis}}.
 
 Cloud Registrar:
 : The default Registrar that is deployed at a URI that is well known to the Pledge.
@@ -254,7 +254,7 @@ For the first use case, as described in {{bootstrap-via-cloud-registrar-and-owne
 {: #arch-one title="Architecture: Bootstrap via Cloud Registrar and Owner Registrar"}
 
 As depicted in {{arch-one}} and {{arch-two}}, there are a number of parties involved in the process.
-The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the Manufacturer Authorized Signing Authority (MASA), or arrange for it to exist.
+The Manufacturer, or Original Equipment Manufacturer (OEM) builds the device, but also is expected to run the MASA, or arrange for it to exist.
 The interaction between the Cloud Registrar and the MASA is described by {{BRSKI, Section 5.4}}.
 
 In {{arch-one}} the two signatures that the Pledge and the Owner Registrar place on the Voucher Request (VR) are shown as `VR-sign(N)` and `sign(VR-sign(N))`
@@ -404,7 +404,7 @@ The Registrar returns the following errors:
 
 If the request is correct and the Registrar is able to handle it, but unable to determine ownership at that time, then it MUST return a 401 Unauthorized response to the Pledge.
 This signals to the Pledge that there is currently no known owner domain for it, but that retrying later might resolve this situation.
-In this scenario, the Registrar SHOULD include a Retry-After {{?RFC7231}} header that includes a time to defer.
+In this scenario, the Registrar SHOULD include a Retry-After {{?RFC9110}} header that includes a time to defer.
 The absence of a Retry-After header indicates to the Pledge not to attempt again.
 The Pledge MUST restart the bootstrapping process from the beginning.
 
